@@ -106,8 +106,8 @@ Antes de ejecutar el proyecto se necesita:
 ### 1. Clonar el repositorio
 
 ```cmd
-git clone https://github.com/maca2003repo-INGENIERIA-DE-SOLUCIONES-CON-INTELIGENCIA-ARTIFICIAL
-cd aduanarag
+git clone https://github.com/maca2003/repo-INGENIERIA-DE-SOLUCIONES-CON-INTELIGENCIA-ARTIFICIAL.git
+cd repo-INGENIERIA-DE-SOLUCIONES-CON-INTELIGENCIA-ARTIFICIAL
 ```
 
 ### 2. Crear el entorno virtual
