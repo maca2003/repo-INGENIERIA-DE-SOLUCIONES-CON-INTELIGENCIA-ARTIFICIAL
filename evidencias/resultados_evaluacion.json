@@ -1,0 +1,244 @@
+[
+  {
+    "id": 1,
+    "categoria": "interna",
+    "pregunta": "¿Qué documentos iniciales deben revisarse antes de preparar una operación?",
+    "respuesta": "Según el procedimiento, antes de preparar una operación, el ejecutivo debe revisar los siguientes documentos iniciales:\n\n- Factura comercial.\n- Documento de transporte.\n- Lista de empaque.\n- Mandato o autorización vigente.\n- Certificado de origen, cuando corresponda.\n- Permisos, vistos buenos o certificados exigidos para mercancías reguladas.\n- Información adicional necesaria para identificar y clasificar las mercancías.",
+    "fuente_esperada": "procedimiento_recepcion_documentos.md",
+    "fuentes_recuperadas": [
+      "procedimiento_recepcion_documentos.md",
+      "gestion_observaciones_operacion.md"
+    ],
+    "palabras_clave": [
+      "factura comercial",
+      "documento de transporte",
+      "lista de empaque"
+    ],
+    "palabras_encontradas": [
+      "factura comercial",
+      "documento de transporte",
+      "lista de empaque"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": null,
+    "resultado_correcto": true
+  },
+  {
+    "id": 2,
+    "categoria": "interna",
+    "pregunta": "Si existen diferencias en cantidades, valores, descripción o peso, ¿se debe completar la preparación de la operación y qué debe solicitarse?",
+    "respuesta": "Señalado en el procedimiento de recepción de documentos, si existen diferencias en cantidades, valores, descripción o peso, el ejecutivo no debe completar la preparación de la operación hasta obtener una aclaración o un documento corregido.",
+    "fuente_esperada": "procedimiento_recepcion_documentos.md",
+    "fuentes_recuperadas": [
+      "procedimiento_recepcion_documentos.md",
+      "gestion_observaciones_operacion.md",
+      "rol_agente_aduana_chile.md"
+    ],
+    "palabras_clave": [
+      "no debe completar",
+      "aclaración",
+      "documento corregido"
+    ],
+    "palabras_encontradas": [
+      "no debe completar",
+      "aclaración",
+      "documento corregido"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": null,
+    "resultado_correcto": true
+  },
+  {
+    "id": 3,
+    "categoria": "interna",
+    "pregunta": "Cuando una observación se comunica al cliente, ¿qué tres elementos específicos deben indicarse?",
+    "respuesta": "Según la sección \"Comunicación\" del contexto, cuando una observación se comunica al cliente, deben indicarse los siguientes tres elementos específicos:\n\n1. El documento afectado.\n2. La inconsistencia detectada.\n3. La acción necesaria para resolverla.",
+    "fuente_esperada": "gestion_observaciones_operacion.md",
+    "fuentes_recuperadas": [
+      "gestion_observaciones_operacion.md",
+      "trazabilidad_seguridad_documental.md"
+    ],
+    "palabras_clave": [
+      "documento afectado",
+      "inconsistencia",
+      "acción necesaria"
+    ],
+    "palabras_encontradas": [
+      "documento afectado",
+      "inconsistencia",
+      "acción necesaria"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": null,
+    "resultado_correcto": true
+  },
+  {
+    "id": 4,
+    "categoria": "interna",
+    "pregunta": "¿Cuándo puede cerrarse una observación?",
+    "respuesta": "Según el procedimiento de registro de observaciones, una observación solo puede cerrarse después de:\n\n1. Recibir el antecedente o aclaración solicitada.\n2. Revisar que la respuesta resuelva la inconsistencia.\n3. Actualizar el estado de la observación.\n4. Registrar la fecha de cierre.\n5. Continuar o derivar la operación, según corresponda.",
+    "fuente_esperada": "gestion_observaciones_operacion.md",
+    "fuentes_recuperadas": [
+      "gestion_observaciones_operacion.md"
+    ],
+    "palabras_clave": [
+      "antecedente",
+      "inconsistencia",
+      "fecha de cierre"
+    ],
+    "palabras_encontradas": [
+      "antecedente",
+      "inconsistencia",
+      "fecha de cierre"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": null,
+    "resultado_correcto": true
+  },
+  {
+    "id": 5,
+    "categoria": "interna",
+    "pregunta": "¿Qué acciones tiene prohibidas el asistente AduanaRAG?",
+    "respuesta": "Según el contexto proporcionado, el asistente AduanaRAG tiene prohibidas las siguientes acciones:\n\n1. Inventar información ausente en las fuentes.\n2. Modificar documentos.\n3. Autorizar operaciones.\n4. Sustituir la revisión de una persona responsable.\n5. Entregar datos confidenciales.\n6. Presentar una respuesta como asesoría legal definitiva.",
+    "fuente_esperada": "trazabilidad_seguridad_documental.md",
+    "fuentes_recuperadas": [
+      "trazabilidad_seguridad_documental.md",
+      "rol_agente_aduana_chile.md"
+    ],
+    "palabras_clave": [
+      "inventar",
+      "modificar documentos",
+      "autorizar operaciones"
+    ],
+    "palabras_encontradas": [
+      "inventar",
+      "modificar documentos",
+      "autorizar operaciones"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": null,
+    "resultado_correcto": true
+  },
+  {
+    "id": 6,
+    "categoria": "externa",
+    "pregunta": "¿Cuál es la función general de un agente de aduana?",
+    "respuesta": "Según el contexto proporcionado, la función general de un agente de aduana es actuar como gestor en el despacho de mercancías y como intermediario entre importadores, exportadores y el Servicio Nacional de Aduanas.",
+    "fuente_esperada": "rol_agente_aduana_chile.md",
+    "fuentes_recuperadas": [
+      "rol_agente_aduana_chile.md",
+      "procedimiento_recepcion_documentos.md"
+    ],
+    "palabras_clave": [
+      "despacho",
+      "intermediario",
+      "mercancías"
+    ],
+    "palabras_encontradas": [
+      "despacho",
+      "intermediario",
+      "mercancías"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": null,
+    "resultado_correcto": true
+  },
+  {
+    "id": 7,
+    "categoria": "externa",
+    "pregunta": "¿Qué diferencia existe entre una agencia de aduanas y el Servicio Nacional de Aduanas?",
+    "respuesta": "Sección: Definición\n\nEl Servicio Nacional de Aduanas es el organismo público encargado de fiscalizar y controlar las operaciones aduaneras.\n\nLa agencia de aduanas es una entidad privada que presta servicios a sus clientes para gestionar operaciones de comercio exterior.",
+    "fuente_esperada": "rol_agente_aduana_chile.md",
+    "fuentes_recuperadas": [
+      "rol_agente_aduana_chile.md",
+      "trazabilidad_seguridad_documental.md"
+    ],
+    "palabras_clave": [
+      "servicios",
+      "organismo público",
+      "fiscalizar"
+    ],
+    "palabras_encontradas": [
+      "servicios",
+      "organismo público",
+      "fiscalizar"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": null,
+    "resultado_correcto": true
+  },
+  {
+    "id": 8,
+    "categoria": "externa",
+    "pregunta": "¿Qué antecedentes generales pueden ser necesarios para una importación en Chile?",
+    "respuesta": "Señalado en la sección \"Documentos generales\" del contexto, los antecedentes generales que pueden ser necesarios para una importación en Chile son:\n\n- Documento de transporte correspondiente.\n- Factura comercial.\n- Declaración jurada del importador sobre el precio de las mercancías.\n- Mandato correspondiente para la tramitación.",
+    "fuente_esperada": "aduanas_chile_requisitos_importacion.md",
+    "fuentes_recuperadas": [
+      "aduanas_chile_requisitos_importacion.md",
+      "procedimiento_recepcion_documentos.md"
+    ],
+    "palabras_clave": [
+      "documento de transporte",
+      "factura comercial",
+      "mandato"
+    ],
+    "palabras_encontradas": [
+      "documento de transporte",
+      "factura comercial",
+      "mandato"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": null,
+    "resultado_correcto": true
+  },
+  {
+    "id": 9,
+    "categoria": "sin_respuesta",
+    "pregunta": "¿Cuál es el horario de atención de la agencia los días sábado?",
+    "respuesta": "No existe información suficiente en las fuentes disponibles para responder con seguridad.",
+    "fuente_esperada": null,
+    "fuentes_recuperadas": [
+      "rol_agente_aduana_chile.md",
+      "trazabilidad_seguridad_documental.md"
+    ],
+    "palabras_clave": [
+      "no existe información suficiente"
+    ],
+    "palabras_encontradas": [
+      "no existe información suficiente"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": true,
+    "resultado_correcto": true
+  },
+  {
+    "id": 10,
+    "categoria": "sin_respuesta",
+    "pregunta": "¿Cuál es el número telefónico personal del gerente de la agencia?",
+    "respuesta": "No existe información suficiente en las fuentes disponibles para responder con seguridad.",
+    "fuente_esperada": null,
+    "fuentes_recuperadas": [
+      "rol_agente_aduana_chile.md",
+      "gestion_observaciones_operacion.md"
+    ],
+    "palabras_clave": [
+      "no existe información suficiente"
+    ],
+    "palabras_encontradas": [
+      "no existe información suficiente"
+    ],
+    "cobertura_palabras": 1.0,
+    "fuente_correcta": true,
+    "rechazo_correcto": true,
+    "resultado_correcto": true
+  }
+]

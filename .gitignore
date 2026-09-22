@@ -1,0 +1,29 @@
+# Entorno virtual
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Variables y secretos
+.env
+*.env
+
+# Base vectorial generada
+chroma_db/
+vectorstore/
+
+# Archivos temporales
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
+# Evidencias temporales
+.streamlit/secrets.toml

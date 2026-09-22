@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "categoria": "interna",
+    "pregunta": "¿Qué documentos iniciales deben revisarse antes de preparar una operación?",
+    "fuente_esperada": "procedimiento_recepcion_documentos.md",
+    "palabras_clave": ["factura comercial", "documento de transporte", "lista de empaque"]
+  },
+  {
+  "id": 2,
+  "categoria": "interna",
+  "pregunta": "Si existen diferencias en cantidades, valores, descripción o peso, ¿se debe completar la preparación de la operación y qué debe solicitarse?",
+  "fuente_esperada": "procedimiento_recepcion_documentos.md",
+  "palabras_clave": ["no debe completar","aclaración","documento corregido"]
+  },
+  {
+  "id": 3,
+  "categoria": "interna",
+  "pregunta": "Cuando una observación se comunica al cliente, ¿qué tres elementos específicos deben indicarse?",
+  "fuente_esperada": "gestion_observaciones_operacion.md",
+  "palabras_clave": ["documento afectado","inconsistencia","acción necesaria"]
+  },
+  {
+    "id": 4,
+    "categoria": "interna",
+    "pregunta": "¿Cuándo puede cerrarse una observación?",
+    "fuente_esperada": "gestion_observaciones_operacion.md",
+    "palabras_clave": ["antecedente", "inconsistencia", "fecha de cierre"]
+  },
+  {
+    "id": 5,
+    "categoria": "interna",
+    "pregunta": "¿Qué acciones tiene prohibidas el asistente AduanaRAG?",
+    "fuente_esperada": "trazabilidad_seguridad_documental.md",
+    "palabras_clave": ["inventar", "modificar documentos", "autorizar operaciones"]
+  },
+  {
+    "id": 6,
+    "categoria": "externa",
+    "pregunta": "¿Cuál es la función general de un agente de aduana?",
+    "fuente_esperada": "rol_agente_aduana_chile.md",
+    "palabras_clave": ["despacho", "intermediario", "mercancías"]
+  },
+  {
+    "id": 7,
+    "categoria": "externa",
+    "pregunta": "¿Qué diferencia existe entre una agencia de aduanas y el Servicio Nacional de Aduanas?",
+    "fuente_esperada": "rol_agente_aduana_chile.md",
+    "palabras_clave": ["servicios", "organismo público", "fiscalizar"]
+  },
+  {
+    "id": 8,
+    "categoria": "externa",
+    "pregunta": "¿Qué antecedentes generales pueden ser necesarios para una importación en Chile?",
+    "fuente_esperada": "aduanas_chile_requisitos_importacion.md",
+    "palabras_clave": ["documento de transporte","factura comercial","mandato"]
+  },
+  {
+    "id": 9,
+    "categoria": "sin_respuesta",
+    "pregunta": "¿Cuál es el horario de atención de la agencia los días sábado?",
+    "fuente_esperada": null,
+    "palabras_clave": ["no existe información suficiente"]
+  },
+  {
+    "id": 10,
+    "categoria": "sin_respuesta",
+    "pregunta": "¿Cuál es el número telefónico personal del gerente de la agencia?",
+    "fuente_esperada": null,
+    "palabras_clave": ["no existe información suficiente"]
+  }
+]
