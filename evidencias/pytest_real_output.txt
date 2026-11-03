@@ -1,0 +1,18 @@
+$ C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe -m pytest -m real -v
+# 2026-11-03 01:03
+
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\macar\proyectos\aduanarag
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.15.1, langsmith-0.14.17
+collecting ... collected 37 items / 33 deselected / 4 selected
+
+tests/test_integracion_real.py::test_revision_real_op1003 PASSED         [ 25%]
+tests/test_integracion_real.py::test_rag_real_responde_con_fuente PASSED [ 50%]
+tests/test_integracion_real.py::test_rag_real_se_abstiene PASSED         [ 75%]
+tests/test_integracion_real.py::test_agente_conversacional_real_usa_herramienta PASSED [100%]
+
+====================== 4 passed, 33 deselected in 19.06s ======================

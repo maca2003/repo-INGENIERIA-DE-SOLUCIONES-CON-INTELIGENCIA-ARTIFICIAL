@@ -1,13 +1,13 @@
-$ /home/claude/venv/bin/python -m pytest -v
-# 2026-11-03 00:35
+$ C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe -m pytest -v
+# 2026-11-03 01:02
 
-============================= test session starts ==============================
-platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0 -- /home/claude/venv/bin/python
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe
 cachedir: .pytest_cache
-rootdir: /home/claude/repo
+rootdir: C:\Users\macar\proyectos\aduanarag
 configfile: pytest.ini
 testpaths: tests
-plugins: langsmith-0.14.11, anyio-4.15.1
+plugins: anyio-4.15.1, langsmith-0.14.17
 collecting ... collected 37 items
 
 tests/test_e2e.py::test_flujo_estandar_deriva_a_revision PASSED          [  2%]
@@ -26,10 +26,10 @@ tests/test_herramientas.py::test_rag_responde_con_fuente_y_se_abstiene_sin_evide
 tests/test_herramientas.py::test_escritura_registra_trazabilidad_y_no_duplica PASSED [ 37%]
 tests/test_herramientas.py::test_correccion_crea_nueva_version_sin_sobrescribir PASSED [ 40%]
 tests/test_herramientas.py::test_priorizacion_por_urgencia_arribo_y_riesgo PASSED [ 43%]
-tests/test_integracion_real.py::test_revision_real_op1003 SKIPPED (O...) [ 45%]
-tests/test_integracion_real.py::test_rag_real_responde_con_fuente SKIPPED [ 48%]
-tests/test_integracion_real.py::test_rag_real_se_abstiene SKIPPED (O...) [ 51%]
-tests/test_integracion_real.py::test_agente_conversacional_real_usa_herramienta SKIPPED [ 54%]
+tests/test_integracion_real.py::test_revision_real_op1003 PASSED         [ 45%]
+tests/test_integracion_real.py::test_rag_real_responde_con_fuente PASSED [ 48%]
+tests/test_integracion_real.py::test_rag_real_se_abstiene PASSED         [ 51%]
+tests/test_integracion_real.py::test_agente_conversacional_real_usa_herramienta PASSED [ 54%]
 tests/test_memoria.py::test_memorias_semilla_cargadas PASSED             [ 56%]
 tests/test_memoria.py::test_recuperacion_semantica_filtrada_por_cliente PASSED [ 59%]
 tests/test_memoria.py::test_episodio_se_consolida_en_memoria_larga PASSED [ 62%]
@@ -48,4 +48,4 @@ tests/test_planificacion.py::test_falla_de_herramienta_reintenta_y_escala PASSED
 tests/test_planificacion.py::test_rechazo_humano_no_envia_comunicacion PASSED [ 97%]
 tests/test_planificacion.py::test_enrutamiento_por_intencion PASSED      [100%]
 
-======================== 33 passed, 4 skipped in 3.79s =========================
+============================= 37 passed in 47.94s =============================

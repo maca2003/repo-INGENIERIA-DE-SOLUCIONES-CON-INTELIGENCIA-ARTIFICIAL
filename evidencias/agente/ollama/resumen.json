@@ -1,0 +1,112 @@
+[
+  {
+    "escenario": 1,
+    "titulo": "Expediente completo y concordante",
+    "archivo": "escenario_01.md",
+    "estado_final": "Derivada a revisión",
+    "tareas": 4,
+    "decisiones": 1,
+    "segundos": 2.3,
+    "criterio": "Estado 'Derivada a revisión' sin observaciones",
+    "cumple": true
+  },
+  {
+    "escenario": 2,
+    "titulo": "Documentos faltantes y preferencia del cliente",
+    "archivo": "escenario_02.md",
+    "estado_final": "Pendiente de documentación",
+    "tareas": 8,
+    "decisiones": 8,
+    "segundos": 2.4,
+    "criterio": "Pendiente de documentación, comunicación a Paula Rojas aprobada por humano",
+    "cumple": true
+  },
+  {
+    "escenario": 3,
+    "titulo": "Inconsistencias corregibles",
+    "archivo": "escenario_03.md",
+    "estado_final": "Con observaciones",
+    "tareas": 9,
+    "decisiones": 7,
+    "segundos": 2.6,
+    "criterio": "Con observaciones y comunicación generada",
+    "cumple": true
+  },
+  {
+    "escenario": 4,
+    "titulo": "Observación crítica con antecedente del cliente",
+    "archivo": "escenario_04.md",
+    "estado_final": "Con observaciones",
+    "tareas": 10,
+    "decisiones": 10,
+    "segundos": 3.0,
+    "criterio": "Permisos verificados primero, validación reforzada y escalamiento sin comunicación",
+    "cumple": true
+  },
+  {
+    "escenario": 5,
+    "titulo": "Control: OP1004 sin memoria de largo plazo",
+    "archivo": "escenario_05.md",
+    "estado_final": "Con observaciones",
+    "tareas": 10,
+    "decisiones": 9,
+    "segundos": 2.7,
+    "criterio": "El plan NO incluye validación reforzada",
+    "cumple": true
+  },
+  {
+    "escenario": 6,
+    "titulo": "Mercancía no catalogada",
+    "archivo": "escenario_06.md",
+    "estado_final": "Con observaciones",
+    "tareas": 9,
+    "decisiones": 7,
+    "segundos": 8.3,
+    "criterio": "Requisito por confirmar o escalado + documento ilegible",
+    "cumple": true
+  },
+  {
+    "escenario": 7,
+    "titulo": "Condición cambiante: documento corregido",
+    "archivo": "escenario_07.md",
+    "estado_final": "Derivada a revisión",
+    "tareas": 7,
+    "decisiones": 5,
+    "segundos": 2.3,
+    "criterio": "Observaciones cerradas y estado 'Derivada a revisión'",
+    "cumple": true
+  },
+  {
+    "escenario": 8,
+    "titulo": "Continuidad de un flujo prolongado",
+    "archivo": "escenario_08.md",
+    "estado_final": "Pendiente de documentación",
+    "tareas": 9,
+    "decisiones": 9,
+    "segundos": "-",
+    "criterio": "El nuevo proceso retoma en 'aprobacion_humana' y termina el flujo",
+    "cumple": true
+  },
+  {
+    "escenario": 9,
+    "titulo": "Secuenciación de la jornada",
+    "archivo": "escenario_09.md",
+    "estado_final": null,
+    "tareas": 0,
+    "decisiones": 0,
+    "segundos": 0.1,
+    "criterio": "Se entrega un orden con justificación",
+    "cumple": true
+  },
+  {
+    "escenario": 10,
+    "titulo": "Modo conversacional (ReAct) y memoria entre sesiones",
+    "archivo": "escenario_10.md",
+    "estado_final": null,
+    "tareas": 0,
+    "decisiones": 0,
+    "segundos": 14.0,
+    "criterio": "",
+    "cumple": null
+  }
+]

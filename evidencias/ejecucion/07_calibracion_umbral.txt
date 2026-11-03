@@ -1,0 +1,17 @@
+Categoría       Distancia  Pregunta
+interna            0.7179  ¿Qué documentos iniciales deben revisarse antes de preparar una operac
+interna            0.7294  Si existen diferencias en cantidades, valores, descripción o peso, ¿se
+interna            0.7638  Cuando una observación se comunica al cliente, ¿qué tres elementos esp
+interna            0.8174  ¿Cuándo puede cerrarse una observación?
+interna            0.6410  ¿Qué acciones tiene prohibidas el asistente AduanaRAG?
+externa            0.5369  ¿Cuál es la función general de un agente de aduana?
+externa            0.5424  ¿Qué diferencia existe entre una agencia de aduanas y el Servicio Naci
+externa            0.4790  ¿Qué antecedentes generales pueden ser necesarios para una importación
+sin_respuesta      1.4440  ¿Cuál es el horario de atención de la agencia los días sábado?
+sin_respuesta      1.2643  ¿Cuál es el número telefónico personal del gerente de la agencia?
+sin_respuesta*     0.9417  ¿La importación de drones de uso recreativo requiere autorización, per
+sin_respuesta*     1.6542  ¿Cuál es el precio del dólar hoy?
+
+Máxima distancia con respuesta: 0.8174
+Mínima distancia sin respuesta: 0.9417
+Umbral sugerido: 0.880

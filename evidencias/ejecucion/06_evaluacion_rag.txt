@@ -1,0 +1,218 @@
+$ C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe src/evaluar_rag.py
+# 2026-11-03 01:04
+
+EVALUACIÓN AUTOMÁTICA DE ADUANARAG
+======================================================================
+Esta prueba puede tardar algunos minutos.
+
+Procesando pregunta 1 de 10...
+
+======================================================================
+PRUEBA 1 | INTERNA | APROBADA
+======================================================================
+Pregunta: ¿Qué documentos iniciales deben revisarse antes de preparar una operación?
+
+Respuesta:
+Según el procedimiento, antes de preparar una operación, el ejecutivo debe revisar los siguientes documentos iniciales:
+
+- Factura comercial.
+- Documento de transporte.
+- Lista de empaque.
+- Mandato o autorización vigente.
+- Certificado de origen, cuando corresponda.
+- Permisos, vistos buenos o certificados exigidos para mercancías reguladas.
+- Información adicional necesaria para identificar y clasificar las mercancías.
+
+Fuentes recuperadas:
+- procedimiento_recepcion_documentos.md
+- gestion_observaciones_operacion.md
+
+Fuente esperada recuperada: SÍ
+Palabras clave encontradas: 3/3
+
+Procesando pregunta 2 de 10...
+
+======================================================================
+PRUEBA 2 | INTERNA | APROBADA
+======================================================================
+Pregunta: Si existen diferencias en cantidades, valores, descripción o peso, ¿se debe completar la preparación de la operación y qué debe solicitarse?
+
+Respuesta:
+Señalado en el procedimiento de recepción de documentos, si existen diferencias en cantidades, valores, descripción o peso, el ejecutivo no debe completar la preparación de la operación hasta obtener una aclaración o un documento corregido. En este caso, se debe solicitar una aclaración.
+
+Fuentes recuperadas:
+- procedimiento_recepcion_documentos.md
+- gestion_observaciones_operacion.md
+- rol_agente_aduana_chile.md
+
+Fuente esperada recuperada: SÍ
+Palabras clave encontradas: 3/3
+
+Procesando pregunta 3 de 10...
+
+======================================================================
+PRUEBA 3 | INTERNA | APROBADA
+======================================================================
+Pregunta: Cuando una observación se comunica al cliente, ¿qué tres elementos específicos deben indicarse?
+
+Respuesta:
+Según la sección "Comunicación" del contexto, cuando una observación se comunica al cliente, deben indicarse los siguientes tres elementos específicos:
+
+1. El documento afectado.
+2. La inconsistencia detectada.
+3. La acción necesaria para resolverla.
+
+Fuentes recuperadas:
+- gestion_observaciones_operacion.md
+- trazabilidad_seguridad_documental.md
+
+Fuente esperada recuperada: SÍ
+Palabras clave encontradas: 3/3
+
+Procesando pregunta 4 de 10...
+
+======================================================================
+PRUEBA 4 | INTERNA | APROBADA
+======================================================================
+Pregunta: ¿Cuándo puede cerrarse una observación?
+
+Respuesta:
+Según el procedimiento de registro de observaciones, una observación solo puede cerrarse después de:
+
+1. Recibir el antecedente o aclaración solicitada.
+2. Revisar que la respuesta resuelva la inconsistencia.
+3. Actualizar el estado de la observación.
+4. Registrar la fecha de cierre.
+5. Continuar o derivar la operación, según corresponda.
+
+Fuentes recuperadas:
+- gestion_observaciones_operacion.md
+
+Fuente esperada recuperada: SÍ
+Palabras clave encontradas: 3/3
+
+Procesando pregunta 5 de 10...
+
+======================================================================
+PRUEBA 5 | INTERNA | APROBADA
+======================================================================
+Pregunta: ¿Qué acciones tiene prohibidas el asistente AduanaRAG?
+
+Respuesta:
+Según el contexto proporcionado, el asistente AduanaRAG tiene prohibidas las siguientes acciones:
+
+1. Inventar información ausente en las fuentes.
+2. Modificar documentos.
+3. Autorizar operaciones.
+4. Sustituir la revisión de una persona responsable.
+5. Entregar datos confidenciales.
+6. Presentar una respuesta como asesoría legal definitiva.
+
+Fuentes recuperadas:
+- trazabilidad_seguridad_documental.md
+- rol_agente_aduana_chile.md
+
+Fuente esperada recuperada: SÍ
+Palabras clave encontradas: 3/3
+
+Procesando pregunta 6 de 10...
+
+======================================================================
+PRUEBA 6 | EXTERNA | APROBADA
+======================================================================
+Pregunta: ¿Cuál es la función general de un agente de aduana?
+
+Respuesta:
+Según el contexto proporcionado, la función general de un agente de aduana es actuar como gestor en el despacho de mercancías y como intermediario entre importadores, exportadores y el Servicio Nacional de Aduanas.
+
+Fuentes recuperadas:
+- rol_agente_aduana_chile.md
+- procedimiento_recepcion_documentos.md
+
+Fuente esperada recuperada: SÍ
+Palabras clave encontradas: 3/3
+
+Procesando pregunta 7 de 10...
+
+======================================================================
+PRUEBA 7 | EXTERNA | REVISAR
+======================================================================
+Pregunta: ¿Qué diferencia existe entre una agencia de aduanas y el Servicio Nacional de Aduanas?
+
+Respuesta:
+Señalado en el contexto que la agencia de aduanas y el Servicio Nacional de Aduanas no son la misma organización.
+
+Fuentes recuperadas:
+- rol_agente_aduana_chile.md
+- trazabilidad_seguridad_documental.md
+
+Fuente esperada recuperada: SÍ
+Palabras clave encontradas: 0/3
+
+Procesando pregunta 8 de 10...
+
+======================================================================
+PRUEBA 8 | EXTERNA | APROBADA
+======================================================================
+Pregunta: ¿Qué antecedentes generales pueden ser necesarios para una importación en Chile?
+
+Respuesta:
+Señalado en la sección "Documentos generales" del contexto, los antecedentes generales que pueden ser necesarios para una importación en Chile son:
+
+- Factura comercial.
+- Documento de transporte.
+- Lista de empaque.
+- Mandato o autorización vigente.
+- Certificado de origen, cuando corresponda.
+- Permisos, vistos buenos o certificados exigidos para mercancías reguladas.
+- Información adicional necesaria para identificar y clasificar las mercancías.
+
+Fuentes recuperadas:
+- aduanas_chile_requisitos_importacion.md
+- procedimiento_recepcion_documentos.md
+
+Fuente esperada recuperada: SÍ
+Palabras clave encontradas: 3/3
+
+Procesando pregunta 9 de 10...
+
+======================================================================
+PRUEBA 9 | SIN_RESPUESTA | APROBADA
+======================================================================
+Pregunta: ¿Cuál es el horario de atención de la agencia los días sábado?
+
+Respuesta:
+No existe información suficiente en las fuentes disponibles para responder con seguridad.
+
+Fuentes recuperadas:
+- rol_agente_aduana_chile.md
+- trazabilidad_seguridad_documental.md
+
+Control de alucinación: CORRECTO
+
+Procesando pregunta 10 de 10...
+
+======================================================================
+PRUEBA 10 | SIN_RESPUESTA | APROBADA
+======================================================================
+Pregunta: ¿Cuál es el número telefónico personal del gerente de la agencia?
+
+Respuesta:
+No existe información suficiente en las fuentes disponibles para responder con seguridad.
+
+Fuentes recuperadas:
+- rol_agente_aduana_chile.md
+- gestion_observaciones_operacion.md
+
+Control de alucinación: CORRECTO
+
+======================================================================
+RESUMEN DE LA EVALUACIÓN
+======================================================================
+Pruebas ejecutadas: 10
+Pruebas aprobadas: 9
+Pruebas para revisar: 1
+Resultado general: 90.0%
+Recuperación de fuente esperada: 100.0%
+Control de alucinaciones: 100.0%
+Resultados guardados en: C:\Users\macar\proyectos\aduanarag\evidencias\resultados_evaluacion.json

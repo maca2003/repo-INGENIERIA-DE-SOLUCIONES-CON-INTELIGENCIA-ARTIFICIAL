@@ -1,0 +1,32 @@
+{
+  "OP1001": {
+    "estado": "Derivada a revisión",
+    "estado_anterior": "Documentación completa",
+    "motivo": "Antecedentes validados inicialmente; solo observaciones informativas o ninguna",
+    "actualizado": "2026-11-03T01:03:24"
+  },
+  "OP1002": {
+    "estado": "Pendiente de documentación",
+    "estado_anterior": "Pendiente de documentación",
+    "motivo": "Faltan uno o más antecedentes obligatorios",
+    "actualizado": "2026-11-03T01:03:48"
+  },
+  "OP1003": {
+    "estado": "Derivada a revisión",
+    "estado_anterior": "Documentación completa",
+    "motivo": "Antecedentes validados inicialmente; solo observaciones informativas o ninguna",
+    "actualizado": "2026-11-03T01:03:46"
+  },
+  "OP1004": {
+    "estado": "Con observaciones",
+    "estado_anterior": null,
+    "motivo": "Existen inconsistencias que deben corregirse o revisarse",
+    "actualizado": "2026-11-03T01:03:32"
+  },
+  "OP1005": {
+    "estado": "Con observaciones",
+    "estado_anterior": null,
+    "motivo": "Existen inconsistencias que deben corregirse o revisarse",
+    "actualizado": "2026-11-03T01:03:43"
+  }
+}

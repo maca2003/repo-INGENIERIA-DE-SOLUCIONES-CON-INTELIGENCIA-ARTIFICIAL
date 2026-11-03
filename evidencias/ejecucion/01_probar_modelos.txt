@@ -1,0 +1,10 @@
+$ C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe src/probar_modelos.py
+# 2026-11-03 01:02
+
+Proveedor: ollama · llama3.2:3b · qwen3-embedding:0.6b
+Probando modelo de lenguaje...
+CONEXION LLM CORRECTA
+
+Probando modelo de embeddings...
+EMBEDDING CORRECTO - Dimensiones: 1024
+Primeros cinco valores: [-0.012503553, -0.032151792, -0.011848554, -0.06314403, 0.010900005]

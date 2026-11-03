@@ -28,7 +28,7 @@
     "id": 2,
     "categoria": "interna",
     "pregunta": "Si existen diferencias en cantidades, valores, descripción o peso, ¿se debe completar la preparación de la operación y qué debe solicitarse?",
-    "respuesta": "Señalado en el procedimiento de recepción de documentos, si existen diferencias en cantidades, valores, descripción o peso, el ejecutivo no debe completar la preparación de la operación hasta obtener una aclaración o un documento corregido.",
+    "respuesta": "Señalado en el procedimiento de recepción de documentos, si existen diferencias en cantidades, valores, descripción o peso, el ejecutivo no debe completar la preparación de la operación hasta obtener una aclaración o un documento corregido. En este caso, se debe solicitar una aclaración.",
     "fuente_esperada": "procedimiento_recepcion_documentos.md",
     "fuentes_recuperadas": [
       "procedimiento_recepcion_documentos.md",
@@ -153,7 +153,7 @@
     "id": 7,
     "categoria": "externa",
     "pregunta": "¿Qué diferencia existe entre una agencia de aduanas y el Servicio Nacional de Aduanas?",
-    "respuesta": "Sección: Definición\n\nEl Servicio Nacional de Aduanas es el organismo público encargado de fiscalizar y controlar las operaciones aduaneras.\n\nLa agencia de aduanas es una entidad privada que presta servicios a sus clientes para gestionar operaciones de comercio exterior.",
+    "respuesta": "Señalado en el contexto que la agencia de aduanas y el Servicio Nacional de Aduanas no son la misma organización.",
     "fuente_esperada": "rol_agente_aduana_chile.md",
     "fuentes_recuperadas": [
       "rol_agente_aduana_chile.md",
@@ -164,21 +164,17 @@
       "organismo público",
       "fiscalizar"
     ],
-    "palabras_encontradas": [
-      "servicios",
-      "organismo público",
-      "fiscalizar"
-    ],
-    "cobertura_palabras": 1.0,
+    "palabras_encontradas": [],
+    "cobertura_palabras": 0.0,
     "fuente_correcta": true,
     "rechazo_correcto": null,
-    "resultado_correcto": true
+    "resultado_correcto": false
   },
   {
     "id": 8,
     "categoria": "externa",
     "pregunta": "¿Qué antecedentes generales pueden ser necesarios para una importación en Chile?",
-    "respuesta": "Señalado en la sección \"Documentos generales\" del contexto, los antecedentes generales que pueden ser necesarios para una importación en Chile son:\n\n- Documento de transporte correspondiente.\n- Factura comercial.\n- Declaración jurada del importador sobre el precio de las mercancías.\n- Mandato correspondiente para la tramitación.",
+    "respuesta": "Señalado en la sección \"Documentos generales\" del contexto, los antecedentes generales que pueden ser necesarios para una importación en Chile son:\n\n- Factura comercial.\n- Documento de transporte.\n- Lista de empaque.\n- Mandato o autorización vigente.\n- Certificado de origen, cuando corresponda.\n- Permisos, vistos buenos o certificados exigidos para mercancías reguladas.\n- Información adicional necesaria para identificar y clasificar las mercancías.",
     "fuente_esperada": "aduanas_chile_requisitos_importacion.md",
     "fuentes_recuperadas": [
       "aduanas_chile_requisitos_importacion.md",
