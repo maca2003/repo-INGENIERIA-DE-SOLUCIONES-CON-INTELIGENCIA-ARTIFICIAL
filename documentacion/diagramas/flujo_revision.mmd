@@ -1,0 +1,26 @@
+flowchart TD
+    A(["Solicitud: 'Revisa la OP1004'"]) --> B["Recuperar contexto<br/>expediente + recuerdos del cliente"]
+    B --> C{"¿Mercancía regulada?"}
+    C -->|Sí| C1["verificar_permisos · prioridad 0"]
+    C -->|No catalogada| C2["evaluar_requisitos_especiales<br/>RAG · prioridad 1"]
+    C -->|No| C3["Omitir permisos"]
+    B --> D{"¿Antecedente de riesgo<br/>en memoria?"}
+    D -->|Sí| D1["validar_concordancia REFORZADA · prioridad 1"]
+    D -->|No| D2["validar_concordancia · prioridad 2"]
+    C1 & C2 & C3 & D1 & D2 --> E["Plan priorizado<br/>+ verificar_documentos (1) + nomenclatura (4) + estado (9)"]
+    E --> F["Ejecutar tarea de menor prioridad"]
+    F --> G{"Resultado"}
+    G -->|Hallazgo crítico| H["Registrar (0) + escalar (0)<br/>suspender comunicación"]
+    G -->|Hallazgo corregible| I["Fundamentar (3) + registrar (5)<br/>+ redactar comunicación (6) + aprobación (7)"]
+    G -->|RAG sin evidencia| J["Escalar: no se infieren requisitos"]
+    G -->|Falla de herramienta| K{"¿Reintentos<br/>disponibles?"}
+    K -->|Sí| F
+    K -->|No| J
+    G -->|Sin hallazgos| L["Continuar"]
+    H & I & J & L --> M{"¿Quedan tareas?"}
+    M -->|Sí| N{"¿Es aprobación?"}
+    N -->|Sí| O["interrupt(): pausa y espera al ejecutivo<br/>estado guardado en SQLite"]
+    O --> M
+    N -->|No| F
+    M -->|No| P["Estado final INT-001<br/>Pendiente · Con observaciones · Derivada"]
+    P --> Q["Informe de revisión + episodio en memoria de largo plazo"]

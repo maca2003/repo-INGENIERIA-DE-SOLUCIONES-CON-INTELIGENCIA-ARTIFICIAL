@@ -1,0 +1,26 @@
+[
+  {
+    "texto": "Preferencia de Comercial Pacífico Ltda: las comunicaciones de observaciones deben dirigirse a Paula Rojas, encargada de comercio exterior, e indicar un plazo de respuesta de 48 horas.",
+    "tipo": "preferencia",
+    "cliente": "Comercial Pacífico Ltda",
+    "operacion_id": "",
+    "clave": "contacto_comunicaciones",
+    "valor": "Paula Rojas (encargada de comercio exterior); plazo de respuesta 48 horas"
+  },
+  {
+    "texto": "Antecedente de Distribuidora Sur SpA: en la operación OP0950 se detectó una identificación incorrecta del importador en el documento de transporte, clasificada como observación crítica y escalada al responsable de revisión.",
+    "tipo": "antecedente",
+    "cliente": "Distribuidora Sur SpA",
+    "operacion_id": "OP0950",
+    "clave": "importador_inconsistente",
+    "valor": "critica"
+  },
+  {
+    "texto": "Antecedente de Importadora Andes SpA: sus últimas operaciones fueron derivadas a revisión sin observaciones.",
+    "tipo": "antecedente",
+    "cliente": "Importadora Andes SpA",
+    "operacion_id": "OP0921",
+    "clave": "sin_observaciones",
+    "valor": "ninguna"
+  }
+]

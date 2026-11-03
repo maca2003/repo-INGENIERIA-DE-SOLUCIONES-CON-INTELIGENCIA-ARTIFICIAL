@@ -1,0 +1,64 @@
+{
+  "operacion_id": "OP1003",
+  "cliente": "Ferretería Central Ltda",
+  "rut_cliente": "78.555.666-7",
+  "tipo_operacion": "importacion",
+  "fecha_recepcion": "2026-10-29",
+  "fecha_arribo_estimada": "2026-11-12",
+  "urgente": false,
+  "mercancia": {
+    "descripcion": "Herramientas eléctricas manuales",
+    "categoria": "herramientas",
+    "preferencia_arancelaria": false
+  },
+  "documentos": {
+    "factura_comercial": {
+      "archivo": "FACTURA_OP1003_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "FC-7781",
+      "fecha": "2026-10-08",
+      "importador_rut": "78.555.666-7",
+      "referencia_operacion": "OP1003",
+      "descripcion": "Herramientas eléctricas manuales",
+      "bultos": 120,
+      "peso_kg": 2400.0,
+      "valor_usd": 18500.0
+    },
+    "documento_transporte": {
+      "archivo": "TRANSPORTE_OP1003_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "BL-77410",
+      "fecha": "2026-10-11",
+      "importador_rut": "78.555.666-7",
+      "referencia_operacion": "OP1003",
+      "descripcion": "Herramientas eléctricas manuales",
+      "bultos": 120,
+      "peso_kg": 2400.0
+    },
+    "lista_empaque": {
+      "archivo": "lista empaque final.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "PL-7781",
+      "fecha": "2026-10-08",
+      "importador_rut": "78.555.666-7",
+      "referencia_operacion": "OP1003",
+      "descripcion": "Herramientas eléctricas manuales",
+      "bultos": 112,
+      "peso_kg": 2310.0
+    },
+    "mandato": {
+      "archivo": "MANDATO_OP1003_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "M-2026-050",
+      "fecha": "2026-03-10",
+      "vigente": true,
+      "importador_rut": "78.555.666-7",
+      "referencia_operacion": "OP1003"
+    }
+  },
+  "permisos": []
+}

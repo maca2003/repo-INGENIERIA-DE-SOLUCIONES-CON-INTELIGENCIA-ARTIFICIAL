@@ -1,0 +1,17 @@
+{
+  "operacion_id": "OP1003",
+  "documento": "lista_empaque",
+  "motivo": "Lista de empaque corregida enviada por el cliente",
+  "contenido": {
+    "archivo": "LISTAEMPAQUE_OP1003_V2.pdf",
+    "legible": true,
+    "version": 2,
+    "numero": "PL-7781",
+    "fecha": "2026-10-08",
+    "importador_rut": "78.555.666-7",
+    "referencia_operacion": "OP1003",
+    "descripcion": "Herramientas eléctricas manuales",
+    "bultos": 120,
+    "peso_kg": 2400.0
+  }
+}

@@ -1,272 +1,293 @@
-# AduanaRAG
+# AduanaAgent · Agente funcional de revisión documental aduanera
 
-AduanaRAG es un prototipo académico de asistente inteligente para realizar consultas sobre procedimientos y documentación aduanera.
+Proyecto de la asignatura **Ingeniería de Soluciones con Inteligencia Artificial (ISY0101) – Duoc UC**.
 
-El sistema utiliza generación aumentada por recuperación (RAG) para buscar información en documentos internos simulados y fuentes públicas oficiales. Las respuestas se generan mediante modelos locales ejecutados con Ollama, sin utilizar una API externa de pago.
+| Etapa | Entregable | Contenido |
+|---|---|---|
+| Evaluación Parcial 1 | **AduanaRAG** | Asistente RAG local para consultar procedimientos aduaneros (`src/consultar_rag.py`, `src/app.py`). |
+| Evaluación Parcial 2 | **AduanaAgent** | Agente funcional sobre el RAG. Integra herramientas de consulta, razonamiento y escritura, memoria de corto y largo plazo, y planificación adaptativa (`src/agente/`). |
 
-## Objetivo
+> **Advertencia.** Proyecto exclusivamente académico. La organización (*Agencia de Aduanas del Norte*), los clientes, las operaciones y los documentos internos son **simulados**. El agente no autoriza operaciones, no presenta declaraciones y no reemplaza la revisión de un agente de aduana ni la normativa vigente.
 
-Facilitar la consulta de procedimientos y antecedentes aduaneros mediante un asistente documental capaz de:
+---
 
-- Recuperar fragmentos relacionados con una pregunta.
-- Generar respuestas basadas en documentos disponibles.
-- Identificar las fuentes utilizadas.
-- Diferenciar documentos internos simulados y fuentes externas oficiales.
-- Evitar respuestas cuando no existe información suficiente.
-- Ejecutarse localmente sin enviar documentos a servicios externos.
+## 1. Requerimiento organizacional
 
-## Advertencia
+En una agencia de aduanas, cada operación de importación pasa por una **revisión documental** antes de preparar la destinación. El ejecutivo debe:
 
-Este proyecto fue desarrollado con fines exclusivamente académicos.
+1. Comprobar que llegaron los antecedentes obligatorios (INT-001).
+2. Verificar la concordancia entre la factura, el documento de transporte y la lista de empaque.
+3. Detectar las mercancías sujetas a control previo y sus permisos (EXT-001).
+4. Clasificar cada observación como informativa, corregible o crítica (INT-002).
+5. Registrar, comunicar al cliente o escalar al responsable, dejando trazabilidad (INT-003).
 
-Las respuestas son informativas y no reemplazan:
+Hoy este flujo es manual, depende de la experiencia del ejecutivo y se interrumpe cuando cambian las condiciones (por ejemplo, llega un documento corregido o el cliente tiene antecedentes). **AduanaAgent automatiza el flujo completo**, con supervisión humana obligatoria antes de cualquier comunicación externa.
 
-- La normativa aduanera vigente.
-- La revisión de un agente de aduana.
-- La evaluación de un profesional responsable.
-- Las instrucciones del Servicio Nacional de Aduanas.
+## 2. Qué hace el agente
 
-Los documentos internos incluidos son simulados y no contienen información confidencial de clientes ni de operaciones reales.
+| Capacidad | Ejemplo de instrucción | Comportamiento |
+|---|---|---|
+| Revisión autónoma | `Revisa la OP1004` | Arma un plan priorizado, ejecuta las herramientas, replanifica según los hallazgos, registra, escala y fija el estado. |
+| Condición cambiante | `Llegó la lista de empaque corregida de la OP1003, reprocésala` | Incorpora la V2 sin sobrescribir la V1, verifica las observaciones abiertas, las cierra y cambia el estado. |
+| Priorización | `Prioriza la cola de revisión` | Ordena las operaciones por urgencia, cercanía del arribo y riesgo de la mercancía. |
+| Consulta (ReAct) | `¿Qué debe hacer el ejecutivo si hay diferencias de peso?` | El LLM elige la herramienta y responde con fuente, o se abstiene si no hay evidencia. |
+| Memoria | `Recuerda que Ferretería Central Ltda prefiere que escribamos a Jorge Díaz` | Guarda la preferencia y la usa en revisiones futuras, aunque sea otra sesión. |
 
-## Tecnologías utilizadas
+## 3. Arquitectura y orquestación
 
-- Python 3.12
-- Streamlit
-- LangChain
-- ChromaDB
-- Ollama
-- Llama 3.2 3B
-- Qwen3 Embedding 0.6B
-- Git y GitHub
+![Arquitectura de componentes](documentacion/diagramas/arquitectura_componentes.png)
 
-## Modelos locales
+El agente se construye con **LangGraph** (grafo de estados con checkpointer) y **LangChain** (herramientas `@tool`, prompts y agente ReAct `create_agent`). Usa los mismos modelos locales de la EP1 a través de **Ollama**.
 
-El proyecto utiliza los siguientes modelos mediante Ollama:
+### 3.1 Grafo implementado
 
-```text
-llama3.2:3b
-qwen3-embedding:0.6b
+El diagrama siguiente se **genera desde el grafo compilado** (`python src/exportar_diagrama.py`), por lo que refleja exactamente el código:
+
+```mermaid
+graph TD;
+	__start__([__start__]) --> gestionar_memoria_corta
+	gestionar_memoria_corta --> recuperar_contexto
+	recuperar_contexto -. revision .-> planificar
+	recuperar_contexto -. conversacion .-> agente_conversacional
+	recuperar_contexto -. cola .-> priorizar_cola
+	planificar -.-> ejecutar_tarea
+	planificar -.-> aprobacion_humana
+	planificar -.-> sintetizar
+	ejecutar_tarea --> evaluar
+	evaluar -.-> ejecutar_tarea
+	evaluar -.-> aprobacion_humana
+	evaluar -.-> sintetizar
+	aprobacion_humana -.-> ejecutar_tarea
+	aprobacion_humana -.-> sintetizar
+	sintetizar --> consolidar_memoria
+	agente_conversacional --> consolidar_memoria
+	priorizar_cola --> consolidar_memoria
+	consolidar_memoria --> __end__([__end__])
 ```
 
-El primer modelo genera las respuestas y el segundo transforma los fragmentos documentales en vectores para realizar búsquedas semánticas.
+| Nodo | Responsabilidad |
+|---|---|
+| `gestionar_memoria_corta` | Compacta el hilo cuando supera 12 mensajes: resume los antiguos con el LLM y los elimina (`RemoveMessage`). |
+| `recuperar_contexto` | Detecta la intención y la operación, carga el expediente y recupera recuerdos semánticos del cliente. |
+| `planificar` | Crea el plan inicial priorizado según la mercancía, los antecedentes de memoria, las observaciones abiertas y las correcciones. |
+| `ejecutar_tarea` | Ejecuta la tarea pendiente de menor prioridad invocando su herramienta. Reintenta ante fallas. |
+| `evaluar` | Analiza el resultado y **replanifica**: agrega, eleva o suspende tareas, y registra cada decisión. |
+| `aprobacion_humana` | `interrupt()` de LangGraph: pausa el flujo hasta que el ejecutivo aprueba o rechaza el borrador. |
+| `sintetizar` | Genera el informe de revisión (`salidas/OPxxxx/informe_revision.md`) y un resumen con el LLM. |
+| `agente_conversacional` | Agente ReAct (`create_agent`): el LLM decide qué herramienta usar para responder. |
+| `priorizar_cola` | Secuencia la jornada de revisión. |
+| `consolidar_memoria` | Guarda el episodio de la revisión en la memoria de largo plazo. |
 
-## Arquitectura general
+### 3.2 Herramientas
 
-El flujo principal del sistema es:
+| Tipo | Herramienta | Función |
+|---|---|---|
+| Consulta | `consultar_procedimientos` | RAG sobre la base de la EP1 con umbral de distancia y abstención controlada. |
+| Consulta | `obtener_expediente`, `listar_observaciones`, `buscar_memoria` | Expediente y estado, registro de observaciones y recuerdos de largo plazo. |
+| Razonamiento | `verificar_documentos_requeridos` | Documentos obligatorios (INT-001), certificado de origen si hay preferencia, legibilidad y datos mínimos. |
+| Razonamiento | `verificar_permisos` | Control previo por categoría de mercancía y organismo competente (EXT-001). |
+| Razonamiento | `validar_concordancia` | Bultos, peso, descripción, valor e importador. En modo *reforzado* también valida el RUT del cliente y la referencia de la operación. |
+| Razonamiento | `validar_nomenclatura`, `clasificar_observacion` | Convención de nombres (INT-003) y nivel de la observación (INT-002). |
+| Razonamiento | `evaluar_requisitos_especiales`, `fundamentar_hallazgos` | Consultan el RAG para mercancías no catalogadas y para respaldar cada hallazgo con su fuente. |
+| Razonamiento | `verificar_resolucion_observaciones`, `priorizar_operaciones` | Cierre de observaciones resueltas y orden de la cola. |
+| Escritura | `registrar_observacion`, `cerrar_observacion` | Registro con los campos de INT-002, sin duplicados. |
+| Escritura | `redactar_comunicacion_cliente` | Borrador con documento afectado, inconsistencia y acción necesaria. |
+| Escritura | `actualizar_estado_operacion`, `escalar_a_responsable` | Estados de INT-001 y ticket de escalamiento. |
+| Escritura | `recibir_documento_corregido`, `guardar_memoria` | Versionado sin sobrescritura y nuevas preferencias. |
 
-1. Se cargan los documentos internos y externos.
-2. Los documentos se dividen en fragmentos.
-3. Los fragmentos se convierten en embeddings.
-4. Los embeddings se almacenan en ChromaDB.
-5. El usuario escribe una pregunta.
-6. El sistema recupera los cuatro fragmentos más relacionados.
-7. El modelo local recibe la pregunta y el contexto recuperado.
-8. Se genera una respuesta limitada a las fuentes disponibles.
-9. La interfaz muestra la respuesta y las fuentes recuperadas.
+Toda escritura deja un registro en `salidas/trazabilidad.jsonl` con los campos de INT-003: usuario, fecha y hora, operación, acción, documento, resultado y observaciones.
 
-## Estructura del proyecto
+## 4. Memoria y recuperación de contexto
 
-```text
-aduanarag/
-├── data/
-│   ├── externos/
-│   └── internos/
-├── documentacion/
-├── evidencias/
-├── src/
-│   ├── app.py
-│   ├── cargar_documentos.py
-│   ├── consultar_rag.py
-│   ├── crear_base_vectorial.py
-│   ├── evaluar_rag.py
-│   ├── fragmentar_documentos.py
-│   └── probar_modelos.py
-├── tests/
-│   └── preguntas_evaluacion.json
-├── .gitignore
-├── README.md
-└── requirements.txt
-```
+![Memoria](documentacion/diagramas/memoria.png)
 
-La carpeta `chroma_db` se genera localmente y no se publica en GitHub.
+| Tipo | Implementación | Para qué sirve |
+|---|---|---|
+| **Corto plazo** | Estado del grafo (`messages`, `operacion_activa`, `plan`, `hallazgos`, `decisiones`) persistido con **`SqliteSaver`** por `thread_id`. | Permite continuar el diálogo (por ejemplo, *"¿qué observaciones quedaron?"* se refiere a la última operación revisada) y **retomar un flujo pausado** incluso después de cerrar el programa. |
+| **Compactación** | Sobre 12 mensajes se resumen los antiguos con el LLM y se eliminan del estado. | Respeta la ventana de contexto de un modelo de 3B sin perder lo decidido. |
+| **Largo plazo** | Colección ChromaDB `memoria_agente` (en `salidas/memoria_largo_plazo/`), con embeddings `qwen3-embedding:0.6b` y metadatos (`tipo`, `cliente`, `clave`, `valor`). | Guarda preferencias, antecedentes y episodios entre sesiones. |
+| **Recuperación semántica** | `similarity_search_with_score` filtrado por cliente y con umbral de distancia. | Recupera solo los recuerdos pertinentes, que modifican el plan (validación reforzada) y la redacción (destinatario y plazo). |
 
-## Requisitos previos
+## 5. Planificación y toma de decisiones
 
-Antes de ejecutar el proyecto se necesita:
+El plan es una lista de tareas con prioridad (0 = primero). Siempre se ejecuta la tarea pendiente de menor `(prioridad, secuencia)`.
 
-- Windows 10 u 11.
-- Python 3.12.
-- Git.
-- Ollama.
-- Visual Studio Code, recomendado.
-- Al menos 8 GB de memoria RAM.
+| Prioridad | Tareas |
+|---:|---|
+| 0 | Incorporar corrección · verificar permisos (mercancía regulada) · registrar y escalar críticas (dinámico) |
+| 1 | Verificar resolución de observaciones previas · documentos requeridos · requisitos de mercancía no catalogada · concordancia **reforzada** por antecedente |
+| 2 | Concordancia normal |
+| 3 | Fundamentar hallazgos (RAG) |
+| 4 | Nomenclatura |
+| 5–7 | Registrar · redactar comunicación · aprobación humana |
+| 9 | Actualizar estado (siempre al final) |
 
-## Instalación
+**Reglas de replanificación** (`src/agente/planificador.py`):
 
-### 1. Clonar el repositorio
+- Hallazgo **crítico**: registrar y escalar con prioridad 0 y suspender la comunicación al cliente.
+- Hallazgo **corregible**: fundamentar, registrar, redactar la comunicación y exigir aprobación humana.
+- **RAG sin evidencia** o hallazgo sin respaldo: escalar en lugar de suponer.
+- **Falla de herramienta** (por ejemplo, Ollama caído): reintentar una vez; si persiste, marcar como fallida y escalar.
+- **Observaciones abiertas** y una corrección recibida: verificar la resolución y cerrar las observaciones.
+- **Antecedente de riesgo en memoria**: validación reforzada y adelantada.
+- **Preferencia del cliente en memoria**: cambia el destinatario y el plazo del borrador.
+
+![Flujo de revisión](documentacion/diagramas/flujo_revision.png)
+
+### 5.1 Ejemplo de flujo de trabajo (OP1003)
+
+![Secuencia OP1003](documentacion/diagramas/secuencia_op1003.png)
+
+### 5.2 Escenarios que demuestran la adaptación
+
+`python src/demo_escenarios.py` ejecuta 10 escenarios y deja la evidencia en `evidencias/agente/<modo>/`.
+
+| # | Escenario | Condición | Comportamiento esperado |
+|---:|---|---|---|
+| 1 | OP1001 | Expediente correcto | Derivada a revisión sin observaciones |
+| 2 | OP1002 | Faltan la lista de empaque y el certificado de origen; cliente con preferencia | Pendiente de documentación; borrador a Paula Rojas con plazo de 48 h; aprobación humana |
+| 3 | OP1003 | Diferencia de bultos y peso | Con observaciones; comunicación aprobada |
+| 4 | OP1004 | Alimentos sin permiso SAG/sanitario, RUT distinto, antecedente del cliente | Permisos primero; validación reforzada; escalamiento; **sin** comunicación |
+| 5 | OP1004 sin memoria | Mismo expediente, sin antecedentes | Plan distinto: validación normal con prioridad 2 |
+| 6 | OP1005 | Mercancía no catalogada + factura ilegible | Consulta el RAG; confirma o escala según la evidencia |
+| 7 | OP1003 V2 | Llega la lista de empaque corregida | Nueva versión, cierre de 3 observaciones, Derivada a revisión |
+| 8 | Continuidad | Flujo pausado; el programa se reinicia | El nuevo proceso retoma en `aprobacion_humana` |
+| 9 | Cola | Varias operaciones pendientes | Orden con puntaje y justificación |
+| 10 | Conversación | Preguntas y una preferencia nueva | El LLM elige la herramienta; la preferencia se recupera desde otro hilo |
+
+## 6. Instalación (Windows)
+
+Requisitos: Windows 10/11, Python 3.12, Git, [Ollama](https://ollama.com) y al menos 8 GB de RAM.
 
 ```cmd
 git clone https://github.com/maca2003/repo-INGENIERIA-DE-SOLUCIONES-CON-INTELIGENCIA-ARTIFICIAL.git
 cd repo-INGENIERIA-DE-SOLUCIONES-CON-INTELIGENCIA-ARTIFICIAL
-```
-
-### 2. Crear el entorno virtual
-
-```cmd
 py -3.12 -m venv .venv
-```
-
-### 3. Activar el entorno virtual
-
-```cmd
 .venv\Scripts\activate
-```
-
-### 4. Instalar las dependencias
-
-```cmd
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-```
 
-### 5. Descargar los modelos de Ollama
-
-```cmd
 ollama pull llama3.2:3b
 ollama pull qwen3-embedding:0.6b
-```
-
-### 6. Comprobar los modelos
-
-```cmd
-ollama list
 python src\probar_modelos.py
 ```
 
-## Preparar la base vectorial
-
-La base de datos vectorial no se descarga desde GitHub. Cada integrante debe generarla localmente.
-
-### Comprobar la carga documental
-
-```cmd
-python src\cargar_documentos.py
-```
-
-### Comprobar la fragmentación
-
-```cmd
-python src\fragmentar_documentos.py
-```
-
-### Crear ChromaDB
+Crear la base de conocimiento (EP1). Solo se hace una vez y queda en `chroma_db/`:
 
 ```cmd
 python src\crear_base_vectorial.py
 ```
 
-Este comando genera localmente la carpeta:
-
-```text
-chroma_db/
-```
-
-## Ejecutar consultas desde la terminal
+Opcional: copiar `.env.example` como `.env` para cambiar el modelo, los umbrales o la fecha de referencia. Para calibrar el umbral del RAG con las distancias reales:
 
 ```cmd
-python src\consultar_rag.py
+python src\calibrar_umbral.py
 ```
 
-Para cerrar el asistente interactivo:
+## 7. Ejecución
+
+| Acción | Comando |
+|---|---|
+| Interfaz web del agente | `streamlit run src\app_agente.py` |
+| Agente en terminal | `python src\agente_cli.py --hilo turno_manana` |
+| Escenarios de demostración (evidencia) | `python src\demo_escenarios.py` |
+| Pruebas automatizadas | `python -m pytest -v` |
+| Pruebas con los modelos reales | `python -m pytest -m ollama -v` |
+| Exportar el diagrama del grafo | `python src\exportar_diagrama.py` |
+| RAG de la EP1 | `streamlit run src\app.py` o `python src\consultar_rag.py` |
+
+Todos los scripts aceptan `--simulado` (por ejemplo, `python src\agente_cli.py --simulado`), que ejecuta el agente **sin Ollama** con un modelo y embeddings deterministas. Este modo se usa en las pruebas y en GitHub Actions. Las evidencias válidas del comportamiento con LLM son las del modo `ollama`.
+
+Comandos dentro del CLI: `/plan`, `/decisiones`, `/memoria`, `/hilo NOMBRE`, `/salir`. Si un hilo quedó pausado esperando aprobación, al volver a abrirlo con el mismo `--hilo` el agente retoma el flujo.
+
+## 8. Pruebas y evidencias
+
+- `tests/test_herramientas.py`: cada herramienta cumple su función (IE1).
+- `tests/test_memoria.py`: memoria corta, compactación, persistencia y reanudación; memoria larga y recuperación semántica (IE3, IE4).
+- `tests/test_planificacion.py`: prioridades, replanificación, fallas, correcciones y rechazo humano (IE5, IE7).
+- `tests/test_integracion_ollama.py`: pruebas con los modelos reales (se omiten si Ollama no está activo).
+- `.github/workflows/pruebas.yml`: ejecuta las pruebas y los escenarios en cada *push*.
+- `evidencias/agente/`: informes por escenario, registro de observaciones, trazabilidad, estados y memoria exportada.
+- `evidencias/` (raíz): evidencias de la EP1 (evaluación RAG: 10/10).
+
+## 9. Estructura del proyecto
 
 ```text
-/salir
+├── data/
+│   ├── internos/ externos/        # Base de conocimiento (EP1)
+│   ├── operaciones/               # Expedientes simulados OP1001–OP1005 (+ correcciones/)
+│   └── memoria_inicial/           # Semillas de memoria de largo plazo
+├── documentacion/diagramas/       # Diagramas Mermaid (.mmd) y PNG
+├── evidencias/agente/             # Evidencias EP2 por modo de ejecución
+├── src/
+│   ├── agente/
+│   │   ├── config.py              # Parámetros (.env)
+│   │   ├── reglas.py              # Reglas INT-001/002/003 y EXT-001
+│   │   ├── herramientas/          # consulta.py · razonamiento.py · escritura.py
+│   │   ├── memoria.py             # Checkpointer SQLite y memoria Chroma
+│   │   ├── planificador.py        # Plan priorizado y replanificación
+│   │   ├── grafo.py               # Orquestación LangGraph
+│   │   ├── servicios.py           # Inyección Ollama / simulado
+│   │   ├── simulacion.py          # Componentes deterministas para pruebas
+│   │   └── almacen.py             # Expedientes, registros y trazabilidad
+│   ├── agente_cli.py · app_agente.py · demo_escenarios.py
+│   ├── calibrar_umbral.py · exportar_diagrama.py
+│   └── (EP1) cargar_documentos.py · fragmentar_documentos.py · crear_base_vectorial.py
+│              consultar_rag.py · evaluar_rag.py · app.py · probar_modelos.py
+├── tests/
+├── .env.example · pytest.ini · requirements.txt
 ```
 
-## Ejecutar la interfaz web
+`chroma_db/`, `salidas/` y `.venv/` se generan localmente y no se publican.
 
-```cmd
-streamlit run src\app.py
-```
+## 10. Decisiones de diseño
 
-La aplicación estará disponible normalmente en:
+| Decisión | Alternativas evaluadas | Justificación |
+|---|---|---|
+| **LangGraph** como orquestador | AgentExecutor de LangChain, AutoGen, Haystack Agents | Grafo explícito y auditable; checkpointer nativo para la memoria corta; `interrupt()` para la supervisión humana. Continúa el stack LangChain de la EP1. |
+| Planificador **híbrido** (reglas + LLM) | Plan generado íntegramente por el LLM | Un modelo de 3B no genera planes JSON confiables. Las reglas trazables a INT-001/002/003 hacen las decisiones auditables. El LLM se usa donde aporta: RAG, elección de herramientas en la conversación y síntesis. |
+| **ReAct** solo para la conversación, con 6 herramientas | Exponer las 20 herramientas | Menos herramientas mejora la precisión de la elección en modelos pequeños, y las de escritura quedan bajo el flujo controlado. |
+| Memoria larga en **ChromaDB** | LangGraph Store, archivo JSON | Reutiliza el motor y los embeddings de la EP1, permite búsqueda semántica con filtros por cliente y persiste localmente. |
+| Memoria corta en **SQLite** | `InMemorySaver` | Sobrevive al cierre del programa: un flujo pausado se retoma después. |
+| **Ollama** local, temperatura 0 | APIs en la nube | Confidencialidad de los documentos (INT-003), costo cero y respuestas deterministas. |
+| Humano en el ciclo | Envío automático | Las comunicaciones externas y las críticas requieren a una persona responsable (INT-002, EXT-002). |
+| Modo simulado inyectable | Pruebas solo con Ollama | Pruebas reproducibles en CI sin GPU; la lógica del agente es la misma. |
 
-```text
-http://localhost:8501
-```
+## 11. Seguridad y limitaciones
 
-Para detener Streamlit se debe presionar `Ctrl + C` en la terminal.
+- No inventa información. Ante falta de evidencia se abstiene o escala.
+- No autoriza operaciones ni envía comunicaciones sin aprobación humana.
+- Opera con expedientes simulados en JSON. Una versión real requiere OCR o extracción desde PDF, control de acceso y respaldo.
+- La calidad de la elección de herramientas depende del modelo local. Con 3B puede fallar en preguntas ambiguas, por eso el flujo crítico es determinista.
+- El umbral de distancia debe recalibrarse si cambian los documentos o el modelo de embeddings.
 
-## Evaluación automática
+## 12. Referencias
 
-El proyecto incluye una batería controlada de diez preguntas:
+Chase, H. (2022). *LangChain* [Software]. GitHub. https://github.com/langchain-ai/langchain
 
-- Cinco preguntas sobre documentos internos simulados.
-- Tres preguntas sobre fuentes externas oficiales.
-- Dos preguntas sin respuesta documental para comprobar el control de alucinaciones.
+Chroma. (s. f.). *Query and get*. https://docs.trychroma.com/docs/querying-collections/query-and-get
 
-Para ejecutar la evaluación:
+LangChain. (s. f.-a). *Agents*. LangChain Docs. https://docs.langchain.com/oss/python/langchain/agents
 
-```cmd
-python src\evaluar_rag.py
-```
+LangChain. (s. f.-b). *Interrupts*. LangGraph Docs. https://docs.langchain.com/oss/python/langgraph/interrupts
 
-En la prueba final se obtuvieron los siguientes resultados:
+LangChain. (s. f.-c). *Memory overview*. LangGraph Docs. https://docs.langchain.com/oss/python/langgraph/memory
 
-| Indicador | Resultado |
-|---|---:|
-| Pruebas ejecutadas | 10 |
-| Pruebas aprobadas | 10 |
-| Resultado general | 100 % |
-| Recuperación de fuente esperada | 100 % |
-| Control de alucinaciones | 100 % |
+LangChain. (s. f.-d). *Persistence*. LangGraph Docs. https://docs.langchain.com/oss/python/langgraph/persistence
 
-Estos resultados corresponden exclusivamente a la batería controlada incluida en el proyecto y no implican precisión universal ante cualquier pregunta.
+Ollama. (s. f.). *Embeddings*. https://docs.ollama.com/capabilities/embeddings
 
-Los resultados detallados se almacenan en:
+Packer, C., Wooders, S., Lin, K., Fang, V., Patil, S. G., Stoica, I., & Gonzalez, J. E. (2023). *MemGPT: Towards LLMs as operating systems*. arXiv. https://doi.org/10.48550/arXiv.2310.08560
 
-```text
-evidencias/resultados_evaluacion.json
-```
+Servicio Nacional de Aduanas. (s. f.). *Portal institucional*. https://www.aduana.cl/
 
-## Fuentes documentales
+Wang, L., Xu, W., Lan, Y., Hu, Z., Lan, Y., Lee, R. K.-W., & Lim, E.-P. (2023). Plan-and-solve prompting: Improving zero-shot chain-of-thought reasoning by large language models. En *Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics* (pp. 2609–2634). https://doi.org/10.18653/v1/2023.acl-long.147
 
-El prototipo utiliza dos tipos de documentos:
+Yao, S., Zhao, J., Yu, D., Du, N., Shafran, I., Narasimhan, K., & Cao, Y. (2023). ReAct: Synergizing reasoning and acting in language models. En *International Conference on Learning Representations (ICLR 2023)*. https://arxiv.org/abs/2210.03629
 
-### Documentos internos simulados
+## 13. Equipo
 
-- Procedimiento de recepción de documentos.
-- Gestión de observaciones de una operación.
-- Trazabilidad y seguridad documental.
+- Roberto González
+- Macarena Muñoz
 
-### Fuentes externas oficiales
-
-Se utilizan síntesis académicas basadas en información pública del Servicio Nacional de Aduanas de Chile sobre:
-
-- Requisitos generales de importación.
-- Rol del agente de aduana.
-
-Cada documento externo conserva la referencia de su página oficial y la fecha de consulta.
-
-## Seguridad y limitaciones
-
-AduanaRAG no debe:
-
-- Inventar información ausente en las fuentes.
-- Modificar documentos.
-- Autorizar operaciones.
-- Sustituir la revisión profesional.
-- Entregar información confidencial.
-- Presentar respuestas como asesoría legal definitiva.
-
-Si las fuentes no permiten contestar una pregunta con seguridad, el sistema informa que no existe información suficiente.
-
-## Trabajo colaborativo
-
-El proyecto utiliza Git y GitHub para:
-
-- Mantener el historial de cambios.
-- Compartir el código entre los integrantes.
-- Separar archivos versionados y archivos locales.
-- Registrar avances mediante commits.
-- Evitar publicar el entorno virtual y la base vectorial local.
+Docente: Cristian Rodrigo Araya Salazar · Duoc UC · 2026

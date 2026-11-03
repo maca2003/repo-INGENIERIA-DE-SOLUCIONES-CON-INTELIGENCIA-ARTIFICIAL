@@ -1,0 +1,19 @@
+flowchart LR
+    subgraph CP["Memoria de corto plazo · por hilo (thread_id)"]
+        M1["messages<br/>historial del hilo"]
+        M2["operacion_activa<br/>plan · hallazgos · decisiones"]
+        M3["resumen_conversacion<br/>(compactación > 12 mensajes)"]
+        CK[("SqliteSaver<br/>salidas/memoria_corto_plazo.sqlite")]
+        M1 & M2 & M3 --> CK
+    end
+    subgraph LP["Memoria de largo plazo · entre sesiones"]
+        S["Semillas<br/>preferencias y antecedentes"]
+        E["Episodios de revisión<br/>(consolidar_memoria)"]
+        P["Preferencias dictadas<br/>(guardar_memoria)"]
+        V[("ChromaDB 'memoria_agente'<br/>embeddings qwen3")]
+        S & E & P --> V
+    end
+    Q["Nueva solicitud"] --> R["recuperar_contexto"]
+    CK -->|retoma estado del hilo| R
+    V -->|búsqueda semántica filtrada por cliente| R
+    R --> X["Planificación adaptada<br/>y redacción personalizada"]

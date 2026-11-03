@@ -1,8 +1,12 @@
 streamlit
-langchain
+pandas
+langchain>=1.0
+langchain-core>=1.0
 langchain-ollama
 langchain-chroma
 langchain-text-splitters
+langgraph>=1.0
+langgraph-checkpoint-sqlite
 chromadb
 pypdf
 python-dotenv

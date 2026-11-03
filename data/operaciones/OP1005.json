@@ -1,0 +1,64 @@
+{
+  "operacion_id": "OP1005",
+  "cliente": "Tecnología Austral SpA",
+  "rut_cliente": "76.999.000-K",
+  "tipo_operacion": "importacion",
+  "fecha_recepcion": "2026-10-31",
+  "fecha_arribo_estimada": "2026-11-18",
+  "urgente": false,
+  "mercancia": {
+    "descripcion": "Drones de uso recreativo con control remoto",
+    "categoria": "no_catalogada",
+    "preferencia_arancelaria": false
+  },
+  "documentos": {
+    "factura_comercial": {
+      "archivo": "FACTURA_OP1005_V1.pdf",
+      "legible": false,
+      "version": 1,
+      "numero": "TA-0412",
+      "fecha": "2026-10-25",
+      "importador_rut": "76.999.000-K",
+      "referencia_operacion": "OP1005",
+      "descripcion": "Drones de uso recreativo",
+      "bultos": 25,
+      "peso_kg": 310.0,
+      "valor_usd": 15600.0
+    },
+    "documento_transporte": {
+      "archivo": "TRANSPORTE_OP1005_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "AWB-551209",
+      "fecha": "2026-10-27",
+      "importador_rut": "76.999.000-K",
+      "referencia_operacion": "OP1005",
+      "descripcion": "Drones de uso recreativo",
+      "bultos": 25,
+      "peso_kg": 310.0
+    },
+    "lista_empaque": {
+      "archivo": "LISTAEMPAQUE_OP1005_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "PL-0412",
+      "fecha": "2026-10-25",
+      "importador_rut": "76.999.000-K",
+      "referencia_operacion": "OP1005",
+      "descripcion": "Drones de uso recreativo",
+      "bultos": 25,
+      "peso_kg": 310.0
+    },
+    "mandato": {
+      "archivo": "MANDATO_OP1005_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "M-2026-070",
+      "fecha": "2026-05-20",
+      "vigente": true,
+      "importador_rut": "76.999.000-K",
+      "referencia_operacion": "OP1005"
+    }
+  },
+  "permisos": []
+}

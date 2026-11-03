@@ -27,3 +27,8 @@ Thumbs.db
 
 # Evidencias temporales
 .streamlit/secrets.toml
+# Salidas generadas por el agente (memoria SQLite, registros, borradores)
+salidas/
+
+# Caché de pruebas
+.pytest_cache/

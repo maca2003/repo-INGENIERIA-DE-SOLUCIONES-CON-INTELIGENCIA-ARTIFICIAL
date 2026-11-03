@@ -1,0 +1,44 @@
+flowchart TB
+    U["👤 Ejecutivo de la agencia · CLI (agente_cli.py) · Streamlit (app_agente.py)"]
+
+    subgraph ORQ["① Orquestación · LangGraph StateGraph (grafo.py)"]
+        direction LR
+        MC["gestionar_memoria_corta"] --> RC{"recuperar_contexto<br/>+ enrutar"}
+        RC -->|revisión| PL["planificar"] --> EJ["ejecutar_tarea"] --> EV["evaluar ·<br/>replanificar"]
+        EV -->|siguiente| EJ
+        EV -->|comunicación| HI["aprobacion_humana<br/>interrupt()"]
+        EV -->|fin| SI["sintetizar"]
+        RC -->|conversación| RA["agente_conversacional<br/>ReAct (create_agent)"]
+        RC -->|cola| PC["priorizar_cola"]
+        SI & RA & PC --> CM["consolidar_memoria"]
+    end
+
+    subgraph HER["② Herramientas LangChain @tool"]
+        direction LR
+        HC["CONSULTA<br/>consultar_procedimientos<br/>obtener_expediente<br/>listar_observaciones<br/>buscar_memoria"]
+        HR["RAZONAMIENTO<br/>verificar_documentos · permisos<br/>validar_concordancia · nomenclatura<br/>clasificar · fundamentar<br/>priorizar_operaciones"]
+        HE["ESCRITURA<br/>registrar / cerrar observación<br/>redactar_comunicacion · escalar<br/>actualizar_estado · corrección<br/>guardar_memoria"]
+    end
+
+    subgraph DAT["③ Conocimiento, memoria y registros (local)"]
+        direction LR
+        KB[("ChromaDB aduanarag<br/>conocimiento EP1")]
+        LTM[("ChromaDB memoria_agente<br/>largo plazo")]
+        CK[("SQLite checkpointer<br/>corto plazo")]
+        EXP[("Expedientes JSON")]
+        REG[("Observaciones · estados<br/>trazabilidad · borradores")]
+    end
+
+    subgraph LLM["④ Ollama local"]
+        direction LR
+        L1["llama3.2:3b · temperatura 0"]
+        L2["qwen3-embedding:0.6b"]
+    end
+
+    U <--> ORQ
+    ORQ --> HER
+    ORQ <--> CK
+    HER --> DAT
+    ORQ -.-> L1
+    HER -.-> L1
+    DAT -.-> L2

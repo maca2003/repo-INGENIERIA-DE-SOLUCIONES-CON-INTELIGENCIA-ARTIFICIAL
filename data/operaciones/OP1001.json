@@ -1,0 +1,64 @@
+{
+  "operacion_id": "OP1001",
+  "cliente": "Importadora Andes SpA",
+  "rut_cliente": "76.111.222-3",
+  "tipo_operacion": "importacion",
+  "fecha_recepcion": "2026-10-26",
+  "fecha_arribo_estimada": "2026-11-20",
+  "urgente": false,
+  "mercancia": {
+    "descripcion": "Repuestos para maquinaria industrial (rodamientos y correas)",
+    "categoria": "maquinaria",
+    "preferencia_arancelaria": false
+  },
+  "documentos": {
+    "factura_comercial": {
+      "archivo": "FACTURA_OP1001_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "INV-5521",
+      "fecha": "2026-10-10",
+      "importador_rut": "76.111.222-3",
+      "referencia_operacion": "OP1001",
+      "descripcion": "Repuestos para maquinaria industrial",
+      "bultos": 40,
+      "peso_kg": 860.0,
+      "valor_usd": 12400.0
+    },
+    "documento_transporte": {
+      "archivo": "TRANSPORTE_OP1001_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "BL-88120",
+      "fecha": "2026-10-12",
+      "importador_rut": "76.111.222-3",
+      "referencia_operacion": "OP1001",
+      "descripcion": "Repuestos para maquinaria industrial",
+      "bultos": 40,
+      "peso_kg": 860.0
+    },
+    "lista_empaque": {
+      "archivo": "LISTAEMPAQUE_OP1001_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "PL-5521",
+      "fecha": "2026-10-10",
+      "importador_rut": "76.111.222-3",
+      "referencia_operacion": "OP1001",
+      "descripcion": "Repuestos para maquinaria industrial",
+      "bultos": 40,
+      "peso_kg": 860.0
+    },
+    "mandato": {
+      "archivo": "MANDATO_OP1001_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "M-2026-031",
+      "fecha": "2026-01-15",
+      "vigente": true,
+      "importador_rut": "76.111.222-3",
+      "referencia_operacion": "OP1001"
+    }
+  },
+  "permisos": []
+}

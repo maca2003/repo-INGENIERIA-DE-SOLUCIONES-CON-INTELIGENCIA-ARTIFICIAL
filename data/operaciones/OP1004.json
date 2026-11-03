@@ -1,0 +1,64 @@
+{
+  "operacion_id": "OP1004",
+  "cliente": "Distribuidora Sur SpA",
+  "rut_cliente": "79.777.888-9",
+  "tipo_operacion": "importacion",
+  "fecha_recepcion": "2026-10-30",
+  "fecha_arribo_estimada": "2026-11-06",
+  "urgente": true,
+  "mercancia": {
+    "descripcion": "Frutas deshidratadas para consumo humano",
+    "categoria": "alimentos_origen_vegetal",
+    "preferencia_arancelaria": false
+  },
+  "documentos": {
+    "factura_comercial": {
+      "archivo": "FACTURA_OP1004_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "DS-1180",
+      "fecha": "2026-10-20",
+      "importador_rut": "79.777.888-9",
+      "referencia_operacion": "OP1004",
+      "descripcion": "Frutas deshidratadas para consumo humano",
+      "bultos": 300,
+      "peso_kg": 4500.0,
+      "valor_usd": 27300.0
+    },
+    "documento_transporte": {
+      "archivo": "TRANSPORTE_OP1004_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "BL-66002",
+      "fecha": "2026-10-22",
+      "importador_rut": "79.777.000-1",
+      "referencia_operacion": "OP1004",
+      "descripcion": "Frutas deshidratadas para consumo humano",
+      "bultos": 300,
+      "peso_kg": 4500.0
+    },
+    "lista_empaque": {
+      "archivo": "LISTAEMPAQUE_OP1004_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "PL-1180",
+      "fecha": "2026-10-20",
+      "importador_rut": "79.777.888-9",
+      "referencia_operacion": "OP1004",
+      "descripcion": "Frutas deshidratadas para consumo humano",
+      "bultos": 300,
+      "peso_kg": 4500.0
+    },
+    "mandato": {
+      "archivo": "MANDATO_OP1004_V1.pdf",
+      "legible": true,
+      "version": 1,
+      "numero": "M-2026-061",
+      "fecha": "2026-04-02",
+      "vigente": true,
+      "importador_rut": "79.777.888-9",
+      "referencia_operacion": "OP1004"
+    }
+  },
+  "permisos": []
+}

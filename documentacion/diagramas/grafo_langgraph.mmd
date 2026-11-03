@@ -1,0 +1,40 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	gestionar_memoria_corta(gestionar_memoria_corta)
+	recuperar_contexto(recuperar_contexto)
+	planificar(planificar)
+	ejecutar_tarea(ejecutar_tarea)
+	evaluar(evaluar)
+	aprobacion_humana(aprobacion_humana)
+	sintetizar(sintetizar)
+	agente_conversacional(agente_conversacional)
+	priorizar_cola(priorizar_cola)
+	consolidar_memoria(consolidar_memoria)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> gestionar_memoria_corta;
+	agente_conversacional --> consolidar_memoria;
+	aprobacion_humana -.-> ejecutar_tarea;
+	aprobacion_humana -.-> sintetizar;
+	ejecutar_tarea --> evaluar;
+	evaluar -.-> aprobacion_humana;
+	evaluar -.-> ejecutar_tarea;
+	evaluar -.-> sintetizar;
+	gestionar_memoria_corta --> recuperar_contexto;
+	planificar -.-> aprobacion_humana;
+	planificar -.-> ejecutar_tarea;
+	planificar -.-> sintetizar;
+	priorizar_cola --> consolidar_memoria;
+	recuperar_contexto -. &nbsp;conversacion&nbsp; .-> agente_conversacional;
+	recuperar_contexto -. &nbsp;revision&nbsp; .-> planificar;
+	recuperar_contexto -. &nbsp;cola&nbsp; .-> priorizar_cola;
+	sintetizar --> consolidar_memoria;
+	consolidar_memoria --> __end__;
+	aprobacion_humana -.-> aprobacion_humana;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc

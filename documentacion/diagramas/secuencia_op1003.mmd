@@ -1,0 +1,26 @@
+sequenceDiagram
+    autonumber
+    actor Ej as Ejecutivo
+    participant G as Grafo LangGraph
+    participant H as Herramientas
+    participant M as Memoria (Chroma / SQLite)
+    Ej->>G: "Revisa la OP1003"
+    G->>M: recuerdos de Ferretería Central Ltda
+    G->>G: planificar (documentos 1, concordancia 2, nomenclatura 4)
+    G->>H: validar_concordancia
+    H-->>G: diferencia de bultos y peso (corregibles)
+    G->>G: replanificar: + fundamentar, registrar, comunicar, aprobar
+    G->>H: fundamentar_hallazgos (RAG)
+    G->>H: registrar_observacion ×3
+    G->>H: redactar_comunicacion_cliente
+    G-->>Ej: interrupt: ¿aprobar borrador?
+    Note over G,M: estado persistido en SQLite, puede retomarse más tarde
+    Ej->>G: aprobar
+    G->>H: actualizar_estado → Con observaciones
+    G->>M: episodio guardado
+    Ej->>G: "Llegó la lista de empaque corregida de la OP1003"
+    G->>H: recibir_documento_corregido (V2, sin sobrescribir V1)
+    G->>H: verificar_resolucion_observaciones
+    H-->>G: 3 resueltas
+    G->>H: cerrar_observacion ×3
+    G->>H: actualizar_estado → Derivada a revisión
