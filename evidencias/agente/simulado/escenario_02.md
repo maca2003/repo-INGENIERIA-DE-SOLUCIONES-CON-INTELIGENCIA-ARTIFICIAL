@@ -1,6 +1,7 @@
 # Escenario 2: Documentos faltantes y preferencia del cliente
 
-- Modo: **simulado**
+- Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
+- Fecha de ejecución: 2026-11-03 00:35
 - Objetivo: Detectar faltantes (incluye certificado de origen por preferencia arancelaria) y usar la preferencia de contacto guardada en memoria.
 - Entrada del usuario: `Revisa la OP1002`
 - Tiempo de ejecución: 0.1 s

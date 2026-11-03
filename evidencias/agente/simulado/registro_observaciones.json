@@ -1,6 +1,6 @@
 [
   {
-    "fecha_deteccion": "2026-10-16T13:22:29",
+    "fecha_deteccion": "2026-11-03T00:35:34",
     "operacion_id": "OP1002",
     "documento": "lista_empaque",
     "tipo": "documento_faltante",
@@ -14,7 +14,7 @@
     "id": "OBS-0001"
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:29",
+    "fecha_deteccion": "2026-11-03T00:35:34",
     "operacion_id": "OP1002",
     "documento": "certificado_origen",
     "tipo": "documento_faltante",
@@ -28,7 +28,7 @@
     "id": "OBS-0002"
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:29",
+    "fecha_deteccion": "2026-11-03T00:35:34",
     "operacion_id": "OP1003",
     "documento": "lista_empaque",
     "tipo": "diferencia_bultos",
@@ -38,12 +38,12 @@
     "accion_requerida": "Solicitar aclaración o documento corregido.",
     "responsable_seguimiento": "Ejecutivo de cuenta",
     "estado": "Cerrada",
-    "fecha_resolucion": "2026-10-16T13:22:30",
+    "fecha_resolucion": "2026-11-03T00:35:35",
     "id": "OBS-0003",
     "resolucion": "Verificado por el agente: la inconsistencia no se reproduce en la versión vigente."
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:29",
+    "fecha_deteccion": "2026-11-03T00:35:34",
     "operacion_id": "OP1003",
     "documento": "lista_empaque",
     "tipo": "diferencia_peso",
@@ -53,12 +53,12 @@
     "accion_requerida": "Solicitar aclaración o documento corregido.",
     "responsable_seguimiento": "Ejecutivo de cuenta",
     "estado": "Cerrada",
-    "fecha_resolucion": "2026-10-16T13:22:30",
+    "fecha_resolucion": "2026-11-03T00:35:35",
     "id": "OBS-0004",
     "resolucion": "Verificado por el agente: la inconsistencia no se reproduce en la versión vigente."
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:29",
+    "fecha_deteccion": "2026-11-03T00:35:34",
     "operacion_id": "OP1003",
     "documento": "lista_empaque",
     "tipo": "nomenclatura",
@@ -68,12 +68,12 @@
     "accion_requerida": "Registrar la aclaración y renombrar según la convención interna.",
     "responsable_seguimiento": "Ejecutivo de cuenta",
     "estado": "Cerrada",
-    "fecha_resolucion": "2026-10-16T13:22:30",
+    "fecha_resolucion": "2026-11-03T00:35:35",
     "id": "OBS-0005",
     "resolucion": "Verificado por el agente: la inconsistencia no se reproduce en la versión vigente."
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:29",
+    "fecha_deteccion": "2026-11-03T00:35:35",
     "operacion_id": "OP1004",
     "documento": "permiso",
     "tipo": "permiso_faltante",
@@ -87,7 +87,7 @@
     "id": "OBS-0006"
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:29",
+    "fecha_deteccion": "2026-11-03T00:35:35",
     "operacion_id": "OP1004",
     "documento": "permiso",
     "tipo": "permiso_faltante",
@@ -101,7 +101,7 @@
     "id": "OBS-0007"
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:29",
+    "fecha_deteccion": "2026-11-03T00:35:35",
     "operacion_id": "OP1004",
     "documento": "documento_transporte",
     "tipo": "importador_inconsistente",
@@ -115,7 +115,7 @@
     "id": "OBS-0008"
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:30",
+    "fecha_deteccion": "2026-11-03T00:35:35",
     "operacion_id": "OP1005",
     "documento": "mercancia",
     "tipo": "requisito_por_confirmar",
@@ -129,7 +129,7 @@
     "id": "OBS-0009"
   },
   {
-    "fecha_deteccion": "2026-10-16T13:22:30",
+    "fecha_deteccion": "2026-11-03T00:35:35",
     "operacion_id": "OP1005",
     "documento": "factura_comercial",
     "tipo": "documento_ilegible",

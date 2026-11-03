@@ -4,18 +4,17 @@ import unicodedata
 from pathlib import Path
 
 from langchain_chroma import Chroma
-from langchain_ollama import ChatOllama, OllamaEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
+
+from agente import modelos
 
 
 # Rutas del proyecto
 RAIZ_PROYECTO = Path(__file__).resolve().parent.parent
 RUTA_PREGUNTAS = RAIZ_PROYECTO / "tests" / "preguntas_evaluacion.json"
-RUTA_CHROMA = RAIZ_PROYECTO / "chroma_db"
+RUTA_CHROMA = modelos.carpeta_chroma(RAIZ_PROYECTO)
 RUTA_RESULTADOS = RAIZ_PROYECTO / "evidencias" / "resultados_evaluacion.json"
 
-MODELO_LLM = "llama3.2:3b"
-MODELO_EMBEDDINGS = "qwen3-embedding:0.6b"
 NOMBRE_COLECCION = "aduanarag"
 CANTIDAD_FRAGMENTOS = 4
 
@@ -79,7 +78,7 @@ def cargar_preguntas():
 
 def crear_componentes():
     """Inicializa embeddings, ChromaDB y el modelo de lenguaje."""
-    embeddings = OllamaEmbeddings(model=MODELO_EMBEDDINGS)
+    embeddings = modelos.crear_embeddings()
 
     base_vectorial = Chroma(
         collection_name=NOMBRE_COLECCION,
@@ -87,10 +86,7 @@ def crear_componentes():
         persist_directory=str(RUTA_CHROMA),
     )
 
-    modelo = ChatOllama(
-        model=MODELO_LLM,
-        temperature=0,
-    )
+    modelo = modelos.crear_llm(temperatura=0)
 
     cadena = PROMPT | modelo
     return base_vectorial, cadena
@@ -114,7 +110,7 @@ def evaluar_pregunta(caso, base_vectorial, cadena):
             "contexto": contexto,
             "pregunta": caso["pregunta"],
         }
-    ).content.strip()
+    ).text.strip()
 
     fuentes_recuperadas = list(
         dict.fromkeys(
@@ -304,5 +300,5 @@ if __name__ == "__main__":
         sys.exit(1)
     except Exception as error:
         print(f"\nERROR INESPERADO: {error}")
-        print("Comprueba que Ollama esté iniciado y que chroma_db exista.")
+        print("Comprueba el proveedor del .env (Ollama iniciado o GOOGLE_API_KEY) y que exista la base vectorial.")
         sys.exit(1)

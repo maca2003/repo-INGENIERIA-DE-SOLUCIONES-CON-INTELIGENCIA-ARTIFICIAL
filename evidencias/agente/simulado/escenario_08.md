@@ -1,6 +1,7 @@
 # Escenario 8: Continuidad de un flujo prolongado
 
-- Modo: **simulado**
+- Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
+- Fecha de ejecución: 2026-11-03 00:35
 - Objetivo: Pausar en la aprobación humana, reiniciar el grafo con el mismo checkpointer SQLite y retomar el flujo en el punto exacto.
 - Entrada del usuario: `Revisa nuevamente la OP1002`
 - Tiempo de ejecución: - s
@@ -8,7 +9,7 @@
 ## Memoria de largo plazo recuperada
 
 - [preferencia] Preferencia de Comercial Pacífico Ltda: las comunicaciones de observaciones deben dirigirse a Paula Rojas, encargada de comercio exterior, e indicar un plazo de respuesta de 48 horas. (distancia 0.8074)
-- [episodio] Episodio OP1002 de Comercial Pacífico Ltda (2026-10-16): estado Pendiente de documentación; hallazgos: documento_faltante. (distancia 1.3239)
+- [episodio] Episodio OP1002 de Comercial Pacífico Ltda (2026-11-03): estado Pendiente de documentación; hallazgos: documento_faltante. (distancia 1.3239)
 
 ## Plan ejecutado (ordenado por ejecución)
 

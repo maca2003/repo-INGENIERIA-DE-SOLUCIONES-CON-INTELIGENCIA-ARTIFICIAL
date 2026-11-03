@@ -22,10 +22,19 @@ def _decimal(nombre: str, defecto: float) -> float:
     return float(os.getenv(nombre, defecto))
 
 
+# Proveedor de modelos: "ollama" (local, por defecto) o "gemini" (API).
+PROVEEDOR = os.getenv("AGENTE_PROVEEDOR", "ollama")
+
 # Modelos locales (Ollama). Se mantienen los modelos de la EP1.
 MODELO_LLM = os.getenv("AGENTE_MODELO_LLM", "llama3.2:3b")
 MODELO_EMBEDDINGS = os.getenv("AGENTE_MODELO_EMBEDDINGS", "qwen3-embedding:0.6b")
 TEMPERATURA = _decimal("AGENTE_TEMPERATURA", 0.0)
+
+# Gemini (opcional). El nombre del modelo cambia con frecuencia: si aparece
+# "model not found", revisar https://ai.google.dev/gemini-api/docs/models
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
+MODELO_LLM_GEMINI = os.getenv("LLM_MODEL", "gemini-3.8-flash")
+MODELO_EMBEDDINGS_GEMINI = os.getenv("AGENTE_MODELO_EMBEDDINGS_GEMINI", "models/gemini-embedding-001")
 
 # Base de conocimiento creada en la EP1 (colección ChromaDB "aduanarag").
 COLECCION_CONOCIMIENTO = "aduanarag"

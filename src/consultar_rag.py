@@ -1,11 +1,8 @@
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_ollama import ChatOllama
-
+from agente.modelos import crear_llm
 from crear_base_vectorial import obtener_base_vectorial
 
-
-MODELO_LLM = "llama3.2:3b"
 CANTIDAD_FRAGMENTOS = 4
 
 MENSAJE_SIN_INFORMACION = (
@@ -116,10 +113,7 @@ def consultar_rag(
 
     contexto = preparar_contexto(fragmentos)
 
-    modelo = ChatOllama(
-        model=MODELO_LLM,
-        temperature=0,
-    )
+    modelo = crear_llm(temperatura=0)
 
     cadena = PROMPT_RAG | modelo
 
@@ -130,7 +124,7 @@ def consultar_rag(
         }
     )
 
-    respuesta = resultado.content.strip()
+    respuesta = resultado.text.strip()
 
     if not respuesta:
         respuesta = MENSAJE_SIN_INFORMACION
@@ -236,7 +230,7 @@ def iniciar_consulta_interactiva() -> None:
             print("\nNo fue posible procesar la consulta.")
             print(f"Detalle técnico: {error}")
             print(
-                "Comprueba que Ollama esté iniciado y "
+                "Comprueba el proveedor del .env (Ollama o Gemini) y "
                 "que la base vectorial exista."
             )
 

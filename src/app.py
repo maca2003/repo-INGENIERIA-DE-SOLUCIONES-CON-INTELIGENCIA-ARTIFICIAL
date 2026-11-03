@@ -35,7 +35,7 @@ with st.form("formulario_consulta"):
 
     consultar = st.form_submit_button(
         "Consultar documentos",
-        use_container_width=True,
+        width="stretch",
     )
 
 

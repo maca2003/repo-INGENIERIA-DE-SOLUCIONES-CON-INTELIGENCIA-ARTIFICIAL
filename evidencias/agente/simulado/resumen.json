@@ -72,7 +72,7 @@
     "estado_final": "Derivada a revisión",
     "tareas": 7,
     "decisiones": 5,
-    "segundos": 0.1,
+    "segundos": 0.0,
     "criterio": "Observaciones cerradas y estado 'Derivada a revisión'",
     "cumple": true
   },

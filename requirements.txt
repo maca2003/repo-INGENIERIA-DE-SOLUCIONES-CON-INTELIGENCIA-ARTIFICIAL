@@ -1,13 +1,17 @@
-streamlit
-pandas
-langchain>=1.0
-langchain-core>=1.0
-langchain-ollama
-langchain-chroma
-langchain-text-splitters
-langgraph>=1.0
-langgraph-checkpoint-sqlite
-chromadb
-pypdf
-python-dotenv
-pytest
+# Versiones probadas (noviembre 2026). Rangos acotados para que el proyecto
+# sea reproducible: el código usa la API de LangChain 1.x (create_agent) y
+# LangGraph 1.x (StateGraph, checkpointer, interrupt).
+langchain>=1.4,<2
+langchain-core>=1.6,<2
+langgraph>=1.2,<2
+langgraph-checkpoint-sqlite>=3.1,<4
+langchain-ollama>=1.1,<2
+langchain-google-genai>=4.4,<5
+langchain-chroma>=1.1,<2
+langchain-text-splitters>=1.1,<2
+chromadb>=1.5,<2
+streamlit>=1.50,<2
+pandas>=2.2,<4
+pypdf>=6,<7
+python-dotenv>=1.1,<2
+pytest>=8,<10

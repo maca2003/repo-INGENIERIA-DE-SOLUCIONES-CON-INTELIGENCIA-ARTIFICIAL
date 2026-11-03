@@ -58,7 +58,7 @@ def consultar_procedimientos(pregunta: str) -> dict:
         f"Contenido:\n{d.page_content}"
         for i, (d, _) in enumerate(relevantes, start=1)
     )
-    respuesta = (PROMPT_RAG | servicios.llm).invoke({"contexto": contexto, "pregunta": pregunta}).content.strip()
+    respuesta = (PROMPT_RAG | servicios.llm).invoke({"contexto": contexto, "pregunta": pregunta}).text.strip()
     suficiente = bool(respuesta) and "no existe información suficiente" not in respuesta.lower()
     return {
         "respuesta": respuesta or config.MENSAJE_SIN_INFORMACION,

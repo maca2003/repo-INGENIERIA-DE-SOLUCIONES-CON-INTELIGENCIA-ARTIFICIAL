@@ -1,6 +1,7 @@
 # Escenario 5: Control: OP1004 sin memoria de largo plazo
 
-- Modo: **simulado**
+- Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
+- Fecha de ejecución: 2026-11-03 00:35
 - Objetivo: Comparar el plan con el escenario 4 para evidenciar el efecto de la memoria.
 - Entrada del usuario: `Revisa la OP1004`
 - Tiempo de ejecución: 0.1 s

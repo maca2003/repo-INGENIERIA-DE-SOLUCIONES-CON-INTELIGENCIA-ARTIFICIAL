@@ -1,9 +1,9 @@
 """Interfaz de terminal de AduanaAgent.
 
 Uso:
-    python src/agente_cli.py                     # hilo "principal" con Ollama
+    python src/agente_cli.py                     # hilo "principal", proveedor del .env
     python src/agente_cli.py --hilo turno_tarde   # otro hilo de memoria corta
-    python src/agente_cli.py --simulado           # sin Ollama (modelo simulado)
+    python src/agente_cli.py --simulado           # sin LLM (modelo simulado)
     python src/agente_cli.py --auto-aprobar       # aprueba comunicaciones (modo lote)
 
 Comandos dentro del chat:
@@ -62,10 +62,11 @@ def main() -> None:
     args = parser.parse_args()
 
     try:
-        grafo, servicios = crear_agente("simulado" if args.simulado else "ollama")
+        grafo, servicios = crear_agente("simulado" if args.simulado else "real")
     except Exception as error:
         print(f"No fue posible iniciar el agente: {error}")
-        print("Comprueba que Ollama esté iniciado y que exista chroma_db (python src/crear_base_vectorial.py).")
+        print("Revisa el proveedor del .env (Ollama iniciado o GOOGLE_API_KEY) y crea la base vectorial:")
+        print("python src/probar_modelos.py  y  python src/crear_base_vectorial.py")
         sys.exit(1)
 
     hilo = args.hilo
@@ -108,7 +109,7 @@ def main() -> None:
         except Exception as error:
             print(f"\nNo fue posible procesar la solicitud: {error}")
             continue
-        print(f"\nAduanaAgent: {resultado['messages'][-1].content}\n")
+        print(f"\nAduanaAgent: {resultado['messages'][-1].text}\n")
         for entrada in resultado.get("bitacora", [])[-3:]:
             if entrada["nodo"] in ("recuperar_contexto", "agente_conversacional"):
                 print(f"  · {entrada['nodo']}: {entrada['detalle']}")

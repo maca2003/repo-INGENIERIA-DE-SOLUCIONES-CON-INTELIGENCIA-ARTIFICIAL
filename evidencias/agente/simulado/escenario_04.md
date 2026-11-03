@@ -1,6 +1,7 @@
 # Escenario 4: Observación crítica con antecedente del cliente
 
-- Modo: **simulado**
+- Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
+- Fecha de ejecución: 2026-11-03 00:35
 - Objetivo: Priorizar el control crítico, escalar y reforzar la validación por un antecedente recuperado de la memoria de largo plazo.
 - Entrada del usuario: `Revisa la OP1004`
 - Tiempo de ejecución: 0.1 s

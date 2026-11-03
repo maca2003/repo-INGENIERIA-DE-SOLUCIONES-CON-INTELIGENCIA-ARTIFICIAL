@@ -1,13 +1,14 @@
 # Escenario 7: Condición cambiante: documento corregido
 
-- Modo: **simulado**
+- Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
+- Fecha de ejecución: 2026-11-03 00:35
 - Objetivo: Incorporar la nueva versión sin sobrescribir, verificar y cerrar observaciones, y replanificar el estado.
 - Entrada del usuario: `Llegó la lista de empaque corregida de la OP1003, reprocésala`
-- Tiempo de ejecución: 0.1 s
+- Tiempo de ejecución: 0.0 s
 
 ## Memoria de largo plazo recuperada
 
-- [episodio] Episodio OP1003 de Ferretería Central Ltda (2026-10-16): estado Con observaciones; hallazgos: diferencia_bultos, diferencia_peso, nomenclatura. (distancia 1.3675)
+- [episodio] Episodio OP1003 de Ferretería Central Ltda (2026-11-03): estado Con observaciones; hallazgos: diferencia_bultos, diferencia_peso, nomenclatura. (distancia 1.3675)
 
 ## Plan ejecutado (ordenado por ejecución)
 

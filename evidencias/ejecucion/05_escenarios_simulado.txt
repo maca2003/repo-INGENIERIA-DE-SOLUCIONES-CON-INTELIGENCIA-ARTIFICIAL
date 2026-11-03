@@ -1,0 +1,15 @@
+$ /home/claude/venv/bin/python src/demo_escenarios.py --simulado
+# 2026-11-03 00:35
+
+[OK ] Escenario 1: Expediente completo y concordante (0.1 s)
+[OK ] Escenario 2: Documentos faltantes y preferencia del cliente (0.1 s)
+[OK ] Escenario 3: Inconsistencias corregibles (0.1 s)
+[OK ] Escenario 4: Observación crítica con antecedente del cliente (0.1 s)
+[OK ] Escenario 5: Control: OP1004 sin memoria de largo plazo (0.1 s)
+[OK ] Escenario 6: Mercancía no catalogada (0.1 s)
+[OK ] Escenario 7: Condición cambiante: documento corregido (0.0 s)
+[OK ] Escenario 8: Continuidad de un flujo prolongado (- s)
+[OK ] Escenario 9: Secuenciación de la jornada (0.0 s)
+[OK ] Escenario 10: Modo conversacional (ReAct) y memoria entre sesiones (0.0 s)
+
+10/10 escenarios cumplen su criterio. Evidencias en /home/claude/repo/evidencias/agente/simulado

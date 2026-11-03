@@ -1,8 +1,8 @@
 """Ejecuta los escenarios de demostración del agente y genera evidencias.
 
 Uso:
-    python src/demo_escenarios.py              # con Ollama (evidencia real)
-    python src/demo_escenarios.py --simulado   # sin Ollama (modelo simulado)
+    python src/demo_escenarios.py              # proveedor del .env (evidencia real)
+    python src/demo_escenarios.py --simulado   # sin LLM (modelo simulado)
 
 Cada escenario muestra cómo el agente ajusta su plan ante condiciones
 distintas. Las evidencias se guardan en evidencias/agente/<modo>/.
@@ -49,7 +49,13 @@ class Demo:
         self.rutas = Rutas()
         self.rutas.salidas = self.salidas
         self.grafo, self.servicios = crear_agente(modo, self.rutas)
-        self.evidencias = RAIZ / "evidencias" / "agente" / modo
+        self.modo = self.servicios.modo  # "ollama", "gemini" o "simulado"
+        if self.modo == "simulado":
+            self.descripcion = "modelo y embeddings deterministas, sin LLM"
+        else:
+            from agente import modelos
+            self.descripcion = modelos.describir().split(" · ", 1)[1]
+        self.evidencias = RAIZ / "evidencias" / "agente" / self.modo
         self.evidencias.mkdir(parents=True, exist_ok=True)
         self.resumen = []
 
@@ -67,7 +73,7 @@ class Demo:
 
     def registrar(self, numero: int, titulo: str, objetivo: str, mensaje: str, resultado: dict,
                   pausas: list, notas: list[str] | None = None, criterio: tuple[str, bool] | None = None) -> None:
-        lineas = [f"# Escenario {numero}: {titulo}", "", f"- Modo: **{self.modo}**",
+        lineas = [f"# Escenario {numero}: {titulo}", "", f"- Modo: **{self.modo}** ({self.descripcion})", f"- Fecha de ejecución: {time.strftime('%Y-%m-%d %H:%M')}",
                   f"- Objetivo: {objetivo}", f"- Entrada del usuario: `{mensaje}`",
                   f"- Tiempo de ejecución: {resultado.get('_segundos')} s", ""]
         if resultado.get("recuerdos"):
@@ -80,7 +86,7 @@ class Demo:
             lineas += ["## Decisiones adaptativas", ""] + tabla_decisiones(resultado["decisiones"]) + [""]
         if pausas:
             lineas += ["## Pausa human-in-the-loop", "", "```text", pausas[0]["borrador"], "```", ""]
-        lineas += ["## Respuesta del agente", "", resultado["messages"][-1].content, ""]
+        lineas += ["## Respuesta del agente", "", resultado["messages"][-1].text, ""]
         if notas:
             lineas += ["## Observaciones", ""] + [f"- {n}" for n in notas] + [""]
         if criterio:
@@ -100,7 +106,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--simulado", action="store_true")
     args = parser.parse_args()
-    modo = "simulado" if args.simulado else "ollama"
+    modo = "simulado" if args.simulado else "real"
     try:
         demo = Demo(modo)
     except Exception as error:
@@ -202,7 +208,7 @@ def main() -> None:
     cola = r["bitacora"][-2].get("cola", []) if len(r["bitacora"]) > 1 else []
     demo.registrar(9, "Secuenciación de la jornada", "Ordenar operaciones pendientes por urgencia, cercanía del "
                    "arribo y riesgo de la mercancía.", "Prioriza la cola de revisión de hoy", r, p,
-                   criterio=("Se entrega un orden con justificación", "Orden recomendado" in r["messages"][-1].content))
+                   criterio=("Se entrega un orden con justificación", "Orden recomendado" in r["messages"][-1].text))
 
     # 9. Conversación: el modelo elige herramientas y usa memoria entre hilos
     mensajes = ["¿Qué debe hacer el ejecutivo si existen diferencias en cantidades o peso?",
@@ -212,10 +218,10 @@ def main() -> None:
     for m in mensajes:
         r, _ = demo.ejecutar("e9", m)
         herramienta = next((b["detalle"] for b in reversed(r["bitacora"]) if b["nodo"] == "agente_conversacional"), "")
-        salidas.append(f"**{m}** → {herramienta}\n\n> {r['messages'][-1].content[:500]}")
+        salidas.append(f"**{m}** → {herramienta}\n\n> {r['messages'][-1].text[:500]}")
     r, _ = demo.ejecutar("e9-otro-hilo", "¿Qué antecedentes o preferencias tienes de Ferretería Central Ltda?")
     salidas.append(f"**(nuevo hilo) ¿Qué antecedentes o preferencias tienes de Ferretería Central Ltda?** → "
-                   f"{r['bitacora'][-2]['detalle']}\n\n> {r['messages'][-1].content[:500]}")
+                   f"{r['bitacora'][-2]['detalle']}\n\n> {r['messages'][-1].text[:500]}")
     r["plan"], r["decisiones"] = [], []
     demo.registrar(10, "Modo conversacional (ReAct) y memoria entre sesiones", "Verificar que el modelo selecciona "
                    "herramientas y que una preferencia guardada se recupera desde otro hilo.", " / ".join(mensajes), r, [],

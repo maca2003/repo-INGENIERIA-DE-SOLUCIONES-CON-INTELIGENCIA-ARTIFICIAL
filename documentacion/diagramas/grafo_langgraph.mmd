@@ -14,6 +14,7 @@ graph TD;
 	sintetizar(sintetizar)
 	agente_conversacional(agente_conversacional)
 	priorizar_cola(priorizar_cola)
+	operacion_inexistente(operacion_inexistente)
 	consolidar_memoria(consolidar_memoria)
 	__end__([<p>__end__</p>]):::last
 	__start__ --> gestionar_memoria_corta;
@@ -30,10 +31,12 @@ graph TD;
 	planificar -.-> sintetizar;
 	priorizar_cola --> consolidar_memoria;
 	recuperar_contexto -. &nbsp;conversacion&nbsp; .-> agente_conversacional;
+	recuperar_contexto -. &nbsp;inexistente&nbsp; .-> operacion_inexistente;
 	recuperar_contexto -. &nbsp;revision&nbsp; .-> planificar;
 	recuperar_contexto -. &nbsp;cola&nbsp; .-> priorizar_cola;
 	sintetizar --> consolidar_memoria;
 	consolidar_memoria --> __end__;
+	operacion_inexistente --> __end__;
 	aprobacion_humana -.-> aprobacion_humana;
 	classDef default fill:#f2f0ff,line-height:1.2
 	classDef first fill-opacity:0

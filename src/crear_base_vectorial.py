@@ -1,23 +1,22 @@
 from pathlib import Path
 
 from langchain_chroma import Chroma
-from langchain_ollama import OllamaEmbeddings
+
+from agente import modelos
 
 from cargar_documentos import cargar_todos_los_documentos
 from fragmentar_documentos import fragmentar_documentos
 
 
 RAIZ_PROYECTO = Path(__file__).resolve().parent.parent
-CARPETA_BASE_VECTORIAL = RAIZ_PROYECTO / "chroma_db"
+# chroma_db/ con Ollama o chroma_db_gemini/ con Gemini (ver .env).
+CARPETA_BASE_VECTORIAL = modelos.carpeta_chroma(RAIZ_PROYECTO)
 
 NOMBRE_COLECCION = "aduanarag"
-MODELO_EMBEDDINGS = "qwen3-embedding:0.6b"
 
 
-def obtener_modelo_embeddings() -> OllamaEmbeddings:
-    return OllamaEmbeddings(
-        model=MODELO_EMBEDDINGS,
-    )
+def obtener_modelo_embeddings():
+    return modelos.crear_embeddings()
 
 
 def obtener_base_vectorial() -> Chroma:
@@ -55,7 +54,7 @@ def crear_base_vectorial() -> Chroma:
     print(f"Documentos originales: {len(documentos)}")
     print(f"Fragmentos procesados: {len(fragmentos)}")
     print(f"Registros almacenados: {cantidad_guardada}")
-    print(f"Modelo de embeddings: {MODELO_EMBEDDINGS}")
+    print(f"Proveedor y modelos: {modelos.describir()}")
     print(f"Ubicación: {CARPETA_BASE_VECTORIAL}")
 
     return base_vectorial

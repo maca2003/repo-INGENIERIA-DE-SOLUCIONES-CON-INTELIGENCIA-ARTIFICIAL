@@ -82,11 +82,11 @@ def gestionar_memoria_corta(estado: EstadoAgente) -> dict:
     antiguos = mensajes[:corte]
     if not antiguos:
         return {}
-    texto = "\n".join(f"{m.type}: {str(m.content)[:300]}" for m in antiguos if m.content)
+    texto = "\n".join(f"{m.type}: {m.text[:300]}" for m in antiguos if m.text)
     try:
         resumen = obtener_servicios().llm.invoke(
             [SystemMessage(content=PROMPT_COMPACTACION), HumanMessage(content=texto)]
-        ).content
+        ).text
     except Exception:  # degradación: resumen extractivo
         resumen = texto[-800:]
     previo = estado.get("resumen_conversacion", "")
@@ -100,7 +100,7 @@ def gestionar_memoria_corta(estado: EstadoAgente) -> dict:
 def _ultimo_texto_humano(estado: EstadoAgente) -> str:
     for mensaje in reversed(estado.get("messages", [])):
         if isinstance(mensaje, HumanMessage):
-            return str(mensaje.content)
+            return mensaje.text
     return ""
 
 
@@ -124,10 +124,16 @@ def recuperar_contexto(estado: EstadoAgente) -> dict:
         if candidatas:
             correccion = str(candidatas[-1])
 
+    if intencion == "revision" and servicios.almacen.obtener_expediente(operacion) is None:
+        # Operación inexistente: se responde de forma determinista, sin LLM.
+        return {
+            "intencion": "inexistente", "operacion_id": operacion, "expediente": {}, "recuerdos": [],
+            "correccion": "",
+            "bitacora": [{"nodo": "recuperar_contexto", "detalle": f"La operación {operacion} no existe"}],
+        }
+
     operacion_contexto = operacion or estado.get("operacion_activa", "")
     expediente = servicios.almacen.obtener_expediente(operacion_contexto) if operacion_contexto else None
-    if intencion == "revision" and expediente is None:
-        intencion = "conversacion"
 
     if expediente:
         consulta = (f"{expediente['cliente']} antecedentes observaciones preferencias comunicaciones "
@@ -426,7 +432,7 @@ def sintetizar(estado: EstadoAgente) -> dict:
              + "\n".join(f"- [{h['nivel']}] {h['descripcion']}" for h in estado["hallazgos"])
              + "\nDecisiones: " + "; ".join(d["decision"] for d in estado["decisiones"][-6:]))
     try:
-        resumen = servicios.llm.invoke([SystemMessage(content=PROMPT_SINTESIS), HumanMessage(content=datos)]).content
+        resumen = servicios.llm.invoke([SystemMessage(content=PROMPT_SINTESIS), HumanMessage(content=datos)]).text
         nota = ""
     except Exception as error:  # el modelo no responde: se entrega el resumen estructurado
         resumen = datos
@@ -462,6 +468,14 @@ def agente_conversacional(estado: EstadoAgente) -> dict:
         "bitacora": [{"nodo": "agente_conversacional",
                       "detalle": f"Herramientas elegidas por el modelo: {', '.join(usadas) or 'ninguna'}"}],
     }
+
+
+def operacion_inexistente(estado: EstadoAgente) -> dict:
+    disponibles = ", ".join(obtener_servicios().almacen.listar_operaciones())
+    texto = (f"No existe la operación {estado['operacion_id']} en la bandeja de expedientes. "
+             f"Operaciones disponibles: {disponibles}.")
+    return {"messages": [AIMessage(content=texto)],
+            "bitacora": [{"nodo": "operacion_inexistente", "detalle": texto}]}
 
 
 def priorizar_cola(estado: EstadoAgente) -> dict:
@@ -504,12 +518,14 @@ def construir_grafo(checkpointer=None):
     grafo.add_node("sintetizar", sintetizar)
     grafo.add_node("agente_conversacional", agente_conversacional)
     grafo.add_node("priorizar_cola", priorizar_cola)
+    grafo.add_node("operacion_inexistente", operacion_inexistente)
     grafo.add_node("consolidar_memoria", consolidar_memoria)
 
     grafo.add_edge(START, "gestionar_memoria_corta")
     grafo.add_edge("gestionar_memoria_corta", "recuperar_contexto")
     grafo.add_conditional_edges("recuperar_contexto", enrutar, {
         "revision": "planificar", "conversacion": "agente_conversacional", "cola": "priorizar_cola",
+        "inexistente": "operacion_inexistente",
     })
     destinos = {"ejecutar_tarea": "ejecutar_tarea", "aprobacion_humana": "aprobacion_humana", "sintetizar": "sintetizar"}
     grafo.add_conditional_edges("planificar", seleccionar, destinos)
@@ -519,5 +535,6 @@ def construir_grafo(checkpointer=None):
     grafo.add_edge("sintetizar", "consolidar_memoria")
     grafo.add_edge("agente_conversacional", "consolidar_memoria")
     grafo.add_edge("priorizar_cola", "consolidar_memoria")
+    grafo.add_edge("operacion_inexistente", END)
     grafo.add_edge("consolidar_memoria", END)
     return grafo.compile(checkpointer=checkpointer)

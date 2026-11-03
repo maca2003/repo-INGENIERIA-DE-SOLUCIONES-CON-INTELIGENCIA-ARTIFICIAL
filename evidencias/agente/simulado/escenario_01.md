@@ -1,6 +1,7 @@
 # Escenario 1: Expediente completo y concordante
 
-- Modo: **simulado**
+- Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
+- Fecha de ejecución: 2026-11-03 00:35
 - Objetivo: Verificar el flujo base sin hallazgos.
 - Entrada del usuario: `Revisa la OP1001`
 - Tiempo de ejecución: 0.1 s

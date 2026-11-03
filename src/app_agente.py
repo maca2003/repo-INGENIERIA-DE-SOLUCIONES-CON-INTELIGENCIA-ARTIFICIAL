@@ -22,12 +22,13 @@ def obtener_agente(modo: str):
 
 with st.sidebar:
     st.header("Configuración")
-    modo = st.radio("Modelo", ["ollama", "simulado"], help="'simulado' funciona sin Ollama (solo pruebas).")
+    modo = st.radio("Modelo", ["real", "simulado"],
+                    help="'real' usa el proveedor del .env (Ollama o Gemini); 'simulado' funciona sin LLM (solo pruebas).")
     if "hilo" not in st.session_state:
         st.session_state.hilo = "web-" + uuid.uuid4().hex[:6]
     hilo = st.text_input("Hilo de conversación (memoria corta)", st.session_state.hilo)
     st.session_state.hilo = hilo
-    if st.button("Nuevo hilo", use_container_width=True):
+    if st.button("Nuevo hilo", width="stretch"):
         st.session_state.hilo = "web-" + uuid.uuid4().hex[:6]
         st.rerun()
     st.caption("Ejemplos")
@@ -40,12 +41,14 @@ try:
     grafo, servicios = obtener_agente(modo)
 except Exception as error:
     st.error(f"No fue posible iniciar el agente: {error}")
-    st.info("Inicia Ollama y crea la base vectorial con: python src/crear_base_vectorial.py")
+    st.info("Revisa el .env (Ollama iniciado o GOOGLE_API_KEY), ejecuta python src/probar_modelos.py "
+            "y crea la base vectorial con python src/crear_base_vectorial.py")
     st.stop()
 
 cfg = configuracion_hilo(st.session_state.hilo)
 st.title("📦 AduanaAgent")
-st.caption("Agente de revisión documental aduanera · LangGraph + LangChain + ChromaDB + Ollama · caso académico simulado")
+st.caption(f"Agente de revisión documental aduanera · LangGraph + LangChain + ChromaDB · modelo: {servicios.modo} · "
+           "caso académico simulado")
 
 chat, panel = st.columns([3, 2])
 estado = grafo.get_state(cfg)
@@ -55,8 +58,8 @@ with chat:
     for mensaje in valores.get("messages", []):
         if isinstance(mensaje, HumanMessage):
             st.chat_message("user").markdown(mensaje.content)
-        elif isinstance(mensaje, AIMessage) and mensaje.content:
-            st.chat_message("assistant").markdown(mensaje.content)
+        elif isinstance(mensaje, AIMessage) and mensaje.text:
+            st.chat_message("assistant").markdown(mensaje.text)
 
     if estado.interrupts:
         pausa = estado.interrupts[0].value
@@ -64,10 +67,10 @@ with chat:
             st.warning(f"Aprobación requerida – {pausa['operacion_id']}")
             st.text(pausa["borrador"])
             col1, col2 = st.columns(2)
-            if col1.button("✅ Aprobar envío", use_container_width=True):
+            if col1.button("✅ Aprobar envío", width="stretch"):
                 grafo.invoke(Command(resume="aprobar"), cfg)
                 st.rerun()
-            if col2.button("❌ Rechazar", use_container_width=True):
+            if col2.button("❌ Rechazar", width="stretch"):
                 grafo.invoke(Command(resume="rechazar"), cfg)
                 st.rerun()
 
@@ -86,7 +89,7 @@ with panel:
             filas = sorted(plan, key=lambda t: (t.get("orden_ejecucion") or 99, t["secuencia"]))
             st.dataframe(pd.DataFrame([{"orden": t.get("orden_ejecucion"), "tarea": t["id"], "acción": t["accion"],
                                         "prioridad": t["prioridad"], "estado": t["estado"], "resultado": t["resultado"]}
-                                       for t in filas]), hide_index=True, use_container_width=True)
+                                       for t in filas]), hide_index=True, width="stretch")
         else:
             st.info("Aún no hay un plan en este hilo.")
     with pestañas[1]:
@@ -103,4 +106,4 @@ with panel:
     with pestañas[3]:
         registros = servicios.almacen.leer_trazabilidad(valores.get("operacion_id") or None)
         if registros:
-            st.dataframe(pd.DataFrame(registros[-30:]), hide_index=True, use_container_width=True)
+            st.dataframe(pd.DataFrame(registros[-30:]), hide_index=True, width="stretch")

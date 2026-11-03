@@ -1,6 +1,7 @@
 # Escenario 6: Mercancía no catalogada
 
-- Modo: **simulado**
+- Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
+- Fecha de ejecución: 2026-11-03 00:35
 - Objetivo: Consultar la base documental antes de asumir requisitos y actuar según exista o no evidencia suficiente.
 - Entrada del usuario: `Revisa la OP1005`
 - Tiempo de ejecución: 0.1 s

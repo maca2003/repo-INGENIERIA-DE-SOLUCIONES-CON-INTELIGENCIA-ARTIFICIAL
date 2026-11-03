@@ -2,7 +2,7 @@
 
 Las herramientas y nodos obtienen el modelo, el recuperador, la memoria y el
 almacén desde un único objeto Servicios. Así el mismo agente se ejecuta con
-Ollama (modo real) o con componentes simulados (pruebas automáticas y CI),
+Ollama o Gemini (modo real) o con componentes simulados (pruebas automáticas y CI),
 sin modificar la lógica del flujo.
 """
 
@@ -41,17 +41,19 @@ def configurar_servicios(servicios: Servicios) -> Servicios:
 
 def obtener_servicios() -> Servicios:
     if _SERVICIOS is None:
-        raise RuntimeError("Servicios no configurados. Llama a crear_servicios_ollama() o crear_servicios_simulados().")
+        raise RuntimeError("Servicios no configurados. Llama a crear_servicios_reales() o crear_servicios_simulados().")
     return _SERVICIOS
 
 
-def crear_servicios_ollama(rutas: Rutas | None = None) -> Servicios:
-    """Servicios reales: Ollama + ChromaDB de la EP1 + memoria persistente."""
+def crear_servicios_reales(rutas: Rutas | None = None) -> Servicios:
+    """Servicios reales con el proveedor del .env (Ollama o Gemini)."""
     from langchain_chroma import Chroma
-    from langchain_ollama import ChatOllama, OllamaEmbeddings
+
+    from . import modelos
 
     rutas = rutas or Rutas()
-    embeddings = OllamaEmbeddings(model=config.MODELO_EMBEDDINGS)
+    rutas.chroma = modelos.carpeta_chroma(rutas.raiz)
+    embeddings = modelos.crear_embeddings()
     base_conocimiento = Chroma(
         collection_name=config.COLECCION_CONOCIMIENTO,
         embedding_function=embeddings,
@@ -67,10 +69,14 @@ def crear_servicios_ollama(rutas: Rutas | None = None) -> Servicios:
 
     memoria = MemoriaLargoPlazo(embeddings, rutas.memoria_larga)
     memoria.inicializar_desde_semillas(rutas.memoria_inicial)
-    llm = ChatOllama(model=config.MODELO_LLM, temperature=config.TEMPERATURA)
     return configurar_servicios(
-        Servicios(llm=llm, recuperador=recuperador, memoria=memoria, almacen=Almacen(rutas), rutas=rutas, modo="ollama")
+        Servicios(llm=modelos.crear_llm(), recuperador=recuperador, memoria=memoria,
+                  almacen=Almacen(rutas), rutas=rutas, modo=modelos.proveedor())
     )
+
+
+# Nombre anterior, se mantiene por compatibilidad.
+crear_servicios_ollama = crear_servicios_reales
 
 
 def crear_servicios_simulados(rutas: Rutas | None = None) -> Servicios:

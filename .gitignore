@@ -11,8 +11,9 @@ __pycache__/
 .env
 *.env
 
-# Base vectorial generada
+# Base vectorial generada (una por proveedor)
 chroma_db/
+chroma_db_gemini/
 vectorstore/
 
 # Archivos temporales
@@ -32,3 +33,6 @@ salidas/
 
 # Caché de pruebas
 .pytest_cache/
+
+# Videos de respaldo (pesados: subir a Drive y enlazar en el README)
+evidencias/videos/*.mp4
