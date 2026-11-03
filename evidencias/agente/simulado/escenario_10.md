@@ -15,7 +15,7 @@
 ## Respuesta del agente
 
 Resultado de buscar_memoria:
-[{"operacion_id": "", "clave": "contacto_comunicaciones", "cliente": "Ferretería Central Ltda", "tipo": "preferencia", "fecha": "2026-10-16T13:14:57", "valor": "Jorge Díaz", "texto": "Preferencia: cliente Ferretería Central Ltda prefiere que las comunicaciones se dirijan a Jorge Díaz", "distancia": 0.9672}, {"clave": "", "cliente": "Ferretería Central Ltda", "tipo": "episodio", "valor": "", "operacion_id": "OP1003", "fecha": "2026-10-16T13:14:57", "texto": "Episodio OP1003 de Ferretería Central Ltda (2026-10-16): estado Derivada a revisión; hallazgos: ninguno.", "distancia": 1.2615}, {"operacion_id": "OP1003", "clave": "", "tipo": "episodio", "fecha": "2026-10-16T13:14:57", "valor": "diferen
+[{"fecha": "2026-10-16T13:22:30", "cliente": "Ferretería Central Ltda", "clave": "contacto_comunicaciones", "tipo": "preferencia", "valor": "Jorge Díaz", "operacion_id": "", "texto": "Preferencia: cliente Ferretería Central Ltda prefiere que las comunicaciones se dirijan a Jorge Díaz", "distancia": 0.9672}, {"tipo": "episodio", "valor": "", "operacion_id": "OP1003", "cliente": "Ferretería Central Ltda", "clave": "", "fecha": "2026-10-16T13:22:30", "texto": "Episodio OP1003 de Ferretería Central Ltda (2026-10-16): estado Derivada a revisión; hallazgos: ninguno.", "distancia": 1.2615}, {"valor": "diferencia_bultos, diferencia_peso, nomenclatura", "fecha": "2026-10-16T13:22:29", "clave": "", "t
 
 ## Observaciones
 
@@ -30,8 +30,8 @@ Resultado de buscar_memoria:
 - **Recuerda que el cliente Ferretería Central Ltda prefiere que las comunicaciones se dirijan a Jorge Díaz** → Herramientas elegidas por el modelo: guardar_memoria
 
 > Resultado de guardar_memoria:
-{"id": "mem-9cbdc3cb13c8", "tipo": "preferencia", "cliente": "Ferretería Central Ltda", "contacto": "Jorge Díaz"}
+{"id": "mem-61103e0e6e80", "tipo": "preferencia", "cliente": "Ferretería Central Ltda", "contacto": "Jorge Díaz"}
 - **(nuevo hilo) ¿Qué antecedentes o preferencias tienes de Ferretería Central Ltda?** → Intención 'conversacion', 4 recuerdos de largo plazo recuperados
 
 > Resultado de buscar_memoria:
-[{"operacion_id": "", "clave": "contacto_comunicaciones", "cliente": "Ferretería Central Ltda", "tipo": "preferencia", "fecha": "2026-10-16T13:14:57", "valor": "Jorge Díaz", "texto": "Preferencia: cliente Ferretería Central Ltda prefiere que las comunicaciones se dirijan a Jorge Díaz", "distancia": 0.9672}, {"clave": "", "cliente": "Ferretería Central Ltda", "tipo": "episodio", "valor": "", "operacion_id": "OP1003", "fecha": "2026-10-16T13:14:57", "texto": "Episodio 
+[{"fecha": "2026-10-16T13:22:30", "cliente": "Ferretería Central Ltda", "clave": "contacto_comunicaciones", "tipo": "preferencia", "valor": "Jorge Díaz", "operacion_id": "", "texto": "Preferencia: cliente Ferretería Central Ltda prefiere que las comunicaciones se dirijan a Jorge Díaz", "distancia": 0.9672}, {"tipo": "episodio", "valor": "", "operacion_id": "OP1003", "cliente": "Ferretería Central Ltda", "clave": "", "fecha": "2026-10-16T13:22:30", "texto": "Episodio 

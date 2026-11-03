@@ -3,7 +3,7 @@
 - Modo: **simulado**
 - Objetivo: Verificar el flujo base sin hallazgos.
 - Entrada del usuario: `Revisa la OP1001`
-- Tiempo de ejecución: 0.0 s
+- Tiempo de ejecución: 0.1 s
 
 ## Memoria de largo plazo recuperada
 

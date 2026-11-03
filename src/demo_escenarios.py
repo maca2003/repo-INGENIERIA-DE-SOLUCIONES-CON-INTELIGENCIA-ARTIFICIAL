@@ -147,14 +147,18 @@ def main() -> None:
     memoria_original = servicios.memoria
     rutas_sin_memoria = copy.copy(demo.rutas)
     rutas_sin_memoria.salidas = demo.salidas / "sin_memoria"
+    from agente.almacen import Almacen
+    almacen_original, rutas_originales = servicios.almacen, servicios.rutas
     servicios.memoria = MemoriaLargoPlazo(memoria_original.almacen.embeddings, rutas_sin_memoria.salidas / "chroma_vacia",
                                           coleccion="memoria_vacia")
+    servicios.almacen, servicios.rutas = Almacen(rutas_sin_memoria), rutas_sin_memoria  # registro limpio
     r4b, p = demo.ejecutar("e4b", "Revisa la OP1004")
-    servicios.memoria = memoria_original
+    servicios.memoria, servicios.almacen, servicios.rutas = memoria_original, almacen_original, rutas_originales
     reforzada_b = any(t["accion"] == "validar_concordancia" and t["args"].get("reforzada") for t in r4b["plan"])
     demo.registrar(5, "Control: OP1004 sin memoria de largo plazo", "Comparar el plan con el escenario 4 para "
                    "evidenciar el efecto de la memoria.", "Revisa la OP1004", r4b, p,
-                   notas=["Sin antecedentes la concordancia se planifica con prioridad 2 y sin verificación reforzada."],
+                   notas=["Sin antecedentes la concordancia se planifica con prioridad 2, después de documentos y sin "
+                          "verificación reforzada. Se usa un registro de observaciones limpio para aislar el efecto."],
                    criterio=("El plan NO incluye validación reforzada", not reforzada_b))
 
     # 5. Mercancía no catalogada + documento ilegible

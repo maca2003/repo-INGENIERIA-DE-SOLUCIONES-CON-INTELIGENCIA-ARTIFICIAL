@@ -122,12 +122,13 @@ def escalar_a_responsable(operacion_id: str, motivo: str, ids_observaciones: lis
         servicios.almacen.actualizar_observacion(id_obs, {"estado": reglas.OBS_ESCALADA,
                                                           "responsable_seguimiento": "Responsable de revisión"})
     observaciones = [o for o in servicios.almacen.observaciones(operacion_id) if o["id"] in ids_observaciones]
-    lineas = [f"# Escalamiento {operacion_id}", "", f"- Fecha: {ahora()}", f"- Motivo: {motivo}",
-              "- Destinatario: Responsable de revisión", "", "## Observaciones escaladas", ""]
+    lineas = [f"## Escalamiento {operacion_id}", "", f"- Fecha: {ahora()}", f"- Motivo: {motivo}",
+              "- Destinatario: Responsable de revisión", "", "Observaciones escaladas:", ""]
     lineas += [f"- {o['id']} [{o['nivel']}] {o['descripcion']}" for o in observaciones]
-    lineas += ["", "El agente no resuelve observaciones críticas mediante suposiciones (INT-002)."]
+    lineas += ["", "El agente no resuelve observaciones críticas mediante suposiciones (INT-002).", "", ""]
     ruta = servicios.rutas.carpeta_operacion(operacion_id) / "escalamiento.md"
-    ruta.write_text("\n".join(lineas), encoding="utf-8")
+    with ruta.open("a", encoding="utf-8") as archivo:  # cada escalamiento se agrega, no se sobrescribe
+        archivo.write("\n".join(lineas))
     servicios.almacen.trazar(operacion_id, "Escala una observación", ruta.name,
                              f"{len(ids_observaciones)} observaciones escaladas", motivo)
     return {"ruta": str(ruta), "escaladas": ids_observaciones}

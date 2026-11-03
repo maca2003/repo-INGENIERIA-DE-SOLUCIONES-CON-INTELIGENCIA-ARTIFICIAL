@@ -1,0 +1,25 @@
+flowchart TB
+    U(["Ejecutivo · CLI · Streamlit"])
+    subgraph ORQ["① Orquestación · LangGraph StateGraph"]
+        direction LR
+        RC{"recuperar_contexto<br/>+ enrutar"} -->|revisión| PL["planificar"] --> EJ["ejecutar_tarea<br/>⇄ evaluar"] --> SI["sintetizar"] --> CM["consolidar_memoria"]
+        EJ --> HI["aprobacion_humana<br/>interrupt()"]
+        RC -->|conversación| RA["agente ReAct"] --> CM
+        RC -->|cola| PC["priorizar_cola"]
+    end
+    subgraph HER["② Herramientas LangChain @tool"]
+        direction LR
+        HC["Consulta · 4"] ~~~ HR["Razonamiento · 9"] ~~~ HE["Escritura · 7"]
+    end
+    subgraph DAT["③ Datos y memoria locales"]
+        direction LR
+        KB[("Chroma aduanarag<br/>conocimiento EP1")] ~~~ LTM[("Chroma memoria_agente<br/>largo plazo")] ~~~ CK[("SQLite checkpointer<br/>corto plazo")] ~~~ REG[("Expedientes · registros<br/>trazabilidad")]
+    end
+    subgraph OL["④ Ollama local"]
+        direction LR
+        L1["llama3.2:3b · temperatura 0"] ~~~ L2["qwen3-embedding:0.6b"]
+    end
+    U <--> ORQ
+    ORQ ==> HER
+    HER ==> DAT
+    DAT -.-> OL

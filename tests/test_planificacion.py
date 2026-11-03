@@ -39,6 +39,9 @@ def test_antecedente_en_memoria_cambia_el_plan(agente, rutas):
     concordancia = lambda plan: next(t for t in plan if t["accion"] == "validar_concordancia")  # noqa: E731
     assert concordancia(con_memoria)["args"]["reforzada"] is True and concordancia(con_memoria)["prioridad"] == 1
     assert concordancia(sin_memoria)["args"]["reforzada"] is False and concordancia(sin_memoria)["prioridad"] == 2
+    orden = lambda plan: [t["accion"] for t in plan]  # noqa: E731
+    assert orden(con_memoria).index("validar_concordancia") < orden(con_memoria).index("verificar_documentos")
+    assert orden(sin_memoria).index("validar_concordancia") > orden(sin_memoria).index("verificar_documentos")
 
 
 def test_siguiente_tarea_respeta_prioridad_y_secuencia():

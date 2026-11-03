@@ -103,17 +103,18 @@ def crear_plan(expediente: dict, recuerdos: list[dict], observaciones_abiertas: 
         decisiones.append(decision("planificar", f"Categoría '{categoria}' sin control previo conocido",
                                    "Omitir verificación de permisos", "EXT-001"))
 
-    nueva_tarea(plan, "verificar_documentos", P_ALTA, "Documentos iniciales requeridos (INT-001)")
-
     riesgos = [r for r in recuerdos if r.get("tipo") in ("antecedente", "episodio")
                and r.get("clave") in CLAVES_ANTECEDENTE_RIESGO]
     if riesgos:
+        # El antecedente adelanta la validación de identidad: se planifica
+        # antes que la revisión documental, con validación reforzada.
         nueva_tarea(plan, "validar_concordancia", P_ALTA,
                     f"Antecedente recuperado de memoria: {riesgos[0]['texto'][:90]}...", reforzada=True)
         decisiones.append(decision("planificar", f"Memoria de largo plazo: antecedente '{riesgos[0]['clave']}' del cliente",
-                                   "Validación de concordancia REFORZADA y adelantada a prioridad 1",
+                                   "Validación de concordancia REFORZADA, adelantada a prioridad 1 y antes de documentos",
                                    "Aprendizaje de episodios previos"))
-    else:
+    nueva_tarea(plan, "verificar_documentos", P_ALTA, "Documentos iniciales requeridos (INT-001)")
+    if not riesgos:
         nueva_tarea(plan, "validar_concordancia", P_MEDIA, "Concordancia factura / transporte / lista de empaque (INT-001)",
                     reforzada=False)
 

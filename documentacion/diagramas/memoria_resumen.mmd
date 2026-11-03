@@ -1,0 +1,7 @@
+flowchart TB
+    N(["Nueva solicitud<br/>thread_id"]) --> R["recuperar_contexto"]
+    CK[("CORTO PLAZO<br/>SqliteSaver por hilo<br/>mensajes · operación activa<br/>plan · decisiones<br/>resumen compactado")] -->|retoma estado| R
+    V[("LARGO PLAZO<br/>Chroma memoria_agente<br/>semillas · episodios<br/>preferencias")] -->|búsqueda semántica<br/>filtrada por cliente| R
+    R --> X["plan adaptado<br/>+ redacción personalizada"]
+    X -->|consolidar_memoria| V
+    X -->|checkpoint| CK

@@ -258,6 +258,8 @@ def _ejecutar(tarea: dict, estado: EstadoAgente) -> dict:
     if accion == "escalar":
         criticas = [h for h in hallazgos if h["nivel"] == "critica" and h.get("id_observacion") and not h.get("escalada")]
         motivo = tarea["motivo"] + (f" ({tarea['args']['motivo_tecnico']})" if tarea["args"].get("motivo_tecnico") else "")
+        if any(h.get("reincidencia") for h in criticas):
+            motivo += ". Cliente reincidente: antecedente del mismo tipo en la memoria de largo plazo"
         resultado = POR_NOMBRE["escalar_a_responsable"].invoke({
             "operacion_id": op, "motivo": motivo, "ids_observaciones": [h["id_observacion"] for h in criticas],
         })

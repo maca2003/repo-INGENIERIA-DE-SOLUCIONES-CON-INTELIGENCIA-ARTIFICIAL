@@ -1,0 +1,14 @@
+flowchart LR
+    A(["Revisa OPxxxx"]) --> B["Contexto:<br/>expediente +<br/>recuerdos"]
+    B --> C["Plan priorizado<br/>regulada → permisos p0<br/>no catalogada → RAG p1<br/>antecedente → reforzada p1"]
+    C --> D["Ejecutar tarea<br/>de menor prioridad"]
+    D --> E{"Evaluar<br/>resultado"}
+    E -->|crítico| F["registrar + escalar p0<br/>suspender comunicación"]
+    E -->|corregible| G["fundamentar · registrar<br/>borrador · aprobación"]
+    E -->|sin evidencia /<br/>falla persistente| H["escalar"]
+    E -->|falla| D
+    F & G & H --> I{"¿Quedan<br/>tareas?"}
+    E -->|sin hallazgos| I
+    I -->|sí| D
+    I -->|aprobación| J["interrupt()<br/>estado en SQLite"] --> I
+    I -->|no| K["Estado INT-001<br/>informe + episodio<br/>en memoria"]

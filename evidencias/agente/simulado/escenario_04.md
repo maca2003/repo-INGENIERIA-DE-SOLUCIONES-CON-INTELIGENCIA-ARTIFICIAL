@@ -16,10 +16,10 @@
 | 1 | T01 | verificar_permisos | 0 | completada | verificar_permisos: permiso_faltante(critica), permiso_faltante(critica) |
 | 2 | T07 | registrar_observaciones | 0 | completada | Observaciones registradas: OBS-0006, OBS-0007 |
 | 3 | T08 | escalar | 0 | completada | Escalamiento generado (2 observaciones) |
-| 4 | T02 | verificar_documentos | 1 | completada | verificar_documentos_requeridos: sin hallazgos |
-| 5 | T03 | validar_concordancia | 1 | completada | validar_concordancia: importador_inconsistente(critica) |
-| 6 | T09 | registrar_observaciones | 0 | completada | Observaciones registradas: OBS-0008 |
-| 7 | T10 | escalar | 0 | completada | Escalamiento generado (1 observaciones) |
+| 4 | T02 | validar_concordancia | 1 | completada | validar_concordancia: importador_inconsistente(critica) |
+| 5 | T09 | registrar_observaciones | 0 | completada | Observaciones registradas: OBS-0008 |
+| 6 | T10 | escalar | 0 | completada | Escalamiento generado (1 observaciones) |
+| 7 | T03 | verificar_documentos | 1 | completada | verificar_documentos_requeridos: sin hallazgos |
 | 8 | T06 | fundamentar | 3 | completada | 2/2 hallazgos con respaldo documental |
 | 9 | T04 | validar_nomenclatura | 4 | completada | validar_nomenclatura: sin hallazgos |
 | 10 | T05 | actualizar_estado | 9 | completada | Estado final: Con observaciones |
@@ -29,15 +29,15 @@
 | Paso | Condición detectada | Decisión | Regla |
 |---|---|---|---|
 | planificar | Categoría 'alimentos_origen_vegetal' sujeta a control previo | Verificar permisos con prioridad 0 | EXT-001: control previo |
-| planificar | Memoria de largo plazo: antecedente 'importador_inconsistente' del cliente | Validación de concordancia REFORZADA y adelantada a prioridad 1 | Aprendizaje de episodios previos |
+| planificar | Memoria de largo plazo: antecedente 'importador_inconsistente' del cliente | Validación de concordancia REFORZADA, adelantada a prioridad 1 y antes de documentos | Aprendizaje de episodios previos |
 | planificar | Operación marcada como urgente | Asunto [URGENTE] y plazo de 24 horas, salvo preferencia registrada del cliente | Priorización |
 | T01 verificar_permisos | Hay hallazgos que deben respaldarse en la base documental | Agregar T06 'fundamentar' con prioridad 3 |  |
 | T01 verificar_permisos | Toda inconsistencia debe registrarse (INT-001) | Agregar T07 'registrar_observaciones' con prioridad 5 |  |
 | T01 verificar_permisos | Observación crítica detectada: registrar de inmediato | Elevar prioridad de T07 'registrar_observaciones' de 5 a 0 |  |
 | T01 verificar_permisos | Observación crítica: escalar al responsable (INT-002) | Agregar T08 'escalar' con prioridad 0 |  |
-| T03 validar_concordancia | Toda inconsistencia debe registrarse (INT-001) | Agregar T09 'registrar_observaciones' con prioridad 5 |  |
-| T03 validar_concordancia | Observación crítica detectada: registrar de inmediato | Elevar prioridad de T09 'registrar_observaciones' de 5 a 0 |  |
-| T03 validar_concordancia | Observación crítica: escalar al responsable (INT-002) | Agregar T10 'escalar' con prioridad 0 |  |
+| T02 validar_concordancia | Toda inconsistencia debe registrarse (INT-001) | Agregar T09 'registrar_observaciones' con prioridad 5 |  |
+| T02 validar_concordancia | Observación crítica detectada: registrar de inmediato | Elevar prioridad de T09 'registrar_observaciones' de 5 a 0 |  |
+| T02 validar_concordancia | Observación crítica: escalar al responsable (INT-002) | Agregar T10 'escalar' con prioridad 0 |  |
 
 ## Respuesta del agente
 

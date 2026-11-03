@@ -6,7 +6,7 @@
     "estado_final": "Derivada a revisión",
     "tareas": 4,
     "decisiones": 1,
-    "segundos": 0.0,
+    "segundos": 0.1,
     "criterio": "Estado 'Derivada a revisión' sin observaciones",
     "cumple": true
   },
@@ -48,8 +48,8 @@
     "titulo": "Control: OP1004 sin memoria de largo plazo",
     "archivo": "escenario_05.md",
     "estado_final": "Con observaciones",
-    "tareas": 11,
-    "decisiones": 10,
+    "tareas": 10,
+    "decisiones": 9,
     "segundos": 0.1,
     "criterio": "El plan NO incluye validación reforzada",
     "cumple": true
