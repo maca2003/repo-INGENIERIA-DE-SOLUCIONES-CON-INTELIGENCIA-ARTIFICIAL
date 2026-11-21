@@ -315,7 +315,8 @@ def main() -> None:
         vueltas += [("optimizado", r) for r in range(1, args.repeticiones + 1)]
 
     casos, eventos, contextos = [], [], []
-    with tempfile.TemporaryDirectory() as temporal:
+    # En Windows, ChromaDB mantiene abiertos sus archivos: no fallar al limpiar.
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temporal:
         for modo, repeticion in vueltas:
             print(f"\n== {modo} · vuelta {repeticion} ==")
             c, e, ctx = correr_vuelta(modo, repeticion, args.simulado, Path(temporal))
