@@ -28,6 +28,7 @@ class Servicios:
     almacen: Almacen
     rutas: Rutas
     modo: str = "ollama"
+    precalentamiento_s: float | None = None
 
 
 _SERVICIOS: Servicios | None = None
@@ -67,11 +68,21 @@ def crear_servicios_reales(rutas: Rutas | None = None) -> Servicios:
     def recuperador(pregunta: str, k: int) -> list[tuple[Document, float]]:
         return base_conocimiento.similarity_search_with_score(pregunta, k=k)
 
+    from .observabilidad import medir_recuperacion, obtener_observador
+
     memoria = MemoriaLargoPlazo(embeddings, rutas.memoria_larga)
     memoria.inicializar_desde_semillas(rutas.memoria_inicial)
+    llm = modelos.crear_llm()
+    precalentamiento = None
+    if config.OPTIMIZADO:
+        # Carga los modelos antes de la primera consulta (evita el arranque en frío).
+        precalentamiento = modelos.precalentar(llm, embeddings)
+        if obtener_observador() is not None:
+            obtener_observador().registrar("precalentamiento", modelos.describir(),
+                                           duracion_ms=round(precalentamiento * 1000, 1), estado="ok")
     return configurar_servicios(
-        Servicios(llm=modelos.crear_llm(), recuperador=recuperador, memoria=memoria,
-                  almacen=Almacen(rutas), rutas=rutas, modo=modelos.proveedor())
+        Servicios(llm=llm, recuperador=medir_recuperacion(recuperador), memoria=memoria,
+                  almacen=Almacen(rutas), rutas=rutas, modo=modelos.proveedor(), precalentamiento_s=precalentamiento)
     )
 
 
@@ -84,7 +95,9 @@ def crear_servicios_simulados(rutas: Rutas | None = None) -> Servicios:
     from .simulacion import EmbeddingsLexicos, ModeloSimulado, RecuperadorLexico
 
     rutas = rutas or Rutas()
-    recuperador = RecuperadorLexico(rutas.raiz / "data")
+    from .observabilidad import medir_recuperacion
+
+    recuperador = medir_recuperacion(RecuperadorLexico(rutas.raiz / "data"))
     memoria = MemoriaLargoPlazo(EmbeddingsLexicos(), rutas.memoria_larga)
     memoria.inicializar_desde_semillas(rutas.memoria_inicial)
     return configurar_servicios(

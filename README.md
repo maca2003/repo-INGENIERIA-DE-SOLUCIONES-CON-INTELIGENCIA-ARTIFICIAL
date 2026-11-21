@@ -6,6 +6,7 @@ Proyecto de la asignatura **Ingeniería de Soluciones con Inteligencia Artificia
 |---|---|---|
 | Evaluación Parcial 1 | **AduanaRAG** | Asistente RAG local para consultar procedimientos aduaneros (`src/consultar_rag.py`, `src/app.py`). |
 | Evaluación Parcial 2 | **AduanaAgent** | Agente funcional sobre el RAG. Integra herramientas de consulta, razonamiento y escritura, memoria de corto y largo plazo, y planificación adaptativa (`src/agente/`). |
+| Evaluación Parcial 3 | **Observabilidad** | Métricas de precisión, consistencia, errores, latencia y recursos; análisis de registros; dashboard; optimización de la latencia y protocolos de seguridad ([`documentacion/observabilidad.md`](documentacion/observabilidad.md)). |
 
 > **Advertencia.** Proyecto exclusivamente académico. La organización (*Agencia de Aduanas del Norte*), los clientes, las operaciones y los documentos internos son **simulados**. El agente no autoriza operaciones, no presenta declaraciones y no reemplaza la revisión de un agente de aduana ni la normativa vigente.
 
@@ -207,6 +208,10 @@ La base queda en `chroma_db/` (Ollama) o `chroma_db_gemini/` (Gemini), porque lo
 | Pruebas con el modelo real | `python -m pytest -m real -v` |
 | Exportar el diagrama del grafo | `python src\exportar_diagrama.py` |
 | RAG de la EP1 | `streamlit run src\app.py` o `python src\consultar_rag.py` |
+| **EP3:** benchmark de observabilidad (base vs optimizado) | `python src\evaluar_observabilidad.py` |
+| **EP3:** análisis de registros | `python src\analizar_logs.py` |
+| **EP3:** dashboard de observabilidad | `streamlit run src\dashboard_observabilidad.py` |
+| **EP3:** toda la evidencia de observabilidad | `python src\generar_evidencias.py --solo-observabilidad --capturas` |
 
 Todos los scripts aceptan `--simulado` (por ejemplo, `python src\agente_cli.py --simulado`), que ejecuta el agente **sin LLM** con un modelo y embeddings deterministas. Este modo se usa en las pruebas y en GitHub Actions. Las evidencias válidas del comportamiento con LLM son las de `evidencias/agente/ollama/` o `evidencias/agente/gemini/`.
 
@@ -234,11 +239,14 @@ Comandos dentro del CLI: `/plan`, `/decisiones`, `/memoria`, `/hilo NOMBRE`, `/s
 | `tests/test_planificacion.py` | Prioridades, replanificación, fallas, correcciones y rechazo humano (IE5, IE7) |
 | `tests/test_e2e.py` | Flujos completos de punta a punta, incluida una operación inexistente |
 | `tests/test_integracion_real.py` | Las mismas capacidades con el modelo real del `.env` (se omiten si no está disponible) |
+| `tests/test_observabilidad.py` | Registro de eventos, enmascaramiento, guardarraíl, retención, métricas y reducción de llamadas al LLM (EP3) |
 
 - `evidencias/pytest_output.txt`: salida completa de `pytest -v`.
 - `evidencias/agente/<proveedor>/`: informe por escenario, registro de observaciones, trazabilidad, estados y memoria exportada.
 - `evidencias/capturas/<proveedor>/`: capturas de la interfaz en las 4 escenas de la demo.
 - `.github/workflows/pruebas.yml`: ejecuta las pruebas y los escenarios en cada *push*.
+- `evidencias/observabilidad/<proveedor>/`: métricas (`metricas.json`, `resumen.md`), casos (`casos.csv`), registros (`eventos.jsonl`) y hallazgos (`hallazgos_logs.md`) de la EP3.
+- `evidencias/capturas/dashboard/<proveedor>/`: capturas de cada pestaña del dashboard.
 - `evidencias/` (raíz): evidencias de la EP1 (evaluación RAG: 10/10).
 
 ### 8.1 Documentación por fases
@@ -251,6 +259,7 @@ Comandos dentro del CLI: `/plan`, `/decisiones`, `/memoria`, `/hilo NOMBRE`, `/s
 | [`documentacion/reglas.md`](documentacion/reglas.md) | Prioridades, reglas de replanificación y reglas de estado |
 | [`documentacion/diagrama_orquestacion.md`](documentacion/diagrama_orquestacion.md) | Diagramas Mermaid de orquestación y flujo |
 | [`documentacion/guion_demo.md`](documentacion/guion_demo.md) | Guion de 10 minutos en 4 escenas, roles y plan B |
+| [`documentacion/observabilidad.md`](documentacion/observabilidad.md) | EP3: arquitectura de observabilidad, métricas, optimización, boceto del dashboard y protocolos de seguridad |
 
 ## 9. Estructura del proyecto
 
@@ -261,7 +270,7 @@ Comandos dentro del CLI: `/plan`, `/decisiones`, `/memoria`, `/hilo NOMBRE`, `/s
 │   └── memoria_inicial/           # Semillas de memoria de largo plazo
 ├── documentacion/                 # Alcance, herramientas, reglas, guion, guía por fases
 │   └── diagramas/                 # Diagramas Mermaid (.mmd) y PNG
-├── evidencias/                    # pytest_output, agente/<proveedor>/, capturas/<proveedor>/
+├── evidencias/                    # pytest_output, agente/, capturas/, observabilidad/<proveedor>/
 ├── src/
 │   ├── agente/
 │   │   ├── config.py              # Parámetros (.env)
@@ -273,8 +282,12 @@ Comandos dentro del CLI: `/plan`, `/decisiones`, `/memoria`, `/hilo NOMBRE`, `/s
 │   │   ├── modelos.py             # Proveedor de modelos: Ollama o Gemini
 │   │   ├── servicios.py           # Inyección real / simulado
 │   │   ├── simulacion.py          # Componentes deterministas para pruebas
-│   │   └── almacen.py             # Expedientes, registros y trazabilidad
+│   │   ├── almacen.py             # Expedientes, registros y trazabilidad
+│   │   ├── observabilidad.py      # (EP3) Registro de eventos, trazas y recursos
+│   │   ├── seguridad.py           # (EP3) Enmascaramiento de datos y guardarraíl
+│   │   └── analitica.py           # (EP3) Métricas y análisis de registros
 │   ├── agente_cli.py · app_agente.py · demo_escenarios.py · generar_evidencias.py
+│   ├── (EP3) evaluar_observabilidad.py · analizar_logs.py · dashboard_observabilidad.py
 │   ├── calibrar_umbral.py · exportar_diagrama.py
 │   └── (EP1) cargar_documentos.py · fragmentar_documentos.py · crear_base_vectorial.py
 │              consultar_rag.py · evaluar_rag.py · app.py · probar_modelos.py
@@ -305,6 +318,7 @@ Comandos dentro del CLI: `/plan`, `/decisiones`, `/memoria`, `/hilo NOMBRE`, `/s
 - Opera con expedientes simulados en JSON. Una versión real requiere OCR o extracción desde PDF, control de acceso y respaldo.
 - La calidad de la elección de herramientas depende del modelo local. Con 3B puede fallar en preguntas ambiguas, por eso el flujo crítico es determinista.
 - El umbral de distancia debe recalibrarse si cambian los documentos o el modelo de embeddings.
+- Los registros de observabilidad enmascaran datos personales y se eliminan a los 30 días; las entradas peligrosas se bloquean antes de llegar al modelo (ver `documentacion/observabilidad.md`).
 
 ## 12. Declaración de uso de inteligencia artificial
 

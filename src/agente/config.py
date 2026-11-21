@@ -59,6 +59,20 @@ MAX_REINTENTOS_HERRAMIENTA = _entero("AGENTE_MAX_REINTENTOS", 1)
 # "inconsistencia importante en el valor declarado" (INT-002).
 UMBRAL_DIFERENCIA_VALOR = _decimal("AGENTE_UMBRAL_DIFERENCIA_VALOR", 0.05)
 
+# Rendimiento (EP3). AGENTE_OPTIMIZADO=false reproduce la versión EP2 (línea
+# base) para comparar latencias con src/evaluar_observabilidad.py.
+OPTIMIZADO = os.getenv("AGENTE_OPTIMIZADO", "true").strip().lower() in ("1", "true", "si", "sí")
+# Tiempo que Ollama mantiene el modelo cargado en memoria entre consultas.
+KEEP_ALIVE = os.getenv("AGENTE_KEEP_ALIVE", "30m")
+# Máximo de tokens generados por respuesta y ventana de contexto.
+NUM_PREDICT = _entero("AGENTE_NUM_PREDICT", 320)
+NUM_CTX = _entero("AGENTE_NUM_CTX", 4096)
+
+# Observabilidad y privacidad (EP3).
+OBSERVABILIDAD = os.getenv("AGENTE_OBSERVABILIDAD", "true").strip().lower() in ("1", "true", "si", "sí")
+RETENCION_LOGS_DIAS = _entero("AGENTE_RETENCION_LOGS_DIAS", 30)
+MAX_LARGO_ENTRADA = _entero("AGENTE_MAX_LARGO_ENTRADA", 1000)
+
 # Fecha usada para priorizar la cola (AAAA-MM-DD). Vacía = fecha actual.
 FECHA_REFERENCIA = os.getenv("AGENTE_FECHA_REFERENCIA", "")
 

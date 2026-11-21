@@ -43,6 +43,11 @@ def crear_llm(temperatura: float | None = None):
         )
     from langchain_ollama import ChatOllama
 
+    if config.OPTIMIZADO:
+        # keep_alive evita que Ollama descargue el modelo tras 5 minutos sin uso
+        # (arranque en frío); num_predict acota la longitud de cada respuesta.
+        return ChatOllama(model=config.MODELO_LLM, temperature=temperatura, keep_alive=config.KEEP_ALIVE,
+                          num_predict=config.NUM_PREDICT, num_ctx=config.NUM_CTX)
     return ChatOllama(model=config.MODELO_LLM, temperature=temperatura)
 
 
@@ -56,7 +61,25 @@ def crear_embeddings():
         )
     from langchain_ollama import OllamaEmbeddings
 
+    if config.OPTIMIZADO:
+        return OllamaEmbeddings(model=config.MODELO_EMBEDDINGS, keep_alive=config.KEEP_ALIVE)
     return OllamaEmbeddings(model=config.MODELO_EMBEDDINGS)
+
+
+def precalentar(llm, embeddings) -> float:
+    """Carga ambos modelos en memoria antes de la primera consulta del usuario.
+
+    Devuelve los segundos que tardó. Si falla, no detiene el agente.
+    """
+    import time
+
+    inicio = time.perf_counter()
+    try:
+        embeddings.embed_query("precalentamiento")
+        llm.invoke("Responde solo: ok")
+    except Exception:
+        pass
+    return round(time.perf_counter() - inicio, 2)
 
 
 def carpeta_chroma(raiz: Path = config.RAIZ_PROYECTO) -> Path:

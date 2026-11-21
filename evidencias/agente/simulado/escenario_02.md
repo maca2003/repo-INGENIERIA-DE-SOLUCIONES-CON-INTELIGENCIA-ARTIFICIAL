@@ -1,7 +1,7 @@
 # Escenario 2: Documentos faltantes y preferencia del cliente
 
 - Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
-- Fecha de ejecución: 2026-11-03 00:35
+- Fecha de ejecución: 2026-11-21 14:13
 - Objetivo: Detectar faltantes (incluye certificado de origen por preferencia arancelaria) y usar la preferencia de contacto guardada en memoria.
 - Entrada del usuario: `Revisa la OP1002`
 - Tiempo de ejecución: 0.1 s
@@ -64,10 +64,10 @@ Agencia de Aduanas del Norte (borrador generado por AduanaAgent, sujeto a revisi
 
 **Revisión OP1002 – Pendiente de documentación**
 
-(Modo simulado) Operación OP1002 – estado final: Pendiente de documentación.
+2 hallazgos: 0 críticos, 2 corregibles y 0 informativos.
 - [corregible] No se recibió: Lista de empaque.
 - [corregible] No se recibió: Certificado de origen (preferencia arancelaria).
-Decisiones: Agregar T05 'fundamentar' con prioridad 3; Agregar T06 'registrar_observaciones' con prioridad 5; Agregar T07 'redactar_comunicacion' con prioridad 6; Agregar T08 'aprobar_comunicacion' con prioridad 7; Dirigir la comunicación a ese contacto y usar plazo 48 horas; Enviar (aprobada)
+Comunicación al cliente: aprobada.
 
 Informe: salidas/demo_simulado/OP1002/informe_revision.md
 

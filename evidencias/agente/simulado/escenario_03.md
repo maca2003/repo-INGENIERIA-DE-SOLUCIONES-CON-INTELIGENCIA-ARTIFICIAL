@@ -1,7 +1,7 @@
 # Escenario 3: Inconsistencias corregibles
 
 - Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
-- Fecha de ejecución: 2026-11-03 00:35
+- Fecha de ejecución: 2026-11-21 14:13
 - Objetivo: Detectar diferencias de bultos y peso y comunicar al cliente.
 - Entrada del usuario: `Revisa la OP1003`
 - Tiempo de ejecución: 0.1 s
@@ -60,11 +60,11 @@ Agencia de Aduanas del Norte (borrador generado por AduanaAgent, sujeto a revisi
 
 **Revisión OP1003 – Con observaciones**
 
-(Modo simulado) Operación OP1003 – estado final: Con observaciones.
+3 hallazgos: 0 críticos, 2 corregibles y 1 informativos.
 - [corregible] Bultos: factura indica 120 y lista de empaque indica 112.
 - [corregible] Peso (kg): factura indica 2400.0 y lista de empaque indica 2310.0.
 - [informativa] El archivo 'lista empaque final.pdf' no sigue la convención LISTAEMPAQUE_OP1003_V1.
-Decisiones: Agregar T05 'fundamentar' con prioridad 3; Agregar T06 'registrar_observaciones' con prioridad 5; Agregar T07 'redactar_comunicacion' con prioridad 6; Agregar T08 'aprobar_comunicacion' con prioridad 7; Agregar T09 'fundamentar' con prioridad 3; Enviar (aprobada)
+Comunicación al cliente: aprobada.
 
 Informe: salidas/demo_simulado/OP1003/informe_revision.md
 

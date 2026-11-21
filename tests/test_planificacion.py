@@ -100,5 +100,8 @@ def test_enrutamiento_por_intencion(ejecutar):
     charla, _ = ejecutar("¿Qué documentos iniciales se requieren?", hilo="r3")
     assert revision["intencion"] == "revision"
     assert cola["intencion"] == "cola" and "Orden recomendado" in cola["messages"][-1].content
-    assert charla["intencion"] == "conversacion"
-    assert any("consultar_procedimientos" in b["detalle"] for b in charla["bitacora"])
+    assert charla["intencion"] == "consulta"  # ruta directa: pregunta de procedimiento
+    assert any("Ruta directa (sin ReAct): consultar_procedimientos" in b["detalle"] for b in charla["bitacora"])
+    memoria, _ = ejecutar("¿Qué antecedentes tienes del cliente Distribuidora Sur SpA?", hilo="r4")
+    assert memoria["intencion"] == "conversacion"  # ambigua: decide el agente ReAct
+    assert any(b["nodo"] == "agente_conversacional" for b in memoria["bitacora"])

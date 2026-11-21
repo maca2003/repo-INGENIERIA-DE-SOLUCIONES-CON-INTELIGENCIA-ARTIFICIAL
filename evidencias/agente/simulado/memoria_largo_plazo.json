@@ -1,18 +1,18 @@
 [
   {
-    "id": "mem-6867bd2a79f7",
+    "id": "mem-3ab49722a9c9",
     "texto": "Preferencia de Comercial Pacífico Ltda: las comunicaciones de observaciones deben dirigirse a Paula Rojas, encargada de comercio exterior, e indicar un plazo de respuesta de 48 horas.",
-    "fecha": "2026-11-03T00:35:34",
-    "operacion_id": "",
-    "valor": "Paula Rojas (encargada de comercio exterior); plazo de respuesta 48 horas",
-    "clave": "contacto_comunicaciones",
     "tipo": "preferencia",
-    "cliente": "Comercial Pacífico Ltda"
+    "operacion_id": "",
+    "fecha": "2026-11-21T14:13:11",
+    "clave": "contacto_comunicaciones",
+    "cliente": "Comercial Pacífico Ltda",
+    "valor": "Paula Rojas (encargada de comercio exterior); plazo de respuesta 48 horas"
   },
   {
-    "id": "mem-61b850cc97e4",
+    "id": "mem-87f6569dafc7",
     "texto": "Antecedente de Distribuidora Sur SpA: en la operación OP0950 se detectó una identificación incorrecta del importador en el documento de transporte, clasificada como observación crítica y escalada al responsable de revisión.",
-    "fecha": "2026-11-03T00:35:34",
+    "fecha": "2026-11-21T14:13:11",
     "clave": "importador_inconsistente",
     "cliente": "Distribuidora Sur SpA",
     "operacion_id": "OP0950",
@@ -20,93 +20,93 @@
     "tipo": "antecedente"
   },
   {
-    "id": "mem-46b64c443b9c",
+    "id": "mem-37b1647e9063",
     "texto": "Antecedente de Importadora Andes SpA: sus últimas operaciones fueron derivadas a revisión sin observaciones.",
-    "valor": "ninguna",
-    "clave": "sin_observaciones",
-    "tipo": "antecedente",
-    "fecha": "2026-11-03T00:35:34",
-    "operacion_id": "OP0921",
-    "cliente": "Importadora Andes SpA"
-  },
-  {
-    "id": "mem-e29dfcf6c012",
-    "texto": "Episodio OP1001 de Importadora Andes SpA (2026-11-03): estado Derivada a revisión; hallazgos: ninguno.",
-    "tipo": "episodio",
-    "clave": "",
     "cliente": "Importadora Andes SpA",
-    "fecha": "2026-11-03T00:35:34",
-    "operacion_id": "OP1001",
-    "valor": ""
+    "tipo": "antecedente",
+    "operacion_id": "OP0921",
+    "fecha": "2026-11-21T14:13:11",
+    "valor": "ninguna",
+    "clave": "sin_observaciones"
   },
   {
-    "id": "mem-6e845eb97556",
-    "texto": "Episodio OP1002 de Comercial Pacífico Ltda (2026-11-03): estado Pendiente de documentación; hallazgos: documento_faltante.",
-    "fecha": "2026-11-03T00:35:34",
+    "id": "mem-0330f651edda",
+    "texto": "Episodio OP1001 de Importadora Andes SpA (2026-11-21): estado Derivada a revisión; hallazgos: ninguno.",
+    "cliente": "Importadora Andes SpA",
     "tipo": "episodio",
+    "valor": "",
+    "clave": "",
+    "operacion_id": "OP1001",
+    "fecha": "2026-11-21T14:13:11"
+  },
+  {
+    "id": "mem-f85334fdd396",
+    "texto": "Episodio OP1002 de Comercial Pacífico Ltda (2026-11-21): estado Pendiente de documentación; hallazgos: documento_faltante.",
+    "operacion_id": "OP1002",
+    "tipo": "episodio",
+    "cliente": "Comercial Pacífico Ltda",
     "clave": "",
     "valor": "documento_faltante",
-    "operacion_id": "OP1002",
-    "cliente": "Comercial Pacífico Ltda"
+    "fecha": "2026-11-21T14:13:11"
   },
   {
-    "id": "mem-35ddd3599212",
-    "texto": "Episodio OP1003 de Ferretería Central Ltda (2026-11-03): estado Con observaciones; hallazgos: diferencia_bultos, diferencia_peso, nomenclatura.",
+    "id": "mem-2fa6055a9b22",
+    "texto": "Episodio OP1003 de Ferretería Central Ltda (2026-11-21): estado Con observaciones; hallazgos: diferencia_bultos, diferencia_peso, nomenclatura.",
     "cliente": "Ferretería Central Ltda",
-    "clave": "",
     "valor": "diferencia_bultos, diferencia_peso, nomenclatura",
-    "fecha": "2026-11-03T00:35:35",
+    "clave": "",
     "operacion_id": "OP1003",
+    "fecha": "2026-11-21T14:13:11",
     "tipo": "episodio"
   },
   {
-    "id": "mem-a48037e9840b",
-    "texto": "Episodio OP1004 de Distribuidora Sur SpA (2026-11-03): estado Con observaciones; hallazgos: importador_inconsistente, permiso_faltante.",
-    "valor": "importador_inconsistente, permiso_faltante",
+    "id": "mem-9c1e90b721d7",
+    "texto": "Episodio OP1004 de Distribuidora Sur SpA (2026-11-21): estado Con observaciones; hallazgos: importador_inconsistente, permiso_faltante.",
+    "fecha": "2026-11-21T14:13:11",
     "operacion_id": "OP1004",
+    "valor": "importador_inconsistente, permiso_faltante",
     "tipo": "antecedente",
     "cliente": "Distribuidora Sur SpA",
-    "clave": "importador_inconsistente",
-    "fecha": "2026-11-03T00:35:35"
+    "clave": "importador_inconsistente"
   },
   {
-    "id": "mem-58dd1c42eeba",
-    "texto": "Episodio OP1005 de Tecnología Austral SpA (2026-11-03): estado Con observaciones; hallazgos: documento_ilegible, requisito_por_confirmar.",
+    "id": "mem-1016d21650bc",
+    "texto": "Episodio OP1005 de Tecnología Austral SpA (2026-11-21): estado Con observaciones; hallazgos: documento_ilegible, requisito_por_confirmar.",
     "cliente": "Tecnología Austral SpA",
+    "fecha": "2026-11-21T14:13:11",
     "clave": "",
-    "operacion_id": "OP1005",
-    "tipo": "episodio",
     "valor": "documento_ilegible, requisito_por_confirmar",
-    "fecha": "2026-11-03T00:35:35"
+    "operacion_id": "OP1005",
+    "tipo": "episodio"
   },
   {
-    "id": "mem-0572857b80a7",
-    "texto": "Episodio OP1003 de Ferretería Central Ltda (2026-11-03): estado Derivada a revisión; hallazgos: ninguno.",
-    "fecha": "2026-11-03T00:35:35",
-    "tipo": "episodio",
+    "id": "mem-f405babbca0c",
+    "texto": "Episodio OP1003 de Ferretería Central Ltda (2026-11-21): estado Derivada a revisión; hallazgos: ninguno.",
     "clave": "",
+    "fecha": "2026-11-21T14:13:11",
+    "tipo": "episodio",
     "cliente": "Ferretería Central Ltda",
-    "operacion_id": "OP1003",
-    "valor": ""
+    "valor": "",
+    "operacion_id": "OP1003"
   },
   {
-    "id": "mem-13d83fa7ef02",
-    "texto": "Episodio OP1002 de Comercial Pacífico Ltda (2026-11-03): estado Pendiente de documentación; hallazgos: documento_faltante.",
-    "tipo": "episodio",
-    "valor": "documento_faltante",
-    "clave": "",
-    "operacion_id": "OP1002",
+    "id": "mem-91e586927fbe",
+    "texto": "Episodio OP1002 de Comercial Pacífico Ltda (2026-11-21): estado Pendiente de documentación; hallazgos: documento_faltante.",
     "cliente": "Comercial Pacífico Ltda",
-    "fecha": "2026-11-03T00:35:35"
+    "fecha": "2026-11-21T14:13:11",
+    "clave": "",
+    "tipo": "episodio",
+    "operacion_id": "OP1002",
+    "valor": "documento_faltante"
   },
   {
-    "id": "mem-16c8825d8b94",
+    "id": "mem-bf1e0bf9a00c",
     "texto": "Preferencia: cliente Ferretería Central Ltda prefiere que las comunicaciones se dirijan a Jorge Díaz",
+    "tipo": "preferencia",
+    "clave": "contacto_comunicaciones",
     "valor": "Jorge Díaz",
     "operacion_id": "",
-    "fecha": "2026-11-03T00:35:35",
-    "cliente": "Ferretería Central Ltda",
-    "clave": "contacto_comunicaciones",
-    "tipo": "preferencia"
+    "fecha": "2026-11-21T14:13:11",
+    "cliente": "Ferretería Central Ltda"
   }
 ]

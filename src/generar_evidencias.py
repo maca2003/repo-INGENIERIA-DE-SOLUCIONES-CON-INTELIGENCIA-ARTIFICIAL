@@ -5,6 +5,7 @@ Uso (desde la raíz del proyecto, con el entorno virtual activo):
     python src/generar_evidencias.py              # con el modelo real del .env
     python src/generar_evidencias.py --capturas   # + capturas de la interfaz
     python src/generar_evidencias.py --simulado   # sin LLM (solo para probar)
+    python src/generar_evidencias.py --solo-observabilidad --capturas   # solo la EP3
 
 Pasos que ejecuta y dónde deja cada resultado:
 
@@ -14,12 +15,16 @@ Pasos que ejecuta y dónde deja cada resultado:
     4. pytest -m real -v         -> evidencias/pytest_real_output.txt
     5. demo_escenarios.py        -> evidencias/agente/<proveedor>/
     6. evaluar_rag.py (EP1)      -> evidencias/resultados_evaluacion.json
-    7. --capturas: Streamlit + Playwright -> evidencias/capturas/<proveedor>/*.png
+    --capturas: Streamlit + Playwright -> evidencias/capturas/<proveedor>/*.png
+    7. evaluar_observabilidad.py -> evidencias/observabilidad/<proveedor>/ (métricas base vs optimizado)
+    8. analizar_logs.py          -> evidencias/observabilidad/<proveedor>/hallazgos_logs.md
+    --capturas: dashboard        -> evidencias/capturas/dashboard/<proveedor>/*.png
 
 Al final escribe evidencias/RESUMEN_EVIDENCIAS.md con el estado de cada paso.
 """
 
 import argparse
+import unicodedata
 import os
 import subprocess
 import sys
@@ -150,11 +155,60 @@ def capturar_pantallas(simulado: bool, proveedor: str) -> dict:
             "archivo": f"evidencias/capturas/{proveedor}/", "resumen": f"{len(archivos)} capturas"}
 
 
+def capturar_dashboard(proveedor: str) -> dict:
+    """Captura cada pestaña del dashboard de observabilidad (EP3)."""
+    print("\n=== Capturas del dashboard de observabilidad ===")
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return {"paso": "Capturas del dashboard", "estado": "OMITIDO (falta Playwright)", "segundos": 0,
+                "archivo": "-", "resumen": "Instalar requirements-evidencias.txt"}
+    carpeta = EVIDENCIAS / "capturas" / "dashboard" / proveedor
+    carpeta.mkdir(parents=True, exist_ok=True)
+    puerto = "8598"
+    servidor = subprocess.Popen(
+        [sys.executable, "-m", "streamlit", "run", "src/dashboard_observabilidad.py", "--server.headless", "true",
+         "--server.port", puerto, "--browser.gatherUsageStats", "false"],
+        cwd=RAIZ, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    inicio = time.perf_counter()
+    archivos = []
+    try:
+        if not esperar_servidor(f"http://localhost:{puerto}"):
+            raise RuntimeError("Streamlit no respondió")
+        with sync_playwright() as p:
+            navegador = p.chromium.launch(executable_path=os.getenv("PLAYWRIGHT_CHROMIUM") or None)
+            pagina = navegador.new_page(viewport={"width": 1500, "height": 1000})
+            pagina.goto(f"http://localhost:{puerto}")
+            pagina.get_by_role("tab").first.wait_for(timeout=60_000)
+            pagina.get_by_text(f"Benchmark · {proveedor}").click()
+            pagina.wait_for_timeout(4000)
+            for i, pestaña in enumerate(pagina.get_by_role("tab").all(), start=1):
+                nombre = pestaña.inner_text().strip()
+                pestaña.click()
+                pagina.wait_for_timeout(3000)
+                limpio = unicodedata.normalize("NFKD", nombre.lower()).encode("ascii", "ignore").decode()
+                archivo = f"{i:02d}_{limpio.replace(' ', '_')}.png"
+                pagina.screenshot(path=str(carpeta / archivo), full_page=True)
+                archivos.append(archivo)
+                print(f"  captura: evidencias/capturas/dashboard/{proveedor}/{archivo}")
+            navegador.close()
+        estado = "OK"
+    except Exception as error:
+        estado = "ERROR: " + str(error).strip().splitlines()[0][:150]
+        print(estado)
+    finally:
+        servidor.terminate()
+    return {"paso": "Capturas del dashboard", "estado": estado, "segundos": round(time.perf_counter() - inicio, 1),
+            "archivo": f"evidencias/capturas/dashboard/{proveedor}/", "resumen": f"{len(archivos)} capturas"}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Genera la evidencia del proyecto")
     parser.add_argument("--simulado", action="store_true", help="sin LLM (no sirve como evidencia real)")
     parser.add_argument("--capturas", action="store_true", help="captura la interfaz con Playwright")
     parser.add_argument("--sin-rag", action="store_true", help="omite la evaluación RAG de la EP1 (más rápido)")
+    parser.add_argument("--solo-observabilidad", action="store_true",
+                        help="solo los pasos de la EP3: benchmark, análisis de registros y capturas del dashboard")
     args = parser.parse_args()
     py = sys.executable
     pasos = []
@@ -177,6 +231,11 @@ def main() -> None:
             pasos.append(ejecutar("2. Crear base vectorial", [py, "src/crear_base_vectorial.py"],
                                   EJECUCION / "02_base_vectorial.txt", 1800))
 
+    if args.solo_observabilidad:
+        observabilidad(args, py, proveedor, pasos)
+        escribir_resumen(pasos, proveedor, descripcion, sufijo="_observabilidad")
+        return
+
     pasos.append(ejecutar("3. Pruebas automatizadas (suite completa)", [py, "-m", "pytest", "-v"],
                           EVIDENCIAS / "pytest_output.txt", 1800))
     if not args.simulado:
@@ -188,10 +247,21 @@ def main() -> None:
         pasos.append(ejecutar("6. Evaluación RAG (EP1)", [py, "src/evaluar_rag.py"], EJECUCION / "06_evaluacion_rag.txt", 3600))
     if args.capturas:
         pasos.append(capturar_pantallas(args.simulado, proveedor))
+    observabilidad(args, py, proveedor, pasos)
     escribir_resumen(pasos, proveedor, descripcion)
 
 
-def escribir_resumen(pasos: list[dict], proveedor: str, descripcion: str) -> None:
+def observabilidad(args, py: str, proveedor: str, pasos: list[dict]) -> None:
+    """Pasos de la EP3: métricas base vs optimizado, análisis de registros y dashboard."""
+    bench = [py, "src/evaluar_observabilidad.py"] + (["--simulado"] if args.simulado else [])
+    pasos.append(ejecutar("7. Benchmark de observabilidad", bench, EJECUCION / f"07_observabilidad_{proveedor}.txt", 7200))
+    pasos.append(ejecutar("8. Análisis de registros", [py, "src/analizar_logs.py", "--proveedor", proveedor],
+                          EJECUCION / f"08_analisis_logs_{proveedor}.txt", 600))
+    if args.capturas:
+        pasos.append(capturar_dashboard(proveedor))
+
+
+def escribir_resumen(pasos: list[dict], proveedor: str, descripcion: str, sufijo: str = "") -> None:
     lineas = [
         "# Resumen de evidencias", "",
         f"- Fecha: {datetime.now():%Y-%m-%d %H:%M}",
@@ -204,7 +274,7 @@ def escribir_resumen(pasos: list[dict], proveedor: str, descripcion: str) -> Non
                       f"{p['resumen'].replace('|', '/')} |")
     if proveedor == "simulado":
         lineas += ["", "> Ejecución en modo simulado: verifica la orquestación, pero NO es evidencia del LLM real."]
-    destino = EVIDENCIAS / f"RESUMEN_EVIDENCIAS_{proveedor}.md"
+    destino = EVIDENCIAS / f"RESUMEN_EVIDENCIAS_{proveedor}{sufijo}.md"
     destino.write_text("\n".join(lineas) + "\n", encoding="utf-8")
     print(f"\nResumen: {destino.relative_to(RAIZ)}")
     for p in pasos:

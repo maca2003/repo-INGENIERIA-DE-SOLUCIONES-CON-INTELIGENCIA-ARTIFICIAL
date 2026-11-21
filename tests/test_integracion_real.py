@@ -67,5 +67,7 @@ def test_agente_conversacional_real_usa_herramienta(agente_real):
     grafo, _ = agente_real
     resultado = grafo.invoke({"messages": [HumanMessage(content="¿Qué documentos iniciales deben revisarse?")]},
                              configuracion_hilo("real-chat"))
-    detalle = next(b["detalle"] for b in reversed(resultado["bitacora"]) if b["nodo"] == "agente_conversacional")
+    # Con AGENTE_OPTIMIZADO la pregunta va por la ruta directa; sin él, por ReAct.
+    detalle = next(b["detalle"] for b in reversed(resultado["bitacora"])
+                   if b["nodo"] in ("agente_conversacional", "respuesta_directa"))
     assert "ninguna" not in detalle

@@ -35,12 +35,19 @@ from .planificador import (
     siguiente_tarea,
 )
 from .prompts import PROMPT_COMPACTACION, PROMPT_CONVERSACIONAL, PROMPT_SINTESIS
+from .seguridad import MENSAJE_BLOQUEO, enmascarar, validar_entrada
 from .servicios import obtener_servicios
 
 PATRON_OPERACION = re.compile(r"\bOP\s?-?(\d{4})\b", re.IGNORECASE)
 VERBOS_REVISION = ("revisa", "revisar", "revisión", "revision", "procesa", "procesar", "analiza", "analizar",
                    "reprocesa", "evalúa", "evalua", "valida", "validar")
 PALABRAS_CORRECCION = ("corregid", "corrección", "correccion", "llegó", "llego", "nueva versión", "nueva version")
+# Ruta directa (EP3): intenciones inequívocas que no necesitan que el LLM elija
+# herramientas (ReAct). Ahorra una o dos llamadas al modelo por consulta.
+PALABRAS_MEMORIA = ("recuerda", "preferencia", "prefiere", "historial")
+PALABRAS_LISTADO = ("quedaron", "quedan", "tiene", "tienen", "registrad", "pendiente", "abierta", "hay ")
+PISTAS_PREGUNTA = ("?", "¿", "qué ", "que ", "cómo", "como ", "cuándo", "cuando", "cuál", "cual", "debe",
+                   "puede", "procedimiento", "requisit", "clasifica", "función", "diferencia")
 PALABRAS_COLA = ("prioriza", "priorizar", "cola", "jornada", "qué reviso primero", "que reviso primero", "orden de revisión")
 
 
@@ -104,19 +111,38 @@ def _ultimo_texto_humano(estado: EstadoAgente) -> str:
     return ""
 
 
+def _es_memoria(bajo: str) -> bool:
+    return any(p in bajo for p in PALABRAS_MEMORIA) or (
+        "antecedente" in bajo and any(c in bajo for c in ("cliente", "ltda", "spa")))
+
+
+def clasificar_intencion(texto: str, operacion: str, operacion_activa: str) -> str:
+    """Enrutamiento determinista: solo lo ambiguo pasa al agente ReAct."""
+    bajo = texto.lower()
+    if operacion and any(v in bajo for v in VERBOS_REVISION + PALABRAS_CORRECCION):
+        return "revision"
+    if any(p in bajo for p in PALABRAS_COLA):
+        return "cola"
+    if ajustes.OPTIMIZADO and not _es_memoria(bajo):
+        if "observaci" in bajo and any(p in bajo for p in PALABRAS_LISTADO) and (operacion or operacion_activa):
+            return "listado"
+        if not operacion and any(p in bajo for p in PISTAS_PREGUNTA):
+            return "consulta"
+    return "conversacion"
+
+
 def recuperar_contexto(estado: EstadoAgente) -> dict:
     servicios = obtener_servicios()
     texto = _ultimo_texto_humano(estado)
+    permitida, motivo = validar_entrada(texto)
+    if not permitida:
+        # Guardarraíl: la entrada no llega al LLM ni a las herramientas.
+        return {"intencion": "bloqueada", "operacion_id": "", "expediente": {}, "recuerdos": [], "correccion": "",
+                "bitacora": [{"nodo": "recuperar_contexto", "detalle": f"Entrada bloqueada: {motivo}"}]}
     bajo = texto.lower()
     coincidencia = PATRON_OPERACION.search(texto)
     operacion = f"OP{coincidencia.group(1)}" if coincidencia else ""
-
-    if operacion and any(v in bajo for v in VERBOS_REVISION + PALABRAS_CORRECCION):
-        intencion = "revision"
-    elif any(p in bajo for p in PALABRAS_COLA):
-        intencion = "cola"
-    else:
-        intencion = "conversacion"
+    intencion = clasificar_intencion(texto, operacion, estado.get("operacion_activa", ""))
 
     correccion = ""
     if intencion == "revision" and any(p in bajo for p in PALABRAS_CORRECCION):
@@ -135,7 +161,9 @@ def recuperar_contexto(estado: EstadoAgente) -> dict:
     operacion_contexto = operacion or estado.get("operacion_activa", "")
     expediente = servicios.almacen.obtener_expediente(operacion_contexto) if operacion_contexto else None
 
-    if expediente:
+    if intencion in ("consulta", "listado"):
+        recuerdos = []  # una pregunta de procedimiento no necesita la memoria del cliente
+    elif expediente:
         consulta = (f"{expediente['cliente']} antecedentes observaciones preferencias comunicaciones "
                     f"{expediente['mercancia']['descripcion']}")
         recuerdos = servicios.memoria.recordar(consulta, cliente=expediente["cliente"])
@@ -423,6 +451,23 @@ def _ruta_visible(ruta: Path, raiz: Path) -> str:
         return str(ruta)
 
 
+def _resumen_estructurado(estado: EstadoAgente) -> str:
+    hallazgos = estado.get("hallazgos", [])
+    por_nivel = {n: sum(1 for h in hallazgos if h["nivel"] == n) for n in ("critica", "corregible", "informativa")}
+    lineas = [f"{len(hallazgos)} hallazgos: {por_nivel['critica']} críticos, {por_nivel['corregible']} corregibles "
+              f"y {por_nivel['informativa']} informativos."]
+    lineas += [f"- [{h['nivel']}] {h['descripcion']}" for h in hallazgos[:6]]
+    acciones = {t["accion"] for t in estado.get("plan", []) if t["estado"] == "completada"}
+    if "escalar" in acciones:
+        lineas.append("Se escaló al responsable de revisión; no se redactó comunicación al cliente.")
+    comunicacion = estado.get("comunicacion", {}).get("estado")
+    if comunicacion:
+        lineas.append(f"Comunicación al cliente: {comunicacion}.")
+    if "cerrar_observaciones" in acciones:
+        lineas.append("Se cerraron las observaciones que ya no se reproducen.")
+    return "\n".join(lineas)
+
+
 def sintetizar(estado: EstadoAgente) -> dict:
     servicios = obtener_servicios()
     informe = _informe_markdown(estado)
@@ -431,12 +476,17 @@ def sintetizar(estado: EstadoAgente) -> dict:
     datos = (f"Operación {estado['operacion_id']} – estado final: {estado_op}.\n"
              + "\n".join(f"- [{h['nivel']}] {h['descripcion']}" for h in estado["hallazgos"])
              + "\nDecisiones: " + "; ".join(d["decision"] for d in estado["decisiones"][-6:]))
-    try:
-        resumen = servicios.llm.invoke([SystemMessage(content=PROMPT_SINTESIS), HumanMessage(content=datos)]).text
-        nota = ""
-    except Exception as error:  # el modelo no responde: se entrega el resumen estructurado
-        resumen = datos
-        nota = f"Síntesis en modo degradado ({type(error).__name__})"
+    if ajustes.OPTIMIZADO:
+        # EP3: el resumen se arma con los datos estructurados. Elimina una llamada
+        # al LLM por revisión y evita imprecisiones observadas en los registros.
+        resumen, nota = _resumen_estructurado(estado), "Resumen estructurado (sin LLM)"
+    else:
+        try:
+            resumen = servicios.llm.invoke([SystemMessage(content=PROMPT_SINTESIS), HumanMessage(content=datos)]).text
+            nota = ""
+        except Exception as error:  # el modelo no responde: se entrega el resumen estructurado
+            resumen = datos
+            nota = f"Síntesis en modo degradado ({type(error).__name__})"
     informe += "\n\n## Resumen del agente\n\n" + resumen
     ruta.write_text(informe, encoding="utf-8")
     respuesta = (f"**Revisión {estado['operacion_id']} – {estado_op}**\n\n{resumen}\n\n"
@@ -468,6 +518,41 @@ def agente_conversacional(estado: EstadoAgente) -> dict:
         "bitacora": [{"nodo": "agente_conversacional",
                       "detalle": f"Herramientas elegidas por el modelo: {', '.join(usadas) or 'ninguna'}"}],
     }
+
+
+def respuesta_directa(estado: EstadoAgente) -> dict:
+    """Ruta directa (EP3): ejecuta la única herramienta necesaria sin pasar por ReAct."""
+    texto = _ultimo_texto_humano(estado)
+    if estado["intencion"] == "listado":
+        op = estado["operacion_id"]
+        observaciones = POR_NOMBRE["listar_observaciones"].invoke({"operacion_id": op})
+        if observaciones:
+            lineas = [f"Observaciones registradas de la {op}:"]
+            lineas += [f"- {o['id']} [{o['nivel']} · {o['estado']}] {o['descripcion']}" for o in observaciones]
+            respuesta = "\n".join(lineas)
+        else:
+            respuesta = f"La {op} no tiene observaciones registradas."
+        herramienta = "listar_observaciones"
+    else:
+        resultado = POR_NOMBRE["consultar_procedimientos"].invoke({"pregunta": texto})
+        respuesta = resultado["respuesta"]
+        if resultado["suficiente"]:
+            fuentes = list(dict.fromkeys(f["fuente"] for f in resultado["fuentes"]))[:2]
+            respuesta += "\n\nFuentes: " + ", ".join(fuentes)
+        herramienta = "consultar_procedimientos"
+    return {"messages": [AIMessage(content=respuesta)],
+            "bitacora": [{"nodo": "respuesta_directa", "detalle": f"Ruta directa (sin ReAct): {herramienta}"}]}
+
+
+def entrada_bloqueada(estado: EstadoAgente) -> dict:
+    motivo = estado["bitacora"][-1]["detalle"].replace("Entrada bloqueada: ", "")
+    from .observabilidad import obtener_observador
+    observador = obtener_observador()
+    if observador is not None:
+        observador.registrar("seguridad", "guardarrail_entrada", estado="bloqueada", motivo=motivo,
+                             entrada=enmascarar(_ultimo_texto_humano(estado))[:200])
+    return {"messages": [AIMessage(content=MENSAJE_BLOQUEO.format(motivo=motivo))],
+            "bitacora": [{"nodo": "entrada_bloqueada", "detalle": motivo}]}
 
 
 def operacion_inexistente(estado: EstadoAgente) -> dict:
@@ -519,6 +604,8 @@ def construir_grafo(checkpointer=None):
     grafo.add_node("agente_conversacional", agente_conversacional)
     grafo.add_node("priorizar_cola", priorizar_cola)
     grafo.add_node("operacion_inexistente", operacion_inexistente)
+    grafo.add_node("respuesta_directa", respuesta_directa)
+    grafo.add_node("entrada_bloqueada", entrada_bloqueada)
     grafo.add_node("consolidar_memoria", consolidar_memoria)
 
     grafo.add_edge(START, "gestionar_memoria_corta")
@@ -526,6 +613,7 @@ def construir_grafo(checkpointer=None):
     grafo.add_conditional_edges("recuperar_contexto", enrutar, {
         "revision": "planificar", "conversacion": "agente_conversacional", "cola": "priorizar_cola",
         "inexistente": "operacion_inexistente",
+        "consulta": "respuesta_directa", "listado": "respuesta_directa", "bloqueada": "entrada_bloqueada",
     })
     destinos = {"ejecutar_tarea": "ejecutar_tarea", "aprobacion_humana": "aprobacion_humana", "sintetizar": "sintetizar"}
     grafo.add_conditional_edges("planificar", seleccionar, destinos)
@@ -536,5 +624,7 @@ def construir_grafo(checkpointer=None):
     grafo.add_edge("agente_conversacional", "consolidar_memoria")
     grafo.add_edge("priorizar_cola", "consolidar_memoria")
     grafo.add_edge("operacion_inexistente", END)
+    grafo.add_edge("respuesta_directa", END)
+    grafo.add_edge("entrada_bloqueada", END)
     grafo.add_edge("consolidar_memoria", END)
     return grafo.compile(checkpointer=checkpointer)

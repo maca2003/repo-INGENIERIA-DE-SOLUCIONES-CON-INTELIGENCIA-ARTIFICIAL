@@ -217,7 +217,8 @@ def main() -> None:
     salidas = []
     for m in mensajes:
         r, _ = demo.ejecutar("e9", m)
-        herramienta = next((b["detalle"] for b in reversed(r["bitacora"]) if b["nodo"] == "agente_conversacional"), "")
+        herramienta = next((b["detalle"] for b in reversed(r["bitacora"])
+                            if b["nodo"] in ("agente_conversacional", "respuesta_directa")), "")
         salidas.append(f"**{m}** → {herramienta}\n\n> {r['messages'][-1].text[:500]}")
     r, _ = demo.ejecutar("e9-otro-hilo", "¿Qué antecedentes o preferencias tienes de Ferretería Central Ltda?")
     salidas.append(f"**(nuevo hilo) ¿Qué antecedentes o preferencias tienes de Ferretería Central Ltda?** → "

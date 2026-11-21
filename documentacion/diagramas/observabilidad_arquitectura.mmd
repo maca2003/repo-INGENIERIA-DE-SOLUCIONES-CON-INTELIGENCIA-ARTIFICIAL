@@ -1,0 +1,19 @@
+flowchart LR
+    U[Usuario<br/>Streamlit / CLI] --> G{{Guardarraíl<br/>validar_entrada}}
+    G -- bloqueada --> B[entrada_bloqueada]
+    G -- válida --> C{clasificar_intencion}
+    C -- consulta / listado --> D[respuesta_directa<br/>0–1 llamadas LLM]
+    C -- revision --> P[planificar → ejecutar → evaluar → sintetizar]
+    C -- conversacion --> R[agente ReAct]
+    D & P & R --> M[(Ollama<br/>keep_alive 30m)]
+    subgraph OBS[Observabilidad]
+      O[Observador<br/>callbacks LangChain] --> E[(eventos_AAAA-MM-DD.jsonl<br/>PII enmascarada · retención 30 días)]
+    end
+    G -.-> O
+    D -.-> O
+    P -.-> O
+    R -.-> O
+    M -.-> O
+    E --> A[analizar_logs.py<br/>cuellos de botella, anomalías]
+    E --> BM[evaluar_observabilidad.py<br/>base vs optimizado]
+    A & BM --> DB[dashboard_observabilidad.py]

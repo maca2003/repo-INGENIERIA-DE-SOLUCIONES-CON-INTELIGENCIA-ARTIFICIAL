@@ -1,7 +1,7 @@
 # Escenario 6: Mercancía no catalogada
 
 - Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
-- Fecha de ejecución: 2026-11-03 00:35
+- Fecha de ejecución: 2026-11-21 14:13
 - Objetivo: Consultar la base documental antes de asumir requisitos y actuar según exista o no evidencia suficiente.
 - Entrada del usuario: `Revisa la OP1005`
 - Tiempo de ejecución: 0.1 s
@@ -60,10 +60,10 @@ Agencia de Aduanas del Norte (borrador generado por AduanaAgent, sujeto a revisi
 
 **Revisión OP1005 – Con observaciones**
 
-(Modo simulado) Operación OP1005 – estado final: Con observaciones.
+2 hallazgos: 0 críticos, 2 corregibles y 0 informativos.
 - [corregible] Las fuentes sugieren posible control previo para 'Drones de uso recreativo con control remoto': Las autorizaciones deben obtenerse ante el organismo competente cuando la legislación establezca un control previo a la importación. Dependiendo de su naturaleza, algunas mercancías pueden estar sujetas a autorización, certificación, visto bueno o control previo de otro organismo del Estado.
 - [corregible] El archivo FACTURA_OP1005_V1.pdf no es legible.
-Decisiones: Solicitar confirmación al cliente; Agregar T06 'fundamentar' con prio
+Comunicación al cliente: aprobada.
 
 Informe: salidas/demo_simulado/OP1005/informe_revision.md
 

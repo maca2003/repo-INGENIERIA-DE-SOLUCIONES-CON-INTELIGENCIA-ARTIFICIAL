@@ -1,7 +1,7 @@
 # Escenario 4: Observación crítica con antecedente del cliente
 
 - Modo: **simulado** (modelo y embeddings deterministas, sin LLM)
-- Fecha de ejecución: 2026-11-03 00:35
+- Fecha de ejecución: 2026-11-21 14:13
 - Objetivo: Priorizar el control crítico, escalar y reforzar la validación por un antecedente recuperado de la memoria de largo plazo.
 - Entrada del usuario: `Revisa la OP1004`
 - Tiempo de ejecución: 0.1 s
@@ -44,11 +44,11 @@
 
 **Revisión OP1004 – Con observaciones**
 
-(Modo simulado) Operación OP1004 – estado final: Con observaciones.
+3 hallazgos: 3 críticos, 0 corregibles y 0 informativos.
 - [critica] La mercancía (Frutas deshidratadas para consumo humano) requiere permiso o visto bueno de Servicio Agrícola y Ganadero y no se recibió.
 - [critica] La mercancía (Frutas deshidratadas para consumo humano) requiere permiso o visto bueno de Autoridad sanitaria y no se recibió.
 - [critica] RUT del importador en documento de transporte (79.777.000-1) no coincide con la factura (79.777.888-9).
-Decisiones: Agregar T07 'registrar_observaciones' con prioridad 5; Elevar prioridad de T07 'registrar_observaciones' de 5 a 0; Agregar T08 'escal
+Se escaló al responsable de revisión; no se redactó comunicación al cliente.
 
 Informe: salidas/demo_simulado/OP1004/informe_revision.md
 

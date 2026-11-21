@@ -39,7 +39,7 @@ def test_memoria_corta_mantiene_operacion_activa(ejecutar):
 
 
 def test_compactacion_de_hilo_largo(ejecutar):
-    for _ in range(5):
+    for _ in range(8):
         resultado, _ = ejecutar("¿Qué documentos iniciales se requieren?", hilo="largo")
     assert resultado["resumen_conversacion"]
     assert len(resultado["messages"]) <= 12 + 4
