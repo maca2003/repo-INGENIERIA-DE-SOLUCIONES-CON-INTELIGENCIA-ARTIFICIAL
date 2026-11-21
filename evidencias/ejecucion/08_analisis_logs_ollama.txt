@@ -1,0 +1,22 @@
+$ C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe src/analizar_logs.py --proveedor ollama
+# 2026-11-21 14:39
+
+
+== base ==
+- El LLM concentra el 96.2 % del tiempo total de las solicitudes; la recuperación en ChromaDB, el 0.7 %.
+- El nodo que más tiempo de LLM consume es «model» (26 llamadas, 50053.1 ms en total, media 1925.1 ms).
+- Se detectaron 1 arranques en frío del modelo (carga de hasta 5547.4 ms).
+- 2 solicitudes superan el doble de la mediana o el p95 de latencia.
+- No se registraron errores de herramientas ni del modelo.
+- El RAG se abstuvo en 4 de 13 consultas.
+- El guardarraíl bloqueó 4 entradas antes de llegar al modelo.
+
+== optimizado ==
+- El LLM concentra el 86.4 % del tiempo total de las solicitudes; la recuperación en ChromaDB, el 3.7 %.
+- El nodo que más tiempo de LLM consume es «respuesta_directa» (27 llamadas, 60841.8 ms en total, media 2253.4 ms).
+- 5 solicitudes superan el doble de la mediana o el p95 de latencia.
+- No se registraron errores de herramientas ni del modelo.
+- El RAG se abstuvo en 12 de 39 consultas.
+- El guardarraíl bloqueó 12 entradas antes de llegar al modelo.
+
+Informe: C:\Users\macar\proyectos\aduanarag\evidencias\observabilidad\ollama\hallazgos_logs.md

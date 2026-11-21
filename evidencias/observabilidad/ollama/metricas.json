@@ -1,0 +1,218 @@
+{
+  "base": {
+    "casos": 30,
+    "repeticiones": 1,
+    "precision": 83.3,
+    "precision_por_tipo": {
+      "revision": 100.0,
+      "seguimiento": 100.0,
+      "consulta": 58.3,
+      "seguridad": 100.0
+    },
+    "consistencia": null,
+    "similitud_textual": null,
+    "frecuencia_errores": 0.0,
+    "latencia_ms": {
+      "n": 30,
+      "media": 4281.1,
+      "p50": 3407.3,
+      "p95": 9740.1,
+      "max": 10758.2
+    },
+    "latencia_por_tipo_ms": {
+      "revision": {
+        "n": 13,
+        "media": 3706.1,
+        "p50": 2831.1,
+        "p95": 8355.6,
+        "max": 9269.9
+      },
+      "seguimiento": {
+        "n": 1,
+        "media": 5734.9,
+        "p50": 5734.9,
+        "p95": 5734.9,
+        "max": 5734.9
+      },
+      "consulta": {
+        "n": 12,
+        "media": 6207.5,
+        "p50": 5713.9,
+        "p95": 10409.9,
+        "max": 10758.2
+      },
+      "seguridad": {
+        "n": 4,
+        "media": 7.4,
+        "p50": 5.4,
+        "p95": 12.6,
+        "max": 13.8
+      }
+    },
+    "primera_consulta_ms": 9269.9,
+    "llamadas_llm_promedio": 1.63,
+    "tokens_promedio": 1299.2,
+    "cpu_ms_promedio": 86.0,
+    "rss_mb_max": 151.8,
+    "casos_incorrectos": [
+      "C01",
+      "C03",
+      "C06",
+      "C09",
+      "C12"
+    ]
+  },
+  "optimizado": {
+    "casos": 90,
+    "repeticiones": 3,
+    "precision": 92.2,
+    "precision_por_tipo": {
+      "revision": 100.0,
+      "seguimiento": 100.0,
+      "consulta": 80.6,
+      "seguridad": 100.0
+    },
+    "consistencia": 96.7,
+    "similitud_textual": 94.4,
+    "frecuencia_errores": 0.0,
+    "latencia_ms": {
+      "n": 90,
+      "media": 956.4,
+      "p50": 223.9,
+      "p95": 4658.8,
+      "max": 5180.5
+    },
+    "latencia_por_tipo_ms": {
+      "revision": {
+        "n": 39,
+        "media": 607.2,
+        "p50": 221.0,
+        "p95": 4626.7,
+        "max": 5113.5
+      },
+      "seguimiento": {
+        "n": 3,
+        "media": 9.4,
+        "p50": 8.8,
+        "p95": 10.9,
+        "max": 11.1
+      },
+      "consulta": {
+        "n": 36,
+        "media": 1729.6,
+        "p50": 1520.9,
+        "p95": 5174.5,
+        "max": 5180.5
+      },
+      "seguridad": {
+        "n": 12,
+        "media": 8.6,
+        "p50": 6.0,
+        "p95": 16.6,
+        "max": 16.8
+      }
+    },
+    "primera_consulta_ms": 1304.6,
+    "llamadas_llm_promedio": 0.33,
+    "tokens_promedio": 329.9,
+    "cpu_ms_promedio": 44.6,
+    "rss_mb_max": 180.2,
+    "casos_incorrectos": [
+      "C05",
+      "C06",
+      "C09"
+    ]
+  },
+  "comparacion": {
+    "reduccion_latencia_media_pct": 77.7,
+    "reduccion_latencia_p95_pct": 52.2,
+    "reduccion_por_tipo_pct": {
+      "revision": 83.6,
+      "seguimiento": 99.8,
+      "consulta": 72.1,
+      "seguridad": -16.2
+    },
+    "reduccion_llamadas_llm_pct": 79.8,
+    "diferencia_precision_pp": 8.9
+  },
+  "contexto": {
+    "proveedor": "ollama · llama3.2:3b · qwen3-embedding:0.6b",
+    "vueltas": [
+      {
+        "modo": "base",
+        "repeticion": 1,
+        "arranque_agente_ms": 6642.8,
+        "precalentamiento_s": null,
+        "memoria_modelos": [
+          {
+            "modelo": "llama3.2:3b",
+            "memoria_mb": 2800,
+            "vram_mb": 2239
+          },
+          {
+            "modelo": "qwen3-embedding:0.6b",
+            "memoria_mb": 1172,
+            "vram_mb": 1172
+          }
+        ]
+      },
+      {
+        "modo": "optimizado",
+        "repeticion": 1,
+        "arranque_agente_ms": 6845.3,
+        "precalentamiento_s": 5.68,
+        "memoria_modelos": [
+          {
+            "modelo": "llama3.2:3b",
+            "memoria_mb": 2800,
+            "vram_mb": 2239
+          },
+          {
+            "modelo": "qwen3-embedding:0.6b",
+            "memoria_mb": 1172,
+            "vram_mb": 1172
+          }
+        ]
+      },
+      {
+        "modo": "optimizado",
+        "repeticion": 2,
+        "arranque_agente_ms": 1553.0,
+        "precalentamiento_s": 0.52,
+        "memoria_modelos": [
+          {
+            "modelo": "llama3.2:3b",
+            "memoria_mb": 2800,
+            "vram_mb": 2239
+          },
+          {
+            "modelo": "qwen3-embedding:0.6b",
+            "memoria_mb": 1172,
+            "vram_mb": 1172
+          }
+        ]
+      },
+      {
+        "modo": "optimizado",
+        "repeticion": 3,
+        "arranque_agente_ms": 1535.0,
+        "precalentamiento_s": 0.47,
+        "memoria_modelos": [
+          {
+            "modelo": "qwen3-embedding:0.6b",
+            "memoria_mb": 1172,
+            "vram_mb": 1172
+          },
+          {
+            "modelo": "llama3.2:3b",
+            "memoria_mb": 2800,
+            "vram_mb": 2239
+          }
+        ]
+      }
+    ],
+    "fecha": "2026-11-21 14:39",
+    "python": "3.12.10",
+    "plataforma": "win32"
+  }
+}

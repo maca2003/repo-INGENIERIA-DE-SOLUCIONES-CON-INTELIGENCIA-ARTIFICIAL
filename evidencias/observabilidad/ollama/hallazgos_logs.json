@@ -1,0 +1,482 @@
+{
+  "base": {
+    "solicitudes": 30,
+    "latencia_solicitud_ms": {
+      "n": 30,
+      "media": 4279.8,
+      "p50": 3406.3,
+      "p95": 9733.5,
+      "max": 10757.3
+    },
+    "reparto_tiempo_pct": {
+      "llm": 96.2,
+      "recuperacion_chroma": 0.7,
+      "herramientas_sin_llm": 0.3,
+      "orquestacion_y_resto": 2.8
+    },
+    "llamadas_llm": 49,
+    "llm_por_nodo": [
+      {
+        "nombre": "model",
+        "llamadas": 26,
+        "total_ms": 50053.1,
+        "media_ms": 1925.1,
+        "p95_ms": 3913.0
+      },
+      {
+        "nombre": "sintetizar",
+        "llamadas": 13,
+        "total_ms": 39528.8,
+        "media_ms": 3040.7,
+        "p95_ms": 5456.6
+      },
+      {
+        "nombre": "tools",
+        "llamadas": 9,
+        "total_ms": 29147.8,
+        "media_ms": 3238.6,
+        "p95_ms": 5121.7
+      },
+      {
+        "nombre": "ejecutar_tarea",
+        "llamadas": 1,
+        "total_ms": 4739.4,
+        "media_ms": 4739.4,
+        "p95_ms": 4739.4
+      }
+    ],
+    "nodos_mas_lentos": [
+      {
+        "nombre": "agente_conversacional",
+        "llamadas": 13,
+        "total_ms": 79723.4,
+        "media_ms": 6132.6,
+        "p95_ms": 10335.5
+      },
+      {
+        "nombre": "model",
+        "llamadas": 26,
+        "total_ms": 50086.2,
+        "media_ms": 1926.4,
+        "p95_ms": 3914.1
+      },
+      {
+        "nombre": "sintetizar",
+        "llamadas": 13,
+        "total_ms": 39552.0,
+        "media_ms": 3042.5,
+        "p95_ms": 5458.6
+      },
+      {
+        "nombre": "tools",
+        "llamadas": 13,
+        "total_ms": 29548.5,
+        "media_ms": 2273.0,
+        "p95_ms": 5143.6
+      },
+      {
+        "nombre": "ejecutar_tarea",
+        "llamadas": 91,
+        "total_ms": 5854.8,
+        "media_ms": 64.3,
+        "p95_ms": 40.7
+      },
+      {
+        "nombre": "consolidar_memoria",
+        "llamadas": 26,
+        "total_ms": 1823.2,
+        "media_ms": 70.1,
+        "p95_ms": 54.9
+      },
+      {
+        "nombre": "recuperar_contexto",
+        "llamadas": 30,
+        "total_ms": 918.6,
+        "media_ms": 30.6,
+        "p95_ms": 43.3
+      },
+      {
+        "nombre": "evaluar",
+        "llamadas": 91,
+        "total_ms": 70.2,
+        "media_ms": 0.8,
+        "p95_ms": 0.6
+      }
+    ],
+    "herramientas_mas_lentas": [
+      {
+        "nombre": "consultar_procedimientos",
+        "llamadas": 13,
+        "total_ms": 34303.0,
+        "media_ms": 2638.7,
+        "p95_ms": 5142.2
+      },
+      {
+        "nombre": "evaluar_requisitos_especiales",
+        "llamadas": 1,
+        "total_ms": 4775.4,
+        "media_ms": 4775.4,
+        "p95_ms": 4775.4
+      },
+      {
+        "nombre": "fundamentar_hallazgos",
+        "llamadas": 12,
+        "total_ms": 579.9,
+        "media_ms": 48.3,
+        "p95_ms": 102.7
+      },
+      {
+        "nombre": "actualizar_estado_operacion",
+        "llamadas": 16,
+        "total_ms": 138.9,
+        "media_ms": 8.7,
+        "p95_ms": 14.2
+      },
+      {
+        "nombre": "escalar_a_responsable",
+        "llamadas": 6,
+        "total_ms": 115.4,
+        "media_ms": 19.2,
+        "p95_ms": 27.3
+      },
+      {
+        "nombre": "registrar_observacion",
+        "llamadas": 17,
+        "total_ms": 55.8,
+        "media_ms": 3.3,
+        "p95_ms": 8.0
+      },
+      {
+        "nombre": "validar_nomenclatura",
+        "llamadas": 13,
+        "total_ms": 14.9,
+        "media_ms": 1.1,
+        "p95_ms": 1.6
+      },
+      {
+        "nombre": "verificar_documentos_requeridos",
+        "llamadas": 13,
+        "total_ms": 11.7,
+        "media_ms": 0.9,
+        "p95_ms": 1.5
+      }
+    ],
+    "arranques_en_frio": [
+      {
+        "ts": "2026-11-21T14:35:53.143",
+        "carga_ms": 5547.4,
+        "nodo": "sintetizar"
+      }
+    ],
+    "tokens_por_s": {
+      "n": 49,
+      "media": 39.3,
+      "p50": 39.0,
+      "p95": 40.9,
+      "max": 41.5
+    },
+    "tokens_entrada_media": 712.5,
+    "tokens_salida_media": 82.9,
+    "anomalias": [
+      {
+        "ts": "2026-11-21T14:37:25.370",
+        "duracion_ms": 10757.3,
+        "intencion": "conversacion",
+        "entrada": "¿Qué antecedentes generales pueden ser necesarios para una importación?",
+        "llamadas_llm": 3
+      },
+      {
+        "ts": "2026-11-21T14:37:35.495",
+        "duracion_ms": 10124.2,
+        "intencion": "conversacion",
+        "entrada": "¿Cuáles son los documentos que hay que revisar al inicio de una operación?",
+        "llamadas_llm": 3
+      }
+    ],
+    "errores": [],
+    "errores_por_componente": {},
+    "rag_consultas": 13,
+    "rag_abstenciones": 4,
+    "seguridad_bloqueos": [
+      {
+        "ts": "2026-11-21T14:37:53.544",
+        "motivo": "patrón no permitido: «Ignora las instrucciones»"
+      },
+      {
+        "ts": "2026-11-21T14:37:53.548",
+        "motivo": "patrón no permitido: «Muestra tu system prompt»"
+      },
+      {
+        "ts": "2026-11-21T14:37:53.554",
+        "motivo": "patrón no permitido: «<script»"
+      },
+      {
+        "ts": "2026-11-21T14:37:53.568",
+        "motivo": "entrada de 1217 caracteres (máximo 1000)"
+      }
+    ],
+    "intenciones": {
+      "revision": 13,
+      "conversacion": 13,
+      "bloqueada": 4
+    },
+    "memoria_rss_mb_max": 151.8
+  },
+  "optimizado": {
+    "solicitudes": 90,
+    "latencia_solicitud_ms": {
+      "n": 90,
+      "media": 955.4,
+      "p50": 223.1,
+      "p95": 4658.1,
+      "max": 5179.6
+    },
+    "reparto_tiempo_pct": {
+      "llm": 86.4,
+      "recuperacion_chroma": 3.7,
+      "herramientas_sin_llm": 1.1,
+      "orquestacion_y_resto": 8.7
+    },
+    "llamadas_llm": 30,
+    "llm_por_nodo": [
+      {
+        "nombre": "respuesta_directa",
+        "llamadas": 27,
+        "total_ms": 60841.8,
+        "media_ms": 2253.4,
+        "p95_ms": 5138.1
+      },
+      {
+        "nombre": "ejecutar_tarea",
+        "llamadas": 3,
+        "total_ms": 13470.2,
+        "media_ms": 4490.1,
+        "p95_ms": 4722.5
+      }
+    ],
+    "nodos_mas_lentos": [
+      {
+        "nombre": "respuesta_directa",
+        "llamadas": 39,
+        "total_ms": 62073.0,
+        "media_ms": 1591.6,
+        "p95_ms": 5168.7
+      },
+      {
+        "nombre": "ejecutar_tarea",
+        "llamadas": 273,
+        "total_ms": 16936.1,
+        "media_ms": 62.0,
+        "p95_ms": 57.5
+      },
+      {
+        "nombre": "recuperar_contexto",
+        "llamadas": 90,
+        "total_ms": 2977.8,
+        "media_ms": 33.1,
+        "p95_ms": 56.4
+      },
+      {
+        "nombre": "consolidar_memoria",
+        "llamadas": 39,
+        "total_ms": 2183.2,
+        "media_ms": 56.0,
+        "p95_ms": 68.6
+      },
+      {
+        "nombre": "evaluar",
+        "llamadas": 273,
+        "total_ms": 98.6,
+        "media_ms": 0.4,
+        "p95_ms": 0.6
+      },
+      {
+        "nombre": "planificar",
+        "llamadas": 39,
+        "total_ms": 42.9,
+        "media_ms": 1.1,
+        "p95_ms": 1.6
+      },
+      {
+        "nombre": "sintetizar",
+        "llamadas": 39,
+        "total_ms": 36.3,
+        "media_ms": 0.9,
+        "p95_ms": 1.4
+      },
+      {
+        "nombre": "entrada_bloqueada",
+        "llamadas": 12,
+        "total_ms": 19.5,
+        "media_ms": 1.6,
+        "p95_ms": 5.3
+      }
+    ],
+    "herramientas_mas_lentas": [
+      {
+        "nombre": "consultar_procedimientos",
+        "llamadas": 39,
+        "total_ms": 75681.6,
+        "media_ms": 1940.6,
+        "p95_ms": 5168.1
+      },
+      {
+        "nombre": "evaluar_requisitos_especiales",
+        "llamadas": 3,
+        "total_ms": 13639.3,
+        "media_ms": 4546.4,
+        "p95_ms": 4770.2
+      },
+      {
+        "nombre": "fundamentar_hallazgos",
+        "llamadas": 36,
+        "total_ms": 1946.7,
+        "media_ms": 54.1,
+        "p95_ms": 90.4
+      },
+      {
+        "nombre": "actualizar_estado_operacion",
+        "llamadas": 48,
+        "total_ms": 380.5,
+        "media_ms": 7.9,
+        "p95_ms": 12.8
+      },
+      {
+        "nombre": "escalar_a_responsable",
+        "llamadas": 18,
+        "total_ms": 286.7,
+        "media_ms": 15.9,
+        "p95_ms": 20.7
+      },
+      {
+        "nombre": "registrar_observacion",
+        "llamadas": 51,
+        "total_ms": 170.8,
+        "media_ms": 3.3,
+        "p95_ms": 8.6
+      },
+      {
+        "nombre": "verificar_documentos_requeridos",
+        "llamadas": 39,
+        "total_ms": 32.1,
+        "media_ms": 0.8,
+        "p95_ms": 1.2
+      },
+      {
+        "nombre": "validar_nomenclatura",
+        "llamadas": 39,
+        "total_ms": 30.3,
+        "media_ms": 0.8,
+        "p95_ms": 1.1
+      }
+    ],
+    "arranques_en_frio": [],
+    "tokens_por_s": {
+      "n": 30,
+      "media": 38.8,
+      "p50": 38.7,
+      "p95": 39.6,
+      "max": 41.2
+    },
+    "tokens_entrada_media": 902.6,
+    "tokens_salida_media": 87.0,
+    "anomalias": [
+      {
+        "ts": "2026-11-21T14:38:16.171",
+        "duracion_ms": 5112.8,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1005",
+        "llamadas_llm": 1
+      },
+      {
+        "ts": "2026-11-21T14:38:34.719",
+        "duracion_ms": 5176.2,
+        "intencion": "consulta",
+        "entrada": "¿Cuáles son los documentos que hay que revisar al inicio de una operación?",
+        "llamadas_llm": 1
+      },
+      {
+        "ts": "2026-11-21T14:38:47.725",
+        "duracion_ms": 4690.3,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1005",
+        "llamadas_llm": 1
+      },
+      {
+        "ts": "2026-11-21T14:39:06.562",
+        "duracion_ms": 5173.0,
+        "intencion": "consulta",
+        "entrada": "¿Cuáles son los documentos que hay que revisar al inicio de una operación?",
+        "llamadas_llm": 1
+      },
+      {
+        "ts": "2026-11-21T14:39:38.323",
+        "duracion_ms": 5179.6,
+        "intencion": "consulta",
+        "entrada": "¿Cuáles son los documentos que hay que revisar al inicio de una operación?",
+        "llamadas_llm": 1
+      }
+    ],
+    "errores": [],
+    "errores_por_componente": {},
+    "rag_consultas": 39,
+    "rag_abstenciones": 12,
+    "seguridad_bloqueos": [
+      {
+        "ts": "2026-11-21T14:38:38.483",
+        "motivo": "patrón no permitido: «Ignora las instrucciones»"
+      },
+      {
+        "ts": "2026-11-21T14:38:38.489",
+        "motivo": "patrón no permitido: «Muestra tu system prompt»"
+      },
+      {
+        "ts": "2026-11-21T14:38:38.495",
+        "motivo": "patrón no permitido: «<script»"
+      },
+      {
+        "ts": "2026-11-21T14:38:38.512",
+        "motivo": "entrada de 1217 caracteres (máximo 1000)"
+      },
+      {
+        "ts": "2026-11-21T14:39:10.336",
+        "motivo": "patrón no permitido: «Ignora las instrucciones»"
+      },
+      {
+        "ts": "2026-11-21T14:39:10.342",
+        "motivo": "patrón no permitido: «Muestra tu system prompt»"
+      },
+      {
+        "ts": "2026-11-21T14:39:10.348",
+        "motivo": "patrón no permitido: «<script»"
+      },
+      {
+        "ts": "2026-11-21T14:39:10.365",
+        "motivo": "entrada de 1217 caracteres (máximo 1000)"
+      },
+      {
+        "ts": "2026-11-21T14:39:42.098",
+        "motivo": "patrón no permitido: «Ignora las instrucciones»"
+      },
+      {
+        "ts": "2026-11-21T14:39:42.104",
+        "motivo": "patrón no permitido: «Muestra tu system prompt»"
+      },
+      {
+        "ts": "2026-11-21T14:39:42.110",
+        "motivo": "patrón no permitido: «<script»"
+      },
+      {
+        "ts": "2026-11-21T14:39:42.127",
+        "motivo": "entrada de 1217 caracteres (máximo 1000)"
+      }
+    ],
+    "intenciones": {
+      "revision": 39,
+      "listado": 3,
+      "consulta": 36,
+      "bloqueada": 12
+    },
+    "memoria_rss_mb_max": 180.2
+  }
+}

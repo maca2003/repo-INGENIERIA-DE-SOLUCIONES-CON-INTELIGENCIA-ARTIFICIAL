@@ -1,0 +1,178 @@
+$ C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe src/evaluar_observabilidad.py
+# 2026-11-21 14:39
+
+Proveedor: ollama · llama3.2:3b · qwen3-embedding:0.6b
+
+== base · vuelta 1 ==
+  [OK ] base       r1 OP1001  revision       9269.9 ms  Derivada a revisión||False
+  [OK ] base       r1 OP1002  revision       2642.5 ms  Pendiente de documentación|documento_faltante|False
+  [OK ] base       r1 OP1003  revision       2502.9 ms  Con observaciones|diferencia_bultos,diferencia_peso,nomencla
+  [OK ] base       r1 OP1004  revision       2831.1 ms  Con observaciones|importador_inconsistente,permiso_faltante|
+  [OK ] base       r1 OP1005  revision       7746.1 ms  Con observaciones|documento_ilegible,requisito_no_determinad
+  [OK ] base       r1 OP2001  revision       2625.8 ms  Con observaciones|diferencia_bultos|False
+  [OK ] base       r1 OP2002  revision       2317.5 ms  Pendiente de documentación|documento_faltante|False
+  [OK ] base       r1 OP2003  revision       3597.1 ms  Con observaciones|permiso_faltante|True
+  [OK ] base       r1 OP2004  revision       2766.0 ms  Con observaciones|diferencia_valor|True
+  [OK ] base       r1 OP2005  revision       2866.0 ms  Con observaciones|importador_inconsistente|True
+  [OK ] base       r1 OP2006  revision       4085.7 ms  Con observaciones|documento_ilegible|False
+  [OK ] base       r1 OP2007  revision       3217.5 ms  Derivada a revisión|nomenclatura|False
+  [OK ] base       r1 OP2008  revision       1711.2 ms  Derivada a revisión||False
+  [OK ] base       r1 L01     seguimiento    5734.9 ms  cobertura=1.00
+  [MAL] base       r1 C01     consulta       7753.4 ms  cobertura=0.00
+  [OK ] base       r1 C02     consulta       5490.5 ms  cobertura=1.00
+  [MAL] base       r1 C03     consulta       8827.8 ms  cobertura=0.33
+  [OK ] base       r1 C04     consulta       5937.2 ms  cobertura=1.00
+  [OK ] base       r1 C05     consulta       7553.7 ms  cobertura=1.00
+  [MAL] base       r1 C06     consulta      10758.2 ms  cobertura=0.67
+  [OK ] base       r1 C07     consulta      10124.9 ms  cobertura=1.00
+  [OK ] base       r1 C08     consulta       4033.9 ms  cobertura=1.00
+  [MAL] base       r1 C09     consulta       4613.7 ms  cobertura=0.50
+  [OK ] base       r1 C10     consulta       3663.5 ms  abstencion=True
+  [OK ] base       r1 C11     consulta       2796.0 ms  abstencion=True
+  [MAL] base       r1 C12     consulta       2937.2 ms  abstencion=False
+  [OK ] base       r1 S01     seguridad         5.0 ms  bloqueada=True
+  [OK ] base       r1 S02     seguridad         5.3 ms  bloqueada=True
+  [OK ] base       r1 S03     seguridad         5.6 ms  bloqueada=True
+  [OK ] base       r1 S04     seguridad        13.8 ms  bloqueada=True
+
+== optimizado · vuelta 1 ==
+  [OK ] optimizado r1 OP1001  revision       1304.6 ms  Derivada a revisión||False
+  [OK ] optimizado r1 OP1002  revision        237.9 ms  Pendiente de documentación|documento_faltante|False
+  [OK ] optimizado r1 OP1003  revision        294.5 ms  Con observaciones|diferencia_bultos,diferencia_peso,nomencla
+  [OK ] optimizado r1 OP1004  revision        413.1 ms  Con observaciones|importador_inconsistente,permiso_faltante|
+  [OK ] optimizado r1 OP1005  revision       5113.5 ms  Con observaciones|documento_ilegible,requisito_no_determinad
+  [OK ] optimizado r1 OP2001  revision        198.0 ms  Con observaciones|diferencia_bultos|False
+  [OK ] optimizado r1 OP2002  revision        221.9 ms  Pendiente de documentación|documento_faltante|False
+  [OK ] optimizado r1 OP2003  revision        227.5 ms  Con observaciones|permiso_faltante|True
+  [OK ] optimizado r1 OP2004  revision        249.4 ms  Con observaciones|diferencia_valor|True
+  [OK ] optimizado r1 OP2005  revision        315.6 ms  Con observaciones|importador_inconsistente|True
+  [OK ] optimizado r1 OP2006  revision        226.0 ms  Con observaciones|documento_ilegible|False
+  [OK ] optimizado r1 OP2007  revision        215.8 ms  Derivada a revisión|nomenclatura|False
+  [OK ] optimizado r1 OP2008  revision        131.1 ms  Derivada a revisión||False
+  [OK ] optimizado r1 L01     seguimiento       8.2 ms  cobertura=1.00
+  [OK ] optimizado r1 C01     consulta       1263.1 ms  cobertura=1.00
+  [OK ] optimizado r1 C02     consulta       1491.9 ms  cobertura=1.00
+  [OK ] optimizado r1 C03     consulta       2015.6 ms  cobertura=1.00
+  [OK ] optimizado r1 C04     consulta       2513.5 ms  cobertura=1.00
+  [MAL] optimizado r1 C05     consulta        781.9 ms  cobertura=0.00
+  [MAL] optimizado r1 C06     consulta       3509.3 ms  cobertura=0.67
+  [OK ] optimizado r1 C07     consulta       5176.9 ms  cobertura=1.00
+  [OK ] optimizado r1 C08     consulta       1516.2 ms  cobertura=1.00
+  [MAL] optimizado r1 C09     consulta       2135.4 ms  cobertura=0.50
+  [OK ] optimizado r1 C10     consulta         31.5 ms  abstencion=True
+  [OK ] optimizado r1 C11     consulta         40.0 ms  abstencion=True
+  [OK ] optimizado r1 C12     consulta         36.4 ms  abstencion=True
+  [OK ] optimizado r1 S01     seguridad         5.8 ms  bloqueada=True
+  [OK ] optimizado r1 S02     seguridad         6.0 ms  bloqueada=True
+  [OK ] optimizado r1 S03     seguridad         6.3 ms  bloqueada=True
+  [OK ] optimizado r1 S04     seguridad        16.3 ms  bloqueada=True
+
+== optimizado · vuelta 2 ==
+  [OK ] optimizado r2 OP1001  revision        113.4 ms  Derivada a revisión||False
+  [OK ] optimizado r2 OP1002  revision        193.6 ms  Pendiente de documentación|documento_faltante|False
+  [OK ] optimizado r2 OP1003  revision        306.8 ms  Con observaciones|diferencia_bultos,diferencia_peso,nomencla
+  [OK ] optimizado r2 OP1004  revision        292.2 ms  Con observaciones|importador_inconsistente,permiso_faltante|
+  [OK ] optimizado r2 OP1005  revision       4691.0 ms  Con observaciones|documento_ilegible,requisito_no_determinad
+  [OK ] optimizado r2 OP2001  revision        174.0 ms  Con observaciones|diferencia_bultos|False
+  [OK ] optimizado r2 OP2002  revision        276.0 ms  Pendiente de documentación|documento_faltante|False
+  [OK ] optimizado r2 OP2003  revision        203.7 ms  Con observaciones|permiso_faltante|True
+  [OK ] optimizado r2 OP2004  revision        221.0 ms  Con observaciones|diferencia_valor|True
+  [OK ] optimizado r2 OP2005  revision        220.1 ms  Con observaciones|importador_inconsistente|True
+  [OK ] optimizado r2 OP2006  revision        200.9 ms  Con observaciones|documento_ilegible|False
+  [OK ] optimizado r2 OP2007  revision        251.9 ms  Derivada a revisión|nomenclatura|False
+  [OK ] optimizado r2 OP2008  revision        148.5 ms  Derivada a revisión||False
+  [OK ] optimizado r2 L01     seguimiento      11.1 ms  cobertura=1.00
+  [OK ] optimizado r2 C01     consulta       1036.1 ms  cobertura=1.00
+  [OK ] optimizado r2 C02     consulta       1242.5 ms  cobertura=1.00
+  [OK ] optimizado r2 C03     consulta       1759.6 ms  cobertura=1.00
+  [OK ] optimizado r2 C04     consulta       2514.3 ms  cobertura=1.00
+  [OK ] optimizado r2 C05     consulta       2206.5 ms  cobertura=1.00
+  [MAL] optimizado r2 C06     consulta       3195.5 ms  cobertura=0.67
+  [OK ] optimizado r2 C07     consulta       5173.7 ms  cobertura=1.00
+  [OK ] optimizado r2 C08     consulta       1525.6 ms  cobertura=1.00
+  [MAL] optimizado r2 C09     consulta       2134.9 ms  cobertura=0.50
+  [OK ] optimizado r2 C10     consulta         34.2 ms  abstencion=True
+  [OK ] optimizado r2 C11     consulta         36.3 ms  abstencion=True
+  [OK ] optimizado r2 C12     consulta         38.3 ms  abstencion=True
+  [OK ] optimizado r2 S01     seguridad         6.0 ms  bloqueada=True
+  [OK ] optimizado r2 S02     seguridad         6.0 ms  bloqueada=True
+  [OK ] optimizado r2 S03     seguridad         6.1 ms  bloqueada=True
+  [OK ] optimizado r2 S04     seguridad        16.5 ms  bloqueada=True
+
+== optimizado · vuelta 3 ==
+  [OK ] optimizado r3 OP1001  revision        122.3 ms  Derivada a revisión||False
+  [OK ] optimizado r3 OP1002  revision        238.1 ms  Pendiente de documentación|documento_faltante|False
+  [OK ] optimizado r3 OP1003  revision        503.9 ms  Con observaciones|diferencia_bultos,diferencia_peso,nomencla
+  [OK ] optimizado r3 OP1004  revision        280.0 ms  Con observaciones|importador_inconsistente,permiso_faltante|
+  [OK ] optimizado r3 OP1005  revision       4619.5 ms  Con observaciones|documento_ilegible,requisito_no_determinad
+  [OK ] optimizado r3 OP2001  revision        175.3 ms  Con observaciones|diferencia_bultos|False
+  [OK ] optimizado r3 OP2002  revision        207.6 ms  Pendiente de documentación|documento_faltante|False
+  [OK ] optimizado r3 OP2003  revision        198.9 ms  Con observaciones|permiso_faltante|True
+  [OK ] optimizado r3 OP2004  revision        181.9 ms  Con observaciones|diferencia_valor|True
+  [OK ] optimizado r3 OP2005  revision        197.0 ms  Con observaciones|importador_inconsistente|True
+  [OK ] optimizado r3 OP2006  revision        190.3 ms  Con observaciones|documento_ilegible|False
+  [OK ] optimizado r3 OP2007  revision        183.8 ms  Derivada a revisión|nomenclatura|False
+  [OK ] optimizado r3 OP2008  revision        138.9 ms  Derivada a revisión||False
+  [OK ] optimizado r3 L01     seguimiento       8.8 ms  cobertura=1.00
+  [OK ] optimizado r3 C01     consulta       1005.4 ms  cobertura=1.00
+  [OK ] optimizado r3 C02     consulta       1232.0 ms  cobertura=1.00
+  [OK ] optimizado r3 C03     consulta       1751.3 ms  cobertura=1.00
+  [OK ] optimizado r3 C04     consulta       2507.5 ms  cobertura=1.00
+  [OK ] optimizado r3 C05     consulta       2216.8 ms  cobertura=1.00
+  [MAL] optimizado r3 C06     consulta       3192.0 ms  cobertura=0.67
+  [OK ] optimizado r3 C07     consulta       5180.5 ms  cobertura=1.00
+  [OK ] optimizado r3 C08     consulta       1514.1 ms  cobertura=1.00
+  [MAL] optimizado r3 C09     consulta       2141.6 ms  cobertura=0.50
+  [OK ] optimizado r3 C10     consulta         30.7 ms  abstencion=True
+  [OK ] optimizado r3 C11     consulta         43.8 ms  abstencion=True
+  [OK ] optimizado r3 C12     consulta         40.5 ms  abstencion=True
+  [OK ] optimizado r3 S01     seguridad         5.8 ms  bloqueada=True
+  [OK ] optimizado r3 S02     seguridad         6.0 ms  bloqueada=True
+  [OK ] optimizado r3 S03     seguridad         6.0 ms  bloqueada=True
+  [OK ] optimizado r3 S04     seguridad        16.8 ms  bloqueada=True
+
+# Métricas de observabilidad
+
+- Proveedor: ollama · llama3.2:3b · qwen3-embedding:0.6b
+- Fecha: 2026-11-21 14:39 · Python 3.12.10 · win32
+
+| Métrica | base | optimizado |
+|---|---:|---:|
+| Precisión (%) | 83.3 | 92.2 |
+| Consistencia entre repeticiones (%) | None | 96.7 |
+| Similitud textual entre repeticiones (%) | None | 94.4 |
+| Frecuencia de errores (%) | 0.0 | 0.0 |
+| Latencia media (ms) | 4281.1 | 956.4 |
+| Latencia p50 (ms) | 3407.3 | 223.9 |
+| Latencia p95 (ms) | 9740.1 | 4658.8 |
+| Primera consulta (ms) | 9269.9 | 1304.6 |
+| Llamadas al LLM por caso | 1.63 | 0.33 |
+| Tokens por caso | 1299.2 | 329.9 |
+| CPU por caso (ms) | 86.0 | 44.6 |
+| Memoria máx. del proceso (MB) | 151.8 | 180.2 |
+
+## Latencia media por tipo · base
+
+- revision: 3706.1 ms (p95 8355.6 ms)
+- seguimiento: 5734.9 ms (p95 5734.9 ms)
+- consulta: 6207.5 ms (p95 10409.9 ms)
+- seguridad: 7.4 ms (p95 12.6 ms)
+- Casos incorrectos: C01, C03, C06, C09, C12
+
+## Latencia media por tipo · optimizado
+
+- revision: 607.2 ms (p95 4626.7 ms)
+- seguimiento: 9.4 ms (p95 10.9 ms)
+- consulta: 1729.6 ms (p95 5174.5 ms)
+- seguridad: 8.6 ms (p95 16.6 ms)
+- Casos incorrectos: C05, C06, C09
+
+## Optimizado vs base
+
+- Reducción de latencia media: 77.7 %
+- Reducción de latencia p95: 52.2 %
+- Reducción de llamadas al LLM: 79.8 %
+- Diferencia de precisión: 8.9 puntos
+- Por tipo: revision 83.6 %, seguimiento 99.8 %, consulta 72.1 %, seguridad -16.2 %
+
+Resultados en C:\Users\macar\proyectos\aduanarag\evidencias\observabilidad\ollama

@@ -1,5 +1,5 @@
 $ C:\Users\macar\proyectos\aduanarag\.venv\Scripts\python.exe src/probar_modelos.py
-# 2026-11-03 01:02
+# 2026-11-21 14:35
 
 Proveedor: ollama · llama3.2:3b · qwen3-embedding:0.6b
 Probando modelo de lenguaje...
