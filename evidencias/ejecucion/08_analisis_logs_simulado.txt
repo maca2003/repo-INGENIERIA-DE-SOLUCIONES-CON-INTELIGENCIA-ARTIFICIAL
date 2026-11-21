@@ -1,0 +1,21 @@
+$ /home/claude/venv/bin/python src/analizar_logs.py --proveedor simulado
+# 2026-11-21 14:10
+
+
+== base ==
+- El LLM concentra el 1.4 % del tiempo total de las solicitudes; la recuperación en ChromaDB, el 0.2 %.
+- El nodo que más tiempo de LLM consume es «model» (26 llamadas, 3.5 ms en total, media 0.1 ms).
+- 2 solicitudes superan el doble de la mediana o el p95 de latencia.
+- No se registraron errores de herramientas ni del modelo.
+- El RAG se abstuvo en 5 de 10 consultas.
+- El guardarraíl bloqueó 4 entradas antes de llegar al modelo.
+
+== optimizado ==
+- El LLM concentra el 1.0 % del tiempo total de las solicitudes; la recuperación en ChromaDB, el 0.1 %.
+- El nodo que más tiempo de LLM consume es «respuesta_directa» (30 llamadas, 11.9 ms en total, media 0.4 ms).
+- 5 solicitudes superan el doble de la mediana o el p95 de latencia.
+- No se registraron errores de herramientas ni del modelo.
+- El RAG se abstuvo en 15 de 39 consultas.
+- El guardarraíl bloqueó 12 entradas antes de llegar al modelo.
+
+Informe: /home/claude/repo/evidencias/observabilidad/simulado/hallazgos_logs.md

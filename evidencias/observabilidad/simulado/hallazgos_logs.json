@@ -1,0 +1,476 @@
+{
+  "base": {
+    "solicitudes": 30,
+    "latencia_solicitud_ms": {
+      "n": 30,
+      "media": 19.1,
+      "p50": 11.8,
+      "p95": 35.9,
+      "max": 47.3
+    },
+    "reparto_tiempo_pct": {
+      "llm": 1.4,
+      "recuperacion_chroma": 0.2,
+      "herramientas_sin_llm": 12.0,
+      "orquestacion_y_resto": 86.3
+    },
+    "llamadas_llm": 47,
+    "llm_por_nodo": [
+      {
+        "nombre": "model",
+        "llamadas": 26,
+        "total_ms": 3.5,
+        "media_ms": 0.1,
+        "p95_ms": 0.4
+      },
+      {
+        "nombre": "tools",
+        "llamadas": 7,
+        "total_ms": 2.4,
+        "media_ms": 0.3,
+        "p95_ms": 0.4
+      },
+      {
+        "nombre": "sintetizar",
+        "llamadas": 13,
+        "total_ms": 1.9,
+        "media_ms": 0.1,
+        "p95_ms": 0.3
+      },
+      {
+        "nombre": "ejecutar_tarea",
+        "llamadas": 1,
+        "total_ms": 0.4,
+        "media_ms": 0.4,
+        "p95_ms": 0.4
+      }
+    ],
+    "nodos_mas_lentos": [
+      {
+        "nombre": "ejecutar_tarea",
+        "llamadas": 90,
+        "total_ms": 115.0,
+        "media_ms": 1.3,
+        "p95_ms": 2.8
+      },
+      {
+        "nombre": "consolidar_memoria",
+        "llamadas": 26,
+        "total_ms": 94.3,
+        "media_ms": 3.6,
+        "p95_ms": 7.8
+      },
+      {
+        "nombre": "agente_conversacional",
+        "llamadas": 13,
+        "total_ms": 89.1,
+        "media_ms": 6.9,
+        "p95_ms": 7.6
+      },
+      {
+        "nombre": "recuperar_contexto",
+        "llamadas": 30,
+        "total_ms": 49.5,
+        "media_ms": 1.6,
+        "p95_ms": 2.4
+      },
+      {
+        "nombre": "tools",
+        "llamadas": 13,
+        "total_ms": 22.7,
+        "media_ms": 1.7,
+        "p95_ms": 2.3
+      },
+      {
+        "nombre": "evaluar",
+        "llamadas": 90,
+        "total_ms": 22.5,
+        "media_ms": 0.2,
+        "p95_ms": 0.4
+      },
+      {
+        "nombre": "model",
+        "llamadas": 26,
+        "total_ms": 13.7,
+        "media_ms": 0.5,
+        "p95_ms": 0.7
+      },
+      {
+        "nombre": "sintetizar",
+        "llamadas": 13,
+        "total_ms": 10.5,
+        "media_ms": 0.8,
+        "p95_ms": 1.0
+      }
+    ],
+    "herramientas_mas_lentas": [
+      {
+        "nombre": "registrar_observacion",
+        "llamadas": 17,
+        "total_ms": 21.3,
+        "media_ms": 1.3,
+        "p95_ms": 2.1
+      },
+      {
+        "nombre": "actualizar_estado_operacion",
+        "llamadas": 16,
+        "total_ms": 13.6,
+        "media_ms": 0.8,
+        "p95_ms": 1.8
+      },
+      {
+        "nombre": "consultar_procedimientos",
+        "llamadas": 10,
+        "total_ms": 12.3,
+        "media_ms": 1.2,
+        "p95_ms": 1.6
+      },
+      {
+        "nombre": "validar_nomenclatura",
+        "llamadas": 13,
+        "total_ms": 8.8,
+        "media_ms": 0.7,
+        "p95_ms": 0.8
+      },
+      {
+        "nombre": "fundamentar_hallazgos",
+        "llamadas": 12,
+        "total_ms": 6.6,
+        "media_ms": 0.5,
+        "p95_ms": 0.7
+      },
+      {
+        "nombre": "verificar_documentos_requeridos",
+        "llamadas": 13,
+        "total_ms": 5.5,
+        "media_ms": 0.4,
+        "p95_ms": 0.5
+      },
+      {
+        "nombre": "validar_concordancia",
+        "llamadas": 13,
+        "total_ms": 5.5,
+        "media_ms": 0.4,
+        "p95_ms": 0.5
+      },
+      {
+        "nombre": "escalar_a_responsable",
+        "llamadas": 5,
+        "total_ms": 5.4,
+        "media_ms": 1.1,
+        "p95_ms": 1.4
+      }
+    ],
+    "arranques_en_frio": [],
+    "tokens_por_s": {
+      "n": 0,
+      "media": null,
+      "p50": null,
+      "p95": null,
+      "max": null
+    },
+    "tokens_entrada_media": 0,
+    "tokens_salida_media": 0,
+    "anomalias": [
+      {
+        "ts": "2026-11-21T14:10:45.887",
+        "duracion_ms": 36.2,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1003",
+        "llamadas_llm": 1
+      },
+      {
+        "ts": "2026-11-21T14:10:45.935",
+        "duracion_ms": 47.3,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1004",
+        "llamadas_llm": 1
+      }
+    ],
+    "errores": [],
+    "errores_por_componente": {},
+    "rag_consultas": 10,
+    "rag_abstenciones": 5,
+    "seguridad_bloqueos": [
+      {
+        "ts": "2026-11-21T14:10:46.361",
+        "motivo": "patrón no permitido: «Ignora las instrucciones»"
+      },
+      {
+        "ts": "2026-11-21T14:10:46.364",
+        "motivo": "patrón no permitido: «Muestra tu system prompt»"
+      },
+      {
+        "ts": "2026-11-21T14:10:46.367",
+        "motivo": "patrón no permitido: «<script»"
+      },
+      {
+        "ts": "2026-11-21T14:10:46.379",
+        "motivo": "entrada de 1217 caracteres (máximo 1000)"
+      }
+    ],
+    "intenciones": {
+      "revision": 13,
+      "conversacion": 13,
+      "bloqueada": 4
+    },
+    "memoria_rss_mb_max": 143.7
+  },
+  "optimizado": {
+    "solicitudes": 90,
+    "latencia_solicitud_ms": {
+      "n": 90,
+      "media": 14.6,
+      "p50": 4.3,
+      "p95": 33.4,
+      "max": 35.5
+    },
+    "reparto_tiempo_pct": {
+      "llm": 1.0,
+      "recuperacion_chroma": 0.1,
+      "herramientas_sin_llm": 14.2,
+      "orquestacion_y_resto": 84.7
+    },
+    "llamadas_llm": 33,
+    "llm_por_nodo": [
+      {
+        "nombre": "respuesta_directa",
+        "llamadas": 30,
+        "total_ms": 11.9,
+        "media_ms": 0.4,
+        "p95_ms": 0.5
+      },
+      {
+        "nombre": "ejecutar_tarea",
+        "llamadas": 3,
+        "total_ms": 1.3,
+        "media_ms": 0.4,
+        "p95_ms": 0.5
+      }
+    ],
+    "nodos_mas_lentos": [
+      {
+        "nombre": "ejecutar_tarea",
+        "llamadas": 270,
+        "total_ms": 311.5,
+        "media_ms": 1.2,
+        "p95_ms": 2.4
+      },
+      {
+        "nombre": "consolidar_memoria",
+        "llamadas": 39,
+        "total_ms": 256.3,
+        "media_ms": 6.6,
+        "p95_ms": 7.1
+      },
+      {
+        "nombre": "recuperar_contexto",
+        "llamadas": 90,
+        "total_ms": 87.1,
+        "media_ms": 1.0,
+        "p95_ms": 2.3
+      },
+      {
+        "nombre": "evaluar",
+        "llamadas": 270,
+        "total_ms": 64.6,
+        "media_ms": 0.2,
+        "p95_ms": 0.3
+      },
+      {
+        "nombre": "respuesta_directa",
+        "llamadas": 39,
+        "total_ms": 50.6,
+        "media_ms": 1.3,
+        "p95_ms": 1.7
+      },
+      {
+        "nombre": "planificar",
+        "llamadas": 39,
+        "total_ms": 18.5,
+        "media_ms": 0.5,
+        "p95_ms": 0.6
+      },
+      {
+        "nombre": "entrada_bloqueada",
+        "llamadas": 12,
+        "total_ms": 18.1,
+        "media_ms": 1.5,
+        "p95_ms": 5.5
+      },
+      {
+        "nombre": "sintetizar",
+        "llamadas": 39,
+        "total_ms": 13.5,
+        "media_ms": 0.3,
+        "p95_ms": 0.5
+      }
+    ],
+    "herramientas_mas_lentas": [
+      {
+        "nombre": "registrar_observacion",
+        "llamadas": 51,
+        "total_ms": 63.5,
+        "media_ms": 1.2,
+        "p95_ms": 2.0
+      },
+      {
+        "nombre": "consultar_procedimientos",
+        "llamadas": 39,
+        "total_ms": 45.4,
+        "media_ms": 1.2,
+        "p95_ms": 1.5
+      },
+      {
+        "nombre": "actualizar_estado_operacion",
+        "llamadas": 48,
+        "total_ms": 43.7,
+        "media_ms": 0.9,
+        "p95_ms": 1.7
+      },
+      {
+        "nombre": "fundamentar_hallazgos",
+        "llamadas": 36,
+        "total_ms": 16.4,
+        "media_ms": 0.5,
+        "p95_ms": 0.6
+      },
+      {
+        "nombre": "validar_nomenclatura",
+        "llamadas": 39,
+        "total_ms": 16.3,
+        "media_ms": 0.4,
+        "p95_ms": 0.5
+      },
+      {
+        "nombre": "verificar_documentos_requeridos",
+        "llamadas": 39,
+        "total_ms": 16.2,
+        "media_ms": 0.4,
+        "p95_ms": 0.5
+      },
+      {
+        "nombre": "validar_concordancia",
+        "llamadas": 39,
+        "total_ms": 16.0,
+        "media_ms": 0.4,
+        "p95_ms": 0.5
+      },
+      {
+        "nombre": "escalar_a_responsable",
+        "llamadas": 15,
+        "total_ms": 14.3,
+        "media_ms": 1.0,
+        "p95_ms": 1.1
+      }
+    ],
+    "arranques_en_frio": [],
+    "tokens_por_s": {
+      "n": 0,
+      "media": null,
+      "p50": null,
+      "p95": null,
+      "max": null
+    },
+    "tokens_entrada_media": 0,
+    "tokens_salida_media": 0,
+    "anomalias": [
+      {
+        "ts": "2026-11-21T14:10:46.553",
+        "duracion_ms": 35.5,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1004",
+        "llamadas_llm": 0
+      },
+      {
+        "ts": "2026-11-21T14:10:46.587",
+        "duracion_ms": 34.0,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1005",
+        "llamadas_llm": 1
+      },
+      {
+        "ts": "2026-11-21T14:10:47.063",
+        "duracion_ms": 35.2,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1004",
+        "llamadas_llm": 0
+      },
+      {
+        "ts": "2026-11-21T14:10:47.098",
+        "duracion_ms": 33.9,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1005",
+        "llamadas_llm": 1
+      },
+      {
+        "ts": "2026-11-21T14:10:47.581",
+        "duracion_ms": 34.2,
+        "intencion": "revision",
+        "entrada": "Revisa la OP1004",
+        "llamadas_llm": 0
+      }
+    ],
+    "errores": [],
+    "errores_por_componente": {},
+    "rag_consultas": 39,
+    "rag_abstenciones": 15,
+    "seguridad_bloqueos": [
+      {
+        "ts": "2026-11-21T14:10:46.871",
+        "motivo": "patrón no permitido: «Ignora las instrucciones»"
+      },
+      {
+        "ts": "2026-11-21T14:10:46.874",
+        "motivo": "patrón no permitido: «Muestra tu system prompt»"
+      },
+      {
+        "ts": "2026-11-21T14:10:46.877",
+        "motivo": "patrón no permitido: «<script»"
+      },
+      {
+        "ts": "2026-11-21T14:10:46.890",
+        "motivo": "entrada de 1217 caracteres (máximo 1000)"
+      },
+      {
+        "ts": "2026-11-21T14:10:47.379",
+        "motivo": "patrón no permitido: «Ignora las instrucciones»"
+      },
+      {
+        "ts": "2026-11-21T14:10:47.382",
+        "motivo": "patrón no permitido: «Muestra tu system prompt»"
+      },
+      {
+        "ts": "2026-11-21T14:10:47.386",
+        "motivo": "patrón no permitido: «<script»"
+      },
+      {
+        "ts": "2026-11-21T14:10:47.404",
+        "motivo": "entrada de 1217 caracteres (máximo 1000)"
+      },
+      {
+        "ts": "2026-11-21T14:10:47.896",
+        "motivo": "patrón no permitido: «Ignora las instrucciones»"
+      },
+      {
+        "ts": "2026-11-21T14:10:47.899",
+        "motivo": "patrón no permitido: «Muestra tu system prompt»"
+      },
+      {
+        "ts": "2026-11-21T14:10:47.902",
+        "motivo": "patrón no permitido: «<script»"
+      },
+      {
+        "ts": "2026-11-21T14:10:47.914",
+        "motivo": "entrada de 1217 caracteres (máximo 1000)"
+      }
+    ],
+    "intenciones": {
+      "revision": 39,
+      "listado": 3,
+      "consulta": 36,
+      "bloqueada": 12
+    },
+    "memoria_rss_mb_max": 160.8
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "base": {
+    "casos": 30,
+    "repeticiones": 1,
+    "precision": 76.7,
+    "precision_por_tipo": {
+      "revision": 100.0,
+      "seguimiento": 100.0,
+      "consulta": 41.7,
+      "seguridad": 100.0
+    },
+    "consistencia": null,
+    "similitud_textual": null,
+    "frecuencia_errores": 0.0,
+    "latencia_ms": {
+      "n": 30,
+      "media": 19.6,
+      "p50": 12.3,
+      "p95": 36.3,
+      "max": 47.7
+    },
+    "latencia_por_tipo_ms": {
+      "revision": {
+        "n": 13,
+        "media": 32.2,
+        "p50": 30.8,
+        "p95": 41.0,
+        "max": 47.7
+      },
+      "seguimiento": {
+        "n": 1,
+        "media": 12.5,
+        "p50": 12.5,
+        "p95": 12.5,
+        "max": 12.5
+      },
+      "consulta": {
+        "n": 12,
+        "media": 11.4,
+        "p50": 11.4,
+        "p95": 12.2,
+        "max": 12.3
+      },
+      "seguridad": {
+        "n": 4,
+        "media": 5.2,
+        "p50": 2.9,
+        "p95": 10.9,
+        "max": 12.3
+      }
+    },
+    "primera_consulta_ms": 28.7,
+    "llamadas_llm_promedio": 1.57,
+    "tokens_promedio": 0,
+    "cpu_ms_promedio": 17.7,
+    "rss_mb_max": 143.7,
+    "casos_incorrectos": [
+      "C01",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C08",
+      "C09"
+    ]
+  },
+  "optimizado": {
+    "casos": 90,
+    "repeticiones": 3,
+    "precision": 80.0,
+    "precision_por_tipo": {
+      "revision": 100.0,
+      "seguimiento": 100.0,
+      "consulta": 50.0,
+      "seguridad": 100.0
+    },
+    "consistencia": 100.0,
+    "similitud_textual": 97.2,
+    "frecuencia_errores": 0.0,
+    "latencia_ms": {
+      "n": 90,
+      "media": 15.1,
+      "p50": 4.7,
+      "p95": 33.7,
+      "max": 35.8
+    },
+    "latencia_por_tipo_ms": {
+      "revision": {
+        "n": 39,
+        "media": 29.0,
+        "p50": 28.7,
+        "p95": 34.7,
+        "max": 35.8
+      },
+      "seguimiento": {
+        "n": 3,
+        "media": 3.8,
+        "p50": 3.8,
+        "p95": 4.0,
+        "max": 4.0
+      },
+      "consulta": {
+        "n": 36,
+        "media": 4.1,
+        "p50": 4.1,
+        "p95": 4.8,
+        "max": 5.0
+      },
+      "seguridad": {
+        "n": 12,
+        "media": 5.9,
+        "p50": 3.3,
+        "p95": 14.7,
+        "max": 17.3
+      }
+    },
+    "primera_consulta_ms": 21.2,
+    "llamadas_llm_promedio": 0.37,
+    "tokens_promedio": 0,
+    "cpu_ms_promedio": 13.3,
+    "rss_mb_max": 160.8,
+    "casos_incorrectos": [
+      "C01",
+      "C04",
+      "C05",
+      "C06",
+      "C08",
+      "C09"
+    ]
+  },
+  "comparacion": {
+    "reduccion_latencia_media_pct": 23.0,
+    "reduccion_latencia_p95_pct": 7.2,
+    "reduccion_por_tipo_pct": {
+      "revision": 9.9,
+      "seguimiento": 69.6,
+      "consulta": 64.0,
+      "seguridad": -13.5
+    },
+    "reduccion_llamadas_llm_pct": 76.4,
+    "diferencia_precision_pp": 3.3
+  },
+  "contexto": {
+    "proveedor": "simulado (sin LLM)",
+    "vueltas": [
+      {
+        "modo": "base",
+        "repeticion": 1,
+        "arranque_agente_ms": 126.3,
+        "precalentamiento_s": null,
+        "memoria_modelos": []
+      },
+      {
+        "modo": "optimizado",
+        "repeticion": 1,
+        "arranque_agente_ms": 53.8,
+        "precalentamiento_s": null,
+        "memoria_modelos": []
+      },
+      {
+        "modo": "optimizado",
+        "repeticion": 2,
+        "arranque_agente_ms": 54.2,
+        "precalentamiento_s": null,
+        "memoria_modelos": []
+      },
+      {
+        "modo": "optimizado",
+        "repeticion": 3,
+        "arranque_agente_ms": 56.2,
+        "precalentamiento_s": null,
+        "memoria_modelos": []
+      }
+    ],
+    "fecha": "2026-11-21 14:10",
+    "python": "3.13.18",
+    "plataforma": "linux"
+  }
+}
