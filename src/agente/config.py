@@ -63,7 +63,16 @@ UMBRAL_DIFERENCIA_VALOR = _decimal("AGENTE_UMBRAL_DIFERENCIA_VALOR", 0.05)
 # base) para comparar latencias con src/evaluar_observabilidad.py.
 OPTIMIZADO = os.getenv("AGENTE_OPTIMIZADO", "true").strip().lower() in ("1", "true", "si", "sí")
 # Tiempo que Ollama mantiene el modelo cargado en memoria entre consultas.
-KEEP_ALIVE = os.getenv("AGENTE_KEEP_ALIVE", "30m")
+def _segundos(valor: str) -> int:
+    """Convierte '30m', '1h', '90s' o '1800' a segundos (OllamaEmbeddings exige un entero)."""
+    valor = valor.strip().lower()
+    unidades = {"s": 1, "m": 60, "h": 3600}
+    if valor and valor[-1] in unidades:
+        return int(float(valor[:-1]) * unidades[valor[-1]])
+    return int(valor)
+
+
+KEEP_ALIVE = _segundos(os.getenv("AGENTE_KEEP_ALIVE", "30m"))
 # Máximo de tokens generados por respuesta y ventana de contexto.
 NUM_PREDICT = _entero("AGENTE_NUM_PREDICT", 320)
 NUM_CTX = _entero("AGENTE_NUM_CTX", 4096)
